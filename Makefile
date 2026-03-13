@@ -1,6 +1,7 @@
-FLAKE = ./.#$(HOST)
+FLAKE = ./.\#$(HOST)
+DIR := $(shell pwd)
 
-.PHONY: env help disko nixos-install nixos-rebuild nix-gc flake-update flake-check
+.PHONY: help env setup disko nixos-install nixos-rebuild nix-gc flake-update flake-check
 
 help:
 	@echo "Available targets:"
@@ -19,16 +20,16 @@ env:
 
 setup: env
 	@export EDITOR=vim
-	@nix shell -p vim
+	@nix-shell -p vim
 
 disko: env
 	sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount --flake $(FLAKE)
-	nixos-generate-config --no-filesystems --root /mnt --dir ./.
+	nixos-generate-config --no-filesystems --root /mnt --dir $(DIR)
 	@lsblk
 
 nixos-install: env
 	sudo nixos-install --no-channel-copy --no-root-password --flake $(FLAKE) --root /mnt
-	@ln -s $(PWD) /mnt/etc/nixos
+	@ln -s $(DIR) /mnt/etc/nixos
 
 nixos-rebuild: env
 	@echo "Rebuilding NixOS configuration..."
