@@ -2,3 +2,9 @@
 sudo systemctl enable --start serial-getty@ttyS0.service
 
 virsh console nixos
+
+# solve text misalignment
+# on host
+echo $LINES $COLUMNS
+# on vm
+stty rows LINE cols COL
