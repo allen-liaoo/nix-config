@@ -1,45 +1,47 @@
-FLAKE = ./.\#$(HOST)
-DIR := $(shell pwd)
+DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST)))) # get directory of the Makefile
+FLAKE = $(DIR)\#$(HOST)
 NIX_FLAGS += --extra-experimental-features "nix-command flakes"
 
 .PHONY: help env setup disko nixos-install nixos-rebuild nix-gc flake-update flake-check
 
 help:
-	@echo "Available targets:"
-	@echo "  disko           - Run disko to format and mount disks (one time use)"
-	@echo "  nixos-install   - Install NixOS using the specified flake"
-	@echo "  nixos-rebuild   - Rebuild the NixOS configuration"
-	@echo "  nix-gc          - Collect Nix garbage"
+	@echo "Common targets:"
+	@echo "  os-rebuild   - Rebuild the NixOS configuration"
 	@echo "  flake-update    - Update flake inputs"
 	@echo "  flake-check     - Check the flake for errors"
-
+	@echo "  gc          - Collect Nix garbage"
+	@echo "One-time-use targets:"
+	@echo "  setup           - Set up the installation environment"
+	@echo "  disko           - Run disko to format and mount disks (one time use)"
+	@echo "  os-install   - Install NixOS using the specified flake"
+	
 env:
 	@if [ -z "$(HOST)" ]; then \
 		echo "HOST is not set"; \
 		exit 1; \
 	fi
 
-setup: env
+setup:
 	@export EDITOR=vim
-	@nix shell nixpkgs#vim
 
 disko: env
 	sudo nix $(NIX_FLAGS) run github:nix-community/disko/latest -- --mode destroy,format,mount --flake $(FLAKE)
 	sudo nixos-generate-config --no-filesystems --root /mnt --dir $(DIR)
 	@lsblk
 
-nixos-install: env
+os-install: env
 	sudo nixos-install --no-channel-copy --no-root-password --flake $(FLAKE) --root /mnt
 	@sudo ln -s $(DIR) /mnt/etc/nixos
+	@echo "NixOS installed. Please reboot and run 'make os-rebuild' to switch to the new configuration."
 
-nixos-rebuild: env
+os-rebuild: env
 	@sudo nixos-rebuild switch --flake $(FLAKE)
 
-nix-gc: env
+gc: env
 	@sudo nix-collect-garbage -d
 
 flake-update: env
 	@nix $(NIX_FLAGS) flake update
 
-flake-check: env
+flake-check:
 	@nix $(NIX_FLAGS) flake check

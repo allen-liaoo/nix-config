@@ -1,17 +1,18 @@
-Install VM (without secure boot):
+Install VM:
 ```
-virt-install --name nixos \
+sudo virt-install --name nixos \
          --connect qemu:///session \
          --ram 8192 \
          --vcpus 2 \
          --disk path=$HOME/.local/share/libvirt/images/NixOS-25.11/nixos.x86_64.qcow2,size=20 \
-         --network network=default,model=virtio \
+         --network network=default,model=virtio,mac=52:54:00:ab:cd:ef \
          --graphics spice \
          --boot uefi \
          --features smm.state=off \
          --noautoconsole \
          --cdrom $HOME/.local/share/libvirt/images/nixos-minimal-25.11.7346.44bae273f9f8-x86_64-linux.iso
 ```
+Disables secure boot and pins VM mac
 
 To reset VM:
 ```

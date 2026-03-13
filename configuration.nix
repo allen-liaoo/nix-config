@@ -27,6 +27,23 @@
     git
   ];
 
+  # Make network interfaces use predictable names (e.g. eth0, wlan0) instead of the default (e.g. enp1s0).
+  boot.kernelParams = [ "net.ifnames=0" "biosdevname=0" ];
+
+  # Make VM IP predictable\
+  networking.useDHCP = false;
+  networking.useNetworkd = true;
+  systemd.network = {
+    enable = true;
+    networks."10-eth0" = {
+      matchConfig.Name = "eth0";
+      address = [ "192.168.122.100/24" ];
+      gateway = [ "192.168.122.1" ];
+      dns = [ "8.8.8.8" "1.1.1.1" ];
+      linkConfig.RequiredForOnline = "routable";
+    };
+  };
+
   services.openssh = {
     enable = true;
     ports = [ 22 ];
