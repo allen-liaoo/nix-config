@@ -22,13 +22,24 @@
   };
 
   environment.systemPackages = with pkgs; [
-    bind #nslookup
+    btop
     curl
+    dig             # in: dnsutils or bind 
     git
     gnumake
-    ping
-    vim 
+    iproute2        # ip, ss
+    iputils         # ping, tracepath
+    lsof
+    nmap
+    procps          # ps, top
+    tcpdump
+    traceroute
+    vim
     wget
+    whois
+    unzip
+    util-linux
+    zip
   ];
 
   # Make network interfaces use predictable names (e.g. eth0, wlan0) instead of the default (e.g. enp1s0).
