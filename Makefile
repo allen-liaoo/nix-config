@@ -1,5 +1,6 @@
 FLAKE = ./.\#$(HOST)
 DIR := $(shell pwd)
+NIX_FLAGS += --extra-experimental-features "nix-command flakes"
 
 .PHONY: help env setup disko nixos-install nixos-rebuild nix-gc flake-update flake-check
 
@@ -23,30 +24,22 @@ setup: env
 	@nix-shell -p vim
 
 disko: env
-	sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount --flake $(FLAKE)
-	nixos-generate-config --no-filesystems --root /mnt --dir $(DIR)
+	sudo nix $(NIX_FLAGS) run github:nix-community/disko/latest -- --mode destroy,format,mount --flake $(FLAKE)
+	sudo nixos-generate-config --no-filesystems --root /mnt --dir $(DIR)
 	@lsblk
 
 nixos-install: env
 	sudo nixos-install --no-channel-copy --no-root-password --flake $(FLAKE) --root /mnt
-	@ln -s $(DIR) /mnt/etc/nixos
+	@sudo ln -s $(DIR) /mnt/etc/nixos
 
 nixos-rebuild: env
-	@echo "Rebuilding NixOS configuration..."
 	@sudo nixos-rebuild switch --flake $(FLAKE)
-	@echo "NixOS rebuild complete."
 
 nix-gc: env
-	@echo "Collecting Nix garbage..."
-	@nix-collect-garbage -d
-	@echo "Garbage collection complete."
+	@sudo nix-collect-garbage -d
 
 flake-update: env
-	@echo "Updating flake inputs..."
-	@nix flake update
-	@echo "Flake update complete."
+	@sudo nix $(NIX_FLAGS) flake update
 
 flake-check: env
-	@echo "Checking flake..."
-	@nix flake check
-	@echo "Flake check complete."
+	@sudo nix $(NIX_FLAGS) flake check
