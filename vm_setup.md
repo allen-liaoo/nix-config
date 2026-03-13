@@ -1,31 +1,50 @@
-# Install (without secure boot)
+Install VM (without secure boot):
+```
 virt-install --name nixos \
          --connect qemu:///session \
          --ram 8192 \
          --vcpus 2 \
          --disk path=$HOME/.local/share/libvirt/images/NixOS-25.11/nixos.x86_64.qcow2,size=20 \
-         --network bridge=virbr0 \
+         --network network=default,model=virtio \
          --graphics spice \
          --boot uefi \
+         --features smm.state=off \
+         --noautoconsole \
          --cdrom $HOME/.local/share/libvirt/images/nixos-minimal-25.11.7346.44bae273f9f8-x86_64-linux.iso
+```
 
-# to reset
-virsh destroy nixos || virsh undefine nixos --remove-all-storage --nvram
+To reset VM:
+```
+virsh destroy nixos ; virsh undefine nixos --remove-all-storage --nvram
+```
 
-# to open virt-viewer
-virt-viewer nixos
-
-# in virt-viewer nixos
+Make VM console accessible in host (run in virt-viewer nixos):
+```
 sudo systemctl enable --start serial-getty@ttyS0.service
 
-# open console
+# Where:
+# open virt-viewer console
+virt-viewer nixos
+```
+
+Open console in host:
+```
 virsh console nixos
+```
 
-# in vm console
+Setup:
+```
 git clone https://github.com/allen-liaoo/nixos-config.git ; stty rows 40 cols 181 ; export host=vm 
+```
 
-# partition disk
+To partition disk:
+```
 sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount --flake ./nixos-config#${host} && lsblk
+```
 
-# install nixos
+Install nixos:
+```
 sudo nixos-install --no-channel-copy --no-root-password --flake ./nixos-config#${host} --root /mnt
+```
+
+Reboot.
