@@ -1,7 +1,7 @@
 {
   description = "NixOS Multi-Host & Multi-User Configuration";
 
-  inpputs = {
+  inputs = {
     nixpkgs = {
       url = "github:NixOS/nixpkgs/nixos-25.11";
     };
@@ -12,11 +12,12 @@
     };
   };
 
-  outputs = { self, nixpkgs, disko }: {
+  outputs = { nixpkgs, ... }@args: {
     nixosConfigurations = {
       "vm" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
+          args.disko.nixosModules.disko
           ./configuration.nix
         ];
       };

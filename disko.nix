@@ -1,3 +1,5 @@
+{ config, lib, pkgs, ... }:
+
 {
   disko.devices = {
     disk.main = {
@@ -6,11 +8,16 @@
       content = {
         type = "gpt";
         partitions = {
-          # BIOS boot partition
-          boot = {
-            size = "1M";
-            type = "EF02"; # BIOS boot
+          # EFI System Partition (ESP)
+          ESP = {
+            size = "512M";
+            type = "EF00";
             priority = 1;
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot";
+            };
           };
           # Main btrfs partition
           root = {
