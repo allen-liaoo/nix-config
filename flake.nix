@@ -7,6 +7,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixpkgs = {
       url = "github:NixOS/nixpkgs/nixos-25.11";
     };
@@ -34,9 +39,22 @@
             ./host/${hostName}/configuration.nix
   
             inputs.disko.nixosModules.disko
+            inputs.home-manager.nixosModules.home-manager
             inputs.sops-nix.nixosModules.sops
           ];
         }
       );
+
+      homeConfigurations = {
+        "pig" = inputs.home-manager.lib.homeManagerConfiguration {
+          # legacy packaging (flat) instead of nested (import nixpkgs)
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          # pull inputs into args of home submodules (if needed)
+          extraSpecialArgs = { inherit inputs; };
+          modules = [
+            ./home/pig/home.nix
+          ];
+        };
+      };
     };
 }
