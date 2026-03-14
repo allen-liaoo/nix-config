@@ -10,7 +10,13 @@
     # age.keyFile = "/persist/sops/age/keys.txt";
 
     secrets = {
-      "ssh/github_personal" = {
+      "ssh/gh_global.pub" = {
+        owner = "pig";# TODO: Change
+        #group = "root";
+        mode = "0400";
+        neededForUsers = true;
+      };
+      "ssh/gh_global" = {
         owner = "pig";# TODO: Change
         #group = "root";
         mode = "0400";
