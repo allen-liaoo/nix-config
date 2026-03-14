@@ -66,7 +66,7 @@
     settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = true;
-      AllowUsers = [ "tester" ];
+      AllowUsers = [ "pig" ];
     };
 
     # Necessary for SOPS
