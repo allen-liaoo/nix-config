@@ -80,7 +80,7 @@
   };
   environment.etc."ssh/ssh_config.d/github.conf".text = ''
   Host github.com
-    IdentityFile /run/secrets/ssh/github_personal
+    IdentityFile /run/secrets-for-users/ssh/github_personal
     User pig
 '';
 
