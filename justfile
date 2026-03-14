@@ -66,12 +66,12 @@ os-install hostname:
 
 # Link config and generate hardware-configuration.nix (after install and reboot)
 [group("initial")]
-os-setup:
+os-setup hostname:
     @echo "Linking {{dir}} to /etc/nixos..."
     sudo ln -s {{dir}} /etc/nixos
     @echo "Adding hardware-configuration.nix... remember to commit it"
     sudo nixos-generate-config --no-filesystems --root /mnt --dir {{dir}}
-    just switch {{hostname}} {{user}}
+    just switch-all {{hostname}}
 
 # Generate host age key for .sops.yaml (based on ssh host public key)
 [group("initial")]
