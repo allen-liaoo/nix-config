@@ -9,15 +9,29 @@ dir := justfile_directory()
 default:
     @just --list
 
-# Rebuild the NixOS configuration
+# Rebuild the NixOS config
 [group("update")]
 os-switch hostname:
     sudo nixos-rebuild switch --flake "{{dir}}#{{hostname}}"
 
-# Rebuild the Home Manager configuration
+# Rebuild a Home Manager config
 [group("update")]
 home-switch hostname user:
     home-manager switch --flake "{{dir}}#{{user}}@{{hostname}}"
+
+# Rebuild all Home Manager configs for host
+[group("update")]
+home-switch-all hostname:
+    nix {{nix_flags}} eval .#homeConfigurations --apply 'builtins.attrNames' --json \
+        | tr -d '[]"' | tr ',' '\n' \
+        | grep '@{{hostname}}$' \
+        | sed 's/@{{hostname}}$//' \
+        | xargs -I{} just home-switch {{hostname}} {}
+
+# Rebuild both NixOS and HomeManager configs
+switch-all hostname:
+    just os-switch {{hostname}}
+    just home-switch-all {{hostname}}
 
 # Update flake inputs
 [group("update")]
@@ -57,6 +71,7 @@ os-setup:
     sudo ln -s {{dir}} /etc/nixos
     @echo "Adding hardware-configuration.nix... remember to commit it"
     sudo nixos-generate-config --no-filesystems --root /mnt --dir {{dir}}
+    just switch {{hostname}} {{user}}
 
 # Generate host age key for .sops.yaml (based on ssh host public key)
 [group("initial")]
