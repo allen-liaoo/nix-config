@@ -9,9 +9,10 @@ NIX_FLAGS := --extra-experimental-features "nix-command flakes"
 
 help:
 	@echo "Common targets:"
-	@echo "  os-rebuild    - Rebuild the NixOS configuration"
+	@echo "  os-switch     - Rebuild the NixOS configuration"
 	@echo "  flake-update  - Update flake inputs"
 	@echo "  flake-check   - Check the flake for errors"
+	@echo "  home-switch   - Rebuild the Home Manager configuration" 
 	@echo "  gc            - Collect Nix garbage"
 	@echo "One-time-use targets:"
 	@echo "  disko         - Run disko to format and mount disks"
@@ -27,7 +28,7 @@ env:
 		export CONFUSER=$(USER); \
 	fi
 
-os-rebuild: env
+os-switch: env
 	@sudo nixos-rebuild switch --flake $(FLAKE)
 
 flake-update: env
