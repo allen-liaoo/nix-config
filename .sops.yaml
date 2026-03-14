@@ -2,7 +2,7 @@ keys:
 - users:
   - global: &global age1w4vzylklxkw07e0n86sz5yf7ug9akpq93z8uqwm83v4rvg7hhutqh05mgc
 - hosts:
-  - guinea: &guinea age1y8ew5vxt7j27tgy76fjyf757vzllwvesnnzsdqfjnjxecxgc2gwszxwl8y
+  - guinea: &guinea age1nm2yd7wed6gauzjyqca6e8ng45njcan0q2yfqaahjqsjurh2h5us6wjmw0
 
 creation_rules:
 # Path relative to location of .sops.yaml

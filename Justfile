@@ -32,7 +32,7 @@ flake-check:
 gc:
     sudo nix-collect-garbage -d
 
-# One-time-use targets
+# Initial targets
 
 # Run disko to format and mount disks
 [group("initial")]
@@ -40,9 +40,9 @@ disko hostname:
     sudo nix {{nix_flags}} run github:nix-community/disko/latest -- \
         --mode destroy,format,mount \
         --flake "{{dir}}#{{hostname}}"
-    lsblk
+    @lsblk
 
-# Install NixOS using the specified flake#hostname
+# Install NixOS using the specified hostname
 [group("initial")]
 os-install hostname:
     sudo nixos-install --no-channel-copy --no-root-password \
@@ -50,7 +50,7 @@ os-install hostname:
         --root /mnt
     @echo "NixOS installed. Please reboot, clone repository, and run 'just os-setup' to use new configuration."
 
-# Link config and generate hardware-configuration.nix
+# Link config and generate hardware-configuration.nix (after install and reboot)
 [group("initial")]
 os-setup:
     @echo "Linking {{dir}} to /etc/nixos..."
