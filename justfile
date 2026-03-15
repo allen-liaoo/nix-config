@@ -12,12 +12,12 @@ default:
 # Rebuild the NixOS config
 [group("update")]
 os-switch hostname:
-    sudo nixos-rebuild switch --flake "{{dir}}#{{hostname}}"
+    sudo nixos-rebuild switch --flake {{dir}}#{{hostname}}
 
 # Rebuild a Home Manager config
 [group("update")]
 home-switch hostname user:
-    home-manager switch --flake "{{dir}}#{{user}}@{{hostname}}"
+    home-manager switch --flake {{dir}}#{{user}}
 
 # Rebuild all Home Manager configs for host
 [group("update")]
@@ -41,6 +41,9 @@ flake-update:
 # Check the flake for errors
 flake-check:
     nix {{nix_flags}} flake check
+
+hm-check user:
+    home-manager -n switch --flake {{dir}}#{{user}}
 
 # Collect Nix garbage
 gc:

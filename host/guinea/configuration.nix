@@ -27,6 +27,7 @@
     curl
     dig             # in: dnsutils or bind 
     git
+    home-manager
     iproute2        # ip, ss
     iputils         # ping, tracepath
     just

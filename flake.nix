@@ -53,6 +53,7 @@
           extraSpecialArgs = { inherit inputs; };
           modules = [
             ./home/pig/home.nix
+            inputs.sops-nix.homeManagerModules.sops
           ];
         };
       };
