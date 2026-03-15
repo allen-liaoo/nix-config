@@ -9,14 +9,14 @@
     ];
 
     secrets = {
-      "ssh/nixos_config_deploy" = {
+      "nixos_config_deploy" = {
         key = "ssh/nixos_config_deploy";
         owner = "root";
         group = "root";
         mode = "0400";
       };
 
-      "age_key/pig" = {
+      "age_key_pig" = {
         sopsFile = secrets_dir + /user/pig.yaml;
         key = "age_key";
         owner = config.users.users."pig".name;
