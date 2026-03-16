@@ -1,9 +1,8 @@
 { lib, customLib, ... }:
 
 {
-  imports = customLib.importDir ./. ++ [
-    ./shell/default.nix
-  ];
+  imports = customLib.importDir ./. ++ customLib.importSubdirs ./.;
+
   programs.home-manager.enable = true;
 
   # This value determines the Home Manager release that your

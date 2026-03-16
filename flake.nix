@@ -42,7 +42,7 @@
           };
           system = "x86_64-linux";
           modules = [
-            ./host/${hostName}/default.nix
+            ./host/${hostName}
   
             inputs.disko.nixosModules.disko
             #inputs.home-manager.nixosModules.home-manager
@@ -61,7 +61,7 @@
             inherit inputs customLib userName;
           };
           modules = [
-            ./home/pig/default.nix
+            ./home/${userName}
             inputs.sops-nix.homeManagerModules.sops
           ];
         }
