@@ -60,7 +60,8 @@
       linkConfig.RequiredForOnline = "routable";
     };
   };
-  # TODO: Hostname
+
+  networking.hostName = "guinea";
 
   services.openssh = {
     enable = true;

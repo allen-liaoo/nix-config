@@ -1,6 +1,6 @@
 { config, ... }: {
   sops = let 
-      secrets_dir = ./../../secrets;
+    secrets_dir = ./../../secrets;
   in {
     defaultSopsFile = secrets_dir + /host/guinea.yaml;
     age.sshKeyPaths = [
