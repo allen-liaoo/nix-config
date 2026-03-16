@@ -7,7 +7,7 @@ keys:
   - *pig 
   - *guinea
   # ALWAYS add this key to secrets
-  - *sops_admin age1w4vzylklxkw07e0n86sz5yf7ug9akpq93z8uqwm83v4rvg7hhutqh05mgc
+  - &sops_admin age1w4vzylklxkw07e0n86sz5yf7ug9akpq93z8uqwm83v4rvg7hhutqh05mgc
 
 creation_rules:
 # IMPORTANT: ORDER MATTERS
@@ -18,4 +18,4 @@ creation_rules:
 - path_regex: secrets/host/guinea.+
   age: [*guinea, *sops_admin]
 - path_regex: secrets/user/pig.+
-  age: [*pig, *sops_admin ]
+  age: [*pig, *sops_admin]
