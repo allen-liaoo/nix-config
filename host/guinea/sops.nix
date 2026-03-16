@@ -17,6 +17,12 @@
         mode = "0400";
       };
 
+      "passwd_pig" = {
+        key = "passwd/pig";
+        mode = "0400";
+        neededForUsers = true;
+      };
+
       "age_key_pig" = {
         key = "age/pig";
         owner = config.users.users."pig".name;

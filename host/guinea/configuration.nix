@@ -2,6 +2,7 @@
 
 {
   time.timeZone = "US/Chicago";
+  i18n.defaultLocale = "en_US.UTF-8";
 
   boot.loader = {
     systemd-boot.enable = true;
@@ -30,7 +31,7 @@
     isNormalUser = true;
     extraGroups = [ "wheel" ];
     linger = true;
-    password = "123";
+    hashedPasswordFile = config.sops.secrets.passwd_pig.path;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPevSDBLs3jQWYE8sq2Dx6S2qQ4VzpKn5RvS1zXkGfiW wcliaw610@gmail.com"
     ];
