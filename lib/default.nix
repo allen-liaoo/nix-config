@@ -1,4 +1,4 @@
-{...}:
+{ ... }:
 {
   # Import all files in a directory, excluding default.nix. Non-recurive
   importDir = (dir:
@@ -9,4 +9,5 @@
         (builtins.attrNames files);
     in map (name: dir + "/${name}") nixFiles
   );
+
 }
