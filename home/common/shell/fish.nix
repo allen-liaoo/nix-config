@@ -8,12 +8,15 @@
         set fish_greeting
       '';
   
-      shellInit = builtins.readFile ./config.fish;
+      #shellInit = builtins.readFile ./config.fish;
 
       shellAbbrs = {
-	ll = "ls -lah";
-	# programs that are only pkgs
+	      ll = "ls -lah";
+	      
+	      # programs that are only pkgs or should be systemwide
         js = "just";
+        v = "vim";
+
       } // lib.optionalAttrs config.programs.git.enable {
         g = "git";
         gs = "git status";
@@ -27,10 +30,7 @@
         grb = "git rebase";
         gm = "git merge";
         gl = "git log";
-      } // lib.optionalAttrs config.programs.btop.enable {
-        bt = "btop";
-      } // lib.optionalAttrs config.programs.vim.enable {
-        v = "vim";
+
       } // lib.optionalAttrs config.programs.zellij.enable {
         zj = "zellij";
       };

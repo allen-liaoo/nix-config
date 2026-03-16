@@ -22,7 +22,7 @@
   
       nnoremap <Esc> :noh<CR>
 
-      # hide lineno for mouse selection during visual mode
+      " hide lineno for mouse selection during visual mode
       autocmd ModeChanged *:[vV\x16]* set nonumber
       autocmd ModeChanged [vV\x16]*:* set number
     '';
