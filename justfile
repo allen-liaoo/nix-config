@@ -1,4 +1,4 @@
-git_repo := "https://github.com/allen-liaoo/nixos-config.git"
+git_repo := "git@github.com:allen-liaoo/nixos-config.git"
 host_key_path := env_var_or_default("HOST_KEY_PATH", "/etc/ssh/ssh_host_ed25519_key")
 nix_flags := "--extra-experimental-features 'nix-command flakes'"
 
@@ -34,7 +34,7 @@ hm-switch-all host="$HOSTNAME":
 # Rebuild both NixOS and HomeManager configs
 switch-all host="$HOSTNAME":
     just os-switch {{host}}
-    just home-switch-all {{host}}
+    just hm-switch-all {{host}}
 
 # Update flake inputs
 [group("update")]
