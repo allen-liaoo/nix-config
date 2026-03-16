@@ -9,7 +9,7 @@
       "nixos_config_deploy" = {
         sopsFile = ./../../secrets/common.yaml;
         mode = "0400";
-        path = "$(home.homeDirectory}" + "/.ssh/nixos_config_deploy";
+        path = "${config.home.homeDirectory}" + "/.ssh/nixos_config_deploy";
       };
     };
   };
