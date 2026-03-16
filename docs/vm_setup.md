@@ -30,9 +30,5 @@ sudo virsh console guinea
 ```
 git clone https://github.com/allen-liaoo/nixos-config.git ; stty rows 40 cols 181 ; export host=guinea 
 ```
-6. Install just
-```
-nix-shell -p just
-```
-7. Use justfile (one-time use) targets
-8. SSH into VM once OS is installed (statically set to `192.168.122.100`)
+6. Install OS and reboot (see install doc)
+7. SSH into VM once OS is installed (statically set to `192.168.122.100`)

@@ -23,6 +23,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    age
     btop
     curl
     dig             # in: dnsutils or bind 
@@ -34,6 +35,7 @@
     lsof
     nmap
     procps          # ps, top
+    sops
     tcpdump
     traceroute
     vim

@@ -11,35 +11,38 @@ default:
 
 # Rebuild the NixOS config
 [group("update")]
-os-switch hostname:
-    sudo nixos-rebuild switch --flake {{dir}}#{{hostname}}
+os-switch host=env("HOSTNAME", host):
+    @echo "Running for host: {{host}}"
+    sudo nixos-rebuild switch --flake {{dir}}#{{host}}
 
 # Rebuild a Home Manager config
 [group("update")]
-home-switch hostname user:
+home-switch user=env("user", user):
+    @echo "Running for user: {{host}}"
     home-manager switch --flake {{dir}}#{{user}}
 
 # Rebuild all Home Manager configs for host
 [group("update")]
-home-switch-all hostname:
+home-switch-all host=("HOSTNAME", host):
+    @echo "Running for host: {{host}}"
     nix {{nix_flags}} eval .#homeConfigurations --apply 'builtins.attrNames' --json \
         | tr -d '[]"' | tr ',' '\n' \
-        | grep '@{{hostname}}$' \
-        | sed 's/@{{hostname}}$//' \
-        | xargs -I{} just home-switch {{hostname}} {}
+        | grep '@{{host}}$' \
+        | sed 's/@{{host}}$//' \
+        | xargs -I{} just home-switch {{host}} {}
 
 # Rebuild both NixOS and HomeManager configs
-switch-all hostname:
-    just os-switch {{hostname}}
-    just home-switch-all {{hostname}}
+switch-all host=("HOSTNAME", host):
+    just os-switch {{host}}
+    just home-switch-all {{host}}
 
 # Update flake inputs
 [group("update")]
-flake-update:
+fl-update:
     nix {{nix_flags}} flake update
 
 # Check the flake for errors
-flake-check:
+fl-check:
     nix {{nix_flags}} flake check
 
 hm-check user:
@@ -50,34 +53,40 @@ gc:
     sudo nix-collect-garbage -d
 
 # Initial targets
+# Dont infer host/user when config has not been applied
 
 # Run disko to format and mount disks
 [group("initial")]
-disko hostname:
+disko host:
     sudo nix {{nix_flags}} run github:nix-community/disko/latest -- \
         --mode destroy,format,mount \
-        --flake "{{dir}}#{{hostname}}"
+        --flake "{{dir}}#{{host}}"
     @lsblk
 
 # Install NixOS using the specified hostname
 [group("initial")]
-os-install hostname:
+os-install host:
     sudo nixos-install --no-channel-copy --no-root-password \
-        --flake "{{dir}}#{{hostname}}" \
+        --flake "{{dir}}#{{host}}" \
         --root /mnt
     @echo "NixOS installed. Please reboot, clone repository, and run 'just os-setup' to use new configuration."
 
-# Link config and generate hardware-configuration.nix (after install and reboot)
+# Link config, generate hardware-configuration.nix, and apply configs 
 [group("initial")]
-os-setup hostname:
+os-setup host:
     @echo "Linking {{dir}} to /etc/nixos..."
     sudo ln -s {{dir}} /etc/nixos
     @echo "Adding hardware-configuration.nix... remember to commit it"
     sudo nixos-generate-config --no-filesystems --root /mnt --dir {{dir}}
-    just switch-all {{hostname}}
+    just switch-all {{host}}
 
 # Generate host age key for .sops.yaml (based on ssh host public key)
 [group("initial")]
 gen-host-key:
     nix-shell -p ssh-to-age --run 'cat {{host_key_path}}.pub | ssh-to-age'
     @echo "Add the above output to .sops.yaml under 'keys' > '&hosts'."
+
+[group("initial")]
+secrets-setup host=env("HOSTNAME",host):
+    just switch-all {{host}}
+    git remote set-url origin {{git_repo}}
