@@ -29,6 +29,8 @@
         gl = "git log";
       } // lib.optionalAttrs config.programs.btop.enable {
         bt = "btop";
+      } // lib.optionalAttrs config.programs.vim.enable {
+        v = "vim";
       } // lib.optionalAttrs config.programs.zellij.enable {
         zj = "zellij";
       };
