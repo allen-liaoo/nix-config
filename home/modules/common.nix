@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./ssh.nix
     ./xdg.nix
 
     ./shell

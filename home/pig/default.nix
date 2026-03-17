@@ -12,14 +12,4 @@
   ];
 
   programs.home-manager.enable = true;
-
-  programs.ssh = {
-    enable = true;
-    matchBlocks = {
-      "*" = {
-        addKeysToAgent = "yes";
-        identityFile = config.sops.secrets.nixos_config_deploy.path;
-      };
-    };
-  };
 }
