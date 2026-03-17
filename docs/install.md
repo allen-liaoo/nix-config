@@ -1,8 +1,8 @@
 Assuming that the host machine is booted with NixOS minimal ISO, and `host/hostname/{disko,configuration}.nix` files have been made. An admin machine with access to this repository and can edit secrets is accompanying the host.
 
 ```
-git clone https://github.com/allen-liaoo/nixos-config.git
-cd nixos-config
+git clone https://github.com/allen-liaoo/nix-config.git
+cd nix-config
 nix-shell -p just
 
 just disko hostname
@@ -10,7 +10,7 @@ just os-install
 reboot
 
 # on startup, at console
-cd nixos-config
+cd nix-config
 just os-setup
 
 # then, one can ssh into the machine if configuration.nix is setup correctly
@@ -23,5 +23,7 @@ just gen-host-key
 # run "sops updateKeys" on relevant secret files, and push changes
 
 # then, git pull in host, and
-just secrets-setup
+just os-switch
+just hm-switch
+git remote set-url origin git@github.com:allen-liaoo/nix-config.git
 ```

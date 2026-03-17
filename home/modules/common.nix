@@ -2,6 +2,8 @@
 
 {
   imports = [
+    ./xdg.nix
+
     ./shell
     ./term
   ];

@@ -1,4 +1,3 @@
-git_repo := "git@github.com:allen-liaoo/nixos-config.git"
 host_key_path := env_var_or_default("HOST_KEY_PATH", "/etc/ssh/ssh_host_ed25519_key")
 nix_flags := "--extra-experimental-features 'nix-command flakes'"
 
@@ -67,8 +66,3 @@ os-setup host:
 gen-host-key:
     nix-shell -p ssh-to-age --run 'cat {{host_key_path}}.pub | ssh-to-age'
     @echo "Add the above output to .sops.yaml under 'keys' > '&hosts'."
-
-[group("initial")]
-secrets-setup host="$HOSTNAME":
-    just switch-all {{host}}
-    git remote set-url origin {{git_repo}}

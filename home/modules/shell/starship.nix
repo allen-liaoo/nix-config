@@ -1,4 +1,4 @@
-{ lib, config, customLib, isNixOS, ... }:
+{ lib, config, constants, customLib, ... }:
 {
   programs.starship = {
     enable = true;
@@ -65,7 +65,7 @@
       nix_shell = {
         disabled = false;
         format = "[$symbol]($style) ";
-        symbol = if isNixOS 
+        symbol = if constants.IS_NIXOS 
           then "\udb84\udd05" # nix nerd-font
           else "❄️";
       };

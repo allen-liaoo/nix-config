@@ -28,7 +28,7 @@ sudo virsh console guinea
 ```
 5. Manual setup 
 ```
-git clone https://github.com/allen-liaoo/nixos-config.git ; stty rows 40 cols 181 ; export host=guinea 
+git clone https://github.com/allen-liaoo/nix-config.git ; stty rows 40 cols 181 ; export host=guinea 
 ```
 6. Install OS and reboot (see install doc)
 7. SSH into VM once OS is installed (statically set to `192.168.122.100`)

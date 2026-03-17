@@ -31,6 +31,7 @@
         "pig"
       ];
       lib = nixpkgs.lib;
+      constants = import ./constants.nix;
       customLib = import ./lib { inherit (nixpkgs) lib; };
     in
     {
@@ -39,6 +40,7 @@
         lib.nixosSystem {
           specialArgs = { 
             inherit inputs lib customLib hostName;
+            constants = constants.nixOs // constants.shared;
           };
           system = "x86_64-linux";
           modules = [
@@ -59,7 +61,7 @@
           # pull inputs into args of home submodules (if needed)
           extraSpecialArgs = { 
             inherit inputs customLib userName;
-            isNixOS = builtins.pathExists /etc/NIXOS;
+            constants = constants.homeManager // constants.shared;
           };
           modules = [
             ./home/${userName}
