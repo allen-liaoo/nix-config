@@ -1,4 +1,4 @@
-{ lib, customLib, ... }:
+{ lib, customLib, userName, ... }:
 
 {
   imports = [
@@ -10,6 +10,9 @@
   ];
 
   programs.home-manager.enable = true;
+
+  home.username = userName;
+  home.homeDirectory = "/home/${userName}";
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

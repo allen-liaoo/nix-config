@@ -5,9 +5,6 @@
     ./../modules/common.nix
   ];
 
-  home.username = userName;
-  home.homeDirectory = "/home/${userName}";
-
   home.packages = with pkgs; [
   ];
 
