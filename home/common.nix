@@ -1,13 +1,15 @@
 { lib, customLib, userName, ... }:
 
 {
-  imports = [
-    ./ssh.nix
-    ./xdg.nix
+  imports = map customLib.relativeToRoot (
+    map (p: "modules/home-manager/" + p) [
+      "ssh.nix"
+      "xdg.nix"
 
-    ./shell
-    ./term
-  ];
+      "shell"
+      "term"
+    ]
+  );
 
   programs.home-manager.enable = true;
 

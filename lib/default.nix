@@ -1,5 +1,8 @@
-{ ... }:
+{ lib, ... }:
 {
+  # use path relative to the root of this project
+  relativeToRoot = lib.path.append ../.;
+
   # Import all files in a directory, excluding a list of ignored files. Non-recurive
   importDir = ({ dir, ignores ? [ "default.nix" ] }:
     let

@@ -2,6 +2,6 @@
 
 {
   imports = customLib.importDir { dir = ./.; } ++ customLib.importSubdirs ./. ++ [
-    ../modules/common.nix
+    ../common.nix
   ];
 }

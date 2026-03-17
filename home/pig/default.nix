@@ -2,7 +2,7 @@
 
 {
   imports = customLib.importDir { dir = ./.; } ++ [
-    ./../modules/common.nix
+    ../common.nix
   ];
 
   home.packages = with pkgs; [
