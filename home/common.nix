@@ -1,7 +1,7 @@
 { lib, customLib, userName, ... }:
 
 {
-  imports = map customLib.relativeToRoot (
+  imports = map customLib.relToRoot (
     map (p: "modules/home-manager/" + p) [
       "ssh.nix"
       "xdg.nix"

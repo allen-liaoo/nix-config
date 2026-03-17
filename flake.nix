@@ -31,7 +31,6 @@
         "pig"
       ];
       lib = nixpkgs.lib;
-      constants = import ./constants.nix;
       customLib = import ./lib { inherit (nixpkgs) lib; };
     in
     {
@@ -40,15 +39,15 @@
         lib.nixosSystem {
           specialArgs = { 
             inherit inputs lib customLib hostName;
-            constants = constants.nixOs // constants.shared;
           };
           system = "x86_64-linux";
           modules = [
             ./host/${hostName}
   
             inputs.disko.nixosModules.disko
-            #inputs.home-manager.nixosModules.home-manager
             inputs.sops-nix.nixosModules.sops
+            # If using HM as a NixOS Module (We dont as we want HM to be usable in other OSes)
+            # inputs.home-manager.nixosModules.home-manager
           ];
         }
       );
@@ -58,10 +57,9 @@
         inputs.home-manager.lib.homeManagerConfiguration {
           # legacy packaging (flat) instead of nested (import nixpkgs)
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          # pull inputs into args of home submodules (if needed)
+          # pull inputs into args of home submodules
           extraSpecialArgs = { 
             inherit inputs customLib userName;
-            constants = constants.homeManager // constants.shared;
           };
           modules = [
             ./home/${userName}

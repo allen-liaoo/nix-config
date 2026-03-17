@@ -2,7 +2,7 @@
 {
   imports = [
     ./common.nix
-  ] ++ (map customLib.relativeToRoot (
+  ] ++ (map customLib.relToRoot (
     map (p: "modules/nixos/" + p) [
       "font.nix"
     ]
