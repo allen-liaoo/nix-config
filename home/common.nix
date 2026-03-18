@@ -1,15 +1,13 @@
 { lib, aln, ... }:
 
 {
-  imports = map aln.lib.relToRoot (
-    map (p: "modules/home-manager/" + p) [
-      "ssh.nix"
-      "xdg.nix"
+  imports = [
+    ./modules/shell.nix
+    ./modules/xdg.nix
 
-      "shell"
-      "term"
-    ]
-  );
+    ./modules/term
+    ./modules/shell
+  ];
 
   programs.home-manager.enable = true;
 
