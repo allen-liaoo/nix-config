@@ -28,7 +28,7 @@
           key = "age/${user.name}";
           owner = user.name;
           mode = "0400";
-          path = " /home/${user.name}/.config/sops/age/keys.txt";
+          path = "/home/${user.name}/.config/sops/age/keys.txt";
         };
 
         # Add user password
