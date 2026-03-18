@@ -13,3 +13,13 @@ My NixOS and Home-Manager Configs
 - `lib`- custom library functions exposed under my namespace `aln.lib`
 - `meta.nix` - supported host and user pairings (for each nixos host) and their metadata, used by both users and hosts
 - `secrets` and `.sops.yaml` - read by sops-nix for host and user secrets at various sops.nix files throughout home and user directories
+
+## Project Location in System
+For each user of NixOS/non-NixOS machines who can edit this repository, it is required that the project is cloned to `~/nix-config`. This allows symlinking out of store files in home-manager modules to work correctly, and sidestep file permission issues.
+
+## Secrets
+Handled by `sops-nix`. In particular:
+- Each NixOS host generates a ssh host key on initial install, which is used to derive the host age key (on boot). The age key is then used to decrypt host secrypts. 
+- For each user of a NixOS host, the host decrypts the user's password for its own setup, and the user's age key to a location that the home-manager sops expects (`~/.config/sops/age/key.txt`).
+  The user then uses the age key to decrypt secrets.
+- Each NixOS host should have access to the secret `nix_config_deploy` which is used to push to this repository. Additionally, each authorized user should have this secret under `~/.ssh` as well.
