@@ -1,7 +1,7 @@
-{ lib, customLib, userName, ... }:
+{ lib, aln, ... }:
 
 {
-  imports = map customLib.relToRoot (
+  imports = map aln.lib.relToRoot (
     map (p: "modules/home-manager/" + p) [
       "ssh.nix"
       "xdg.nix"
@@ -13,8 +13,8 @@
 
   programs.home-manager.enable = true;
 
-  home.username = userName;
-  home.homeDirectory = "/home/${userName}";
+  home.username = aln.ctx.userName;
+  home.homeDirectory = "/home/${aln.ctx.userName}";
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

@@ -1,7 +1,7 @@
-{ customLib, ... }:
+{ aln, ... }:
 
 {
-  imports = customLib.importDir ./. ++ customLib.importSubdirs ./. ++ [
+  imports = aln.lib.listDirFiles ./. ++ aln.lib.listSubdirs ./. ++ [
     ../common.nix
   ];
 }

@@ -6,8 +6,8 @@ rec {
   # to refer to a path outside of /nix/store, use outOfStoreRelToRoot
   relToRoot = lib.path.append ../.;
 
-  # Import all files in a directory, excluding a list of ignored files. Non-recurive
-  importDir = (dir:
+  # List all files in a directory, excluding "default.nix". Non-recurive
+  listDirFiles = (dir:
     let
       files = builtins.readDir dir;
       nixFiles = builtins.filter
@@ -15,16 +15,14 @@ rec {
         (builtins.attrNames files);
     in map (name: dir + "/${name}") nixFiles);
 
-  # Import all immediate subdirectory of current directory
-  importSubdirs = (dir:
+  # List all immediate subdirectory of current directory
+  listSubdirs = (dir:
     let
       entries = builtins.readDir dir;
       subdirs = builtins.filter
         (name: entries.${name} == "directory")
         (builtins.attrNames entries);
     in map (name: dir + "/${name}") subdirs);
-    
-  isNixOS = builtins.pathExists /etc/NIXOS;
 
   ## HOME MANAGER EXCLUSIVE ##
 

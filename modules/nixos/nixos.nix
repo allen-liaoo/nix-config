@@ -1,4 +1,4 @@
-{ pkgs, hostName, ... }:
+{ pkgs, aln, ... }:
 
 {
   nix.settings = {
@@ -29,7 +29,7 @@
     zip
   ];
 
-  networking.hostName = hostName;
+  networking.hostName = aln.ctx.hostName;
 
   security.sudo.extraConfig = ''
     Defaults pwfeedback # password input feedback - makes typed password visible as asterisks

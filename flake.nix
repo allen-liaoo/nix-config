@@ -24,21 +24,22 @@
 
   outputs = { nixpkgs, ... } @ inputs: 
     let 
-      hostList = [
-        "guinea"
-      ];
-      userList = [
-        "pig"
-      ];
       lib = nixpkgs.lib;
-      customLib = import ./lib { inherit (nixpkgs) lib; };
+      # my namespace
+      mkAln = (args:
+        import ./aln {
+          inherit (nixpkgs) lib;
+          hostName = args.hostName or null;
+          userName = args.userName or null;
+        });
     in
     {
       nixosConfigurations = lib.genAttrs hostList (
         hostName:
         lib.nixosSystem {
           specialArgs = { 
-            inherit inputs lib customLib hostName;
+            inherit inputs lib;
+            aln = mkAln { inherit hostName; };
           };
           system = "x86_64-linux";
           modules = [
@@ -59,7 +60,8 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           # pull inputs into args of home submodules
           extraSpecialArgs = { 
-            inherit inputs customLib userName;
+            inherit inputs;
+            aln = mkAln { inherit hostName; inherit userName; };
           };
           modules = [
             ./home/${userName}

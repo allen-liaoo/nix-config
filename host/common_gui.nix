@@ -1,8 +1,8 @@
-{ pkgs, customLib, ... }:
+{ pkgs, aln, ... }:
 {
   imports = [
     ./common.nix
-  ] ++ (map customLib.relToRoot (
+  ] ++ (map aln.lib.relToRoot (
     map (p: "modules/nixos/" + p) [
       "font.nix"
     ]

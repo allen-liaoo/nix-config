@@ -1,4 +1,4 @@
-{ lib, config, customLib, ... }:
+{ lib, config, aln, ... }:
 {
   programs.starship = {
     enable = true;
@@ -65,7 +65,7 @@
       nix_shell = {
         disabled = false;
         format = "[$symbol]($style) ";
-        symbol = if customLib.isNixOS
+        symbol = if aln.lib.isNixOS aln.ctx
           then "\udb84\udd05" # nix nerd-font
           else "❄️";
       };

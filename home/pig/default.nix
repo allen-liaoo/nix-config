@@ -1,7 +1,7 @@
-{ config, pkgs, lib, customLib, userName, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  imports = customLib.importDir ./. ++ [
+  imports = aln.lib.listDirFiles ./. ++ [
     ../common.nix
   ];
 
