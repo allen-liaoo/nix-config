@@ -22,12 +22,13 @@
     } // (lib.mergeAttrsList (
       map (user: {
         # Add user age key, which the user would use to decrypt secrets
-        # see /home/modules/sops.nix
+        # expected to be in the default age key location
+        # see home's shared sops.nix
         "age_key_${user.name}" = {
           key = "age/${user.name}";
           owner = user.name;
           mode = "0400";
-          path = "/home/${user.name}/age_key";
+          path = " /home/${user.name}/.config/sops/age/keys.txt";
         };
 
         # Add user password
