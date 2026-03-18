@@ -19,9 +19,9 @@ os-switch host=current_hostname:
 
 # Rebuild a Home Manager config
 [group("update")]
-hm-switch user=current_user:
+hm-switch user=current_user host=current_hostname:
     @echo "Running for user: {{user}}"
-    home-manager switch --flake {{dir}}#{{user}}
+    home-manager switch --flake {{dir}}#{{user}}@{{host}}
 
 # Update flake inputs
 [group("update")]

@@ -26,48 +26,54 @@
     let 
       lib = nixpkgs.lib;
       # my namespace
-      mkAln = (args:
-        import ./aln {
-          inherit (nixpkgs) lib;
-          hostName = args.hostName or null;
-          userName = args.userName or null;
-        });
+      meta = import ./aln/meta.nix { inherit lib; };
+      mkAln = ctx: {
+        inherit meta;
+        lib = import ./aln/lib { inherit lib; };
+        ctx = ctx // {
+          hostName = ctx.hostName or "default";  # default for non-nixos
+          userName = ctx.userName or null;
+        };
+      };
     in
     {
-      nixosConfigurations = lib.genAttrs hostList (
+      nixosConfigurations = lib.genAttrs meta.hostNames (
         hostName:
-        lib.nixosSystem {
-          specialArgs = { 
-            inherit inputs lib;
-            aln = mkAln { inherit hostName; };
-          };
-          system = "x86_64-linux";
-          modules = [
-            ./host/${hostName}
-  
-            inputs.disko.nixosModules.disko
-            inputs.sops-nix.nixosModules.sops
-            # If using HM as a NixOS Module (We dont as we want HM to be usable in other OSes)
-            # inputs.home-manager.nixosModules.home-manager
-          ];
-        }
+          let host = meta.hosts."${hostName}"; in 
+          lib.nixosSystem {
+            specialArgs = { 
+              inherit inputs lib;
+              aln = mkAln { inherit hostName; };
+            };
+            system = host.system;
+            modules = [
+              ./host/${hostName}
+    
+              inputs.disko.nixosModules.disko
+              inputs.sops-nix.nixosModules.sops
+              # If using HM as a NixOS Module (We dont as we want HM to be usable in other OSes)
+              # inputs.home-manager.nixosModules.home-manager
+            ];
+          }
       );
 
-      homeConfigurations = lib.genAttrs userList (
-        userName:
-        inputs.home-manager.lib.homeManagerConfiguration {
-          # legacy packaging (flat) instead of nested (import nixpkgs)
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          # pull inputs into args of home submodules
-          extraSpecialArgs = { 
-            inherit inputs;
-            aln = mkAln { inherit hostName; inherit userName; };
+      homeConfigurations = lib.listToAttrs (
+        map ({ userName, hostName }: {
+          name = "${userName}@${hostName}";
+          value = inputs.home-manager.lib.homeManagerConfiguration {
+            # legacy packaging (flat) instead of nested (import nixpkgs)
+            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+            # pull inputs into args of home submodules
+            extraSpecialArgs = { 
+              inherit inputs;
+              aln = mkAln { inherit hostName; inherit userName; };
+            };
+            modules = [
+              ./home/${userName}
+              inputs.sops-nix.homeManagerModules.sops
+            ];
           };
-          modules = [
-            ./home/${userName}
-            inputs.sops-nix.homeManagerModules.sops
-          ];
-        }
+        }) meta.userHostPairs
       );
     };
 }
