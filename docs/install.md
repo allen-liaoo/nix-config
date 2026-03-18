@@ -22,8 +22,12 @@ just gen-host-key
 # in admin machine, add age key to .sops.yaml, add corresponding secrets,
 # run "sops updateKeys" on relevant secret files, and push changes
 
-# then, git pull in host, and
-just os-switch
-just hm-switch
+# then, git pull in host
+# hostname is important because at this point the host name is not initialized yet 
+just os-switch hostname
+# username is important because at this point the username is not initialized yet 
+just hm-switch username 
+
+# switch repo to ssh (should have ssh keys alrdy)
 just repo-switch-ssh
 ```

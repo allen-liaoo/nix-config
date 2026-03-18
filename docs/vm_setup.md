@@ -26,7 +26,7 @@ sudo systemctl start serial-getty@ttyS0.service
 ```
 sudo virsh console guinea
 ```
-5. Manual setup 
+5. Manual setup (I have to set stty dimensions to prevent vanishing lines)
 ```
 git clone https://github.com/allen-liaoo/nix-config.git ; stty rows 40 cols 181 ; export host=guinea 
 ```
