@@ -27,7 +27,8 @@
   };
 
   users.mutableUsers = false;
-  users.users."pig" = { # TODO: pass in users attr per host?
+
+  users.users."pig" = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
     linger = true;

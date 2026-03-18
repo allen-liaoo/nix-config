@@ -3,10 +3,6 @@
 {
   imports = aln.lib.listDirFiles ./. ++ [
     ../common.nix
+    ../sops_nix_config_deploy.nix
   ];
-
-  home.packages = with pkgs; [
-  ];
-
-  programs.home-manager.enable = true;
 }

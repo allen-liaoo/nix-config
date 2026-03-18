@@ -22,7 +22,8 @@ in rec
       name = "pig";
       primary = true;
     };
-    };
+  };
+
   # Derived from meta
   hostNames = builtins.attrNames hosts;
   userNames = builtins.attrNames users;
@@ -38,9 +39,8 @@ in rec
   hostHasUser = hostName: userName:
     builtins.elem userName hosts.${hostName}.users;
 
-  # Get all users metadata for a host as attrs
-  usersForHost = hostName:
-    lib.genAttrs hosts.${hostName}.users (u: users.${u});
+  # Get all users metadata for a host as a list
+  usersForHost = hostName: (map (u: users."${u}") hosts."${hostName}".users);
 
   isNixOS = (hostName: hostName != "default");
 }

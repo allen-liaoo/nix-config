@@ -1,7 +1,8 @@
-{ lib, aln, ... }:
+{ lib, pkgs, aln, ... }:
 
 {
   imports = [
+    ./modules/sops.nix
     ./modules/ssh.nix
     ./modules/xdg.nix
 
@@ -13,6 +14,9 @@
 
   home.username = aln.ctx.userName;
   home.homeDirectory = "/home/${aln.ctx.userName}";
+
+  home.packages = with pkgs; [
+  ];
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
