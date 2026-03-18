@@ -6,10 +6,19 @@
       
       interactiveShellInit = ''
         set fish_greeting
+      '' + lib.optionalString config.programs.yazi.enable ''
+        # Yazi specific init (replaces the need for abbreviation
+        # press q to quit with auto cd; press Q to quit without cd
+        function y
+        	set tmp (mktemp -t "yazi-cwd.XXXXXX")
+        	yazi $argv --cwd-file="$tmp"
+        	if read -z cwd < "$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+        		builtin cd -- "$cwd"
+        	end
+        	rm -f -- "$tmp"
+        end
       '';
   
-      #shellInit = builtins.readFile ./config.fish;
-
       shellAbbrs = {
         ll = "ls -lAh";
 	      
@@ -31,8 +40,6 @@
         gm = "git merge";
         gl = "git log";
 
-      } // lib.optionalAttrs config.programs.yazi.enable {
-        y = "yazi";
       } // lib.optionalAttrs config.programs.zellij.enable {
         zj = "zellij";
       };
