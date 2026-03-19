@@ -65,7 +65,7 @@
       nix_shell = {
         disabled = false;
         format = "[$symbol]($style) ";
-        symbol = if aln.meta.isNixOS aln.ctx.hostName
+        symbol = if aln.ctx.host.is.gui
           then "\udb84\udd05" # nix nerd-font
           else "❄️";
       };

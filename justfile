@@ -2,7 +2,7 @@ current_hostname := `hostname -s`
 current_user := `whoami`
 nix_config_path := "$HOME/nix-config"
 host_key_path := env_var_or_default("HOST_KEY_PATH", "/etc/ssh/ssh_host_ed25519_key")
-nix_flags := "--extra-experimental-features 'nix-command flakes'"
+nix_flags := "--extra-experimental-features 'nix-command flakes pipe-operators'"
 
 dir := justfile_directory()
 

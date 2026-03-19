@@ -2,7 +2,7 @@
   sops = let 
     secrets_dir = aln.lib.relToRoot "secrets";
   in {
-    defaultSopsFile = secrets_dir + /host/${aln.ctx.hostName}.yaml;
+    defaultSopsFile = secrets_dir + /host/${aln.ctx.host.name}.yaml;
     # Host SSH Keys are used to decrypt secrets
     # Each host is guaranteed to have a host key generated when first booted up (see host sshd config)
     age.sshKeyPaths = [
@@ -37,7 +37,7 @@
           mode = "0400";
           neededForUsers = true;
         };
-      }) (aln.meta.usersForHost aln.ctx.hostName))
+      }) (aln.ctx.host.users))
     );
   };
 }

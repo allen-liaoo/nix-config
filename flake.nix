@@ -4,21 +4,18 @@
   outputs = { nixpkgs, ... } @ inputs: 
   let 
     lib = nixpkgs.lib;
-    meta = import ./meta.nix { inherit lib; };
+    inventory = import ./inventory { inherit lib; };
     # my namespace; everything I define will be accessible in "aln" attr of module inputs
     mkAln = ctx: {
-      inherit meta;
+      inherit inventory;
       lib = import ./lib { inherit lib; };
-      ctx = ctx // {
-        hostName = ctx.hostName or "default";  # default for non-nixos
-        userName = ctx.userName or null;
-      };
+      ctx = import ./ctx.nix ({ inherit lib inventory; } // ctx);
     };
   in
   {
-    nixosConfigurations = lib.genAttrs meta.hostNames (
+    nixosConfigurations = lib.genAttrs inventory.hostNames (
       hostName:
-      let host = meta.hosts.${hostName}; in 
+      let host = inventory.hosts.${hostName}; in 
       lib.nixosSystem {
         specialArgs = { 
           inherit inputs lib;
@@ -43,7 +40,7 @@
         value = inputs.home-manager.lib.homeManagerConfiguration {
           # legacy packaging (flat) instead of nested (import nixpkgs)
           pkgs = let
-            system = meta.hosts.${hostName}.system or meta.systems.x86_linux;
+            system = inventory.hosts.${hostName}.system or inventory.systems.x86_linux;
           in nixpkgs.legacyPackages.${system};
           # pull inputs into args of home submodules
           extraSpecialArgs = {
@@ -57,10 +54,10 @@
             sops-nix.homeManagerModules.sops
           ];
         };
-      }) meta.userHostPairs
+      }) inventory.userHostPairs
     );
 
-    devShells = lib.genAttrs meta.systemsList (
+    devShells = lib.genAttrs inventory.systemsList (
       (system: {
         default = let 
           pkgs = nixpkgs.legacyPackages.${system};

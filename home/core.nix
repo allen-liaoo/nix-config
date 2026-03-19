@@ -12,8 +12,8 @@
 
   programs.home-manager.enable = true;
 
-  home.username = aln.ctx.userName;
-  home.homeDirectory = "/home/${aln.ctx.userName}";
+  home.username = aln.ctx.user.name;
+  home.homeDirectory = "/home/${aln.ctx.user.name}";
 
   home.packages = with pkgs; [
     fastfetch

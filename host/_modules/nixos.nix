@@ -5,6 +5,7 @@
     experimental-features = [
       "flakes"
       "nix-command"
+      "pipe-operators"
     ];
   };
 
@@ -29,7 +30,7 @@
     zip
   ];
 
-  networking.hostName = aln.ctx.hostName;
+  networking.hostName = aln.ctx.host.name;
 
   security.sudo.extraConfig = ''
     Defaults pwfeedback # password input feedback - makes typed password visible as asterisks
