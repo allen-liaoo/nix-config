@@ -18,7 +18,7 @@
   {
     nixosConfigurations = lib.genAttrs meta.hostNames (
       hostName:
-      let host = meta.hosts."${hostName}"; in 
+      let host = meta.hosts.${hostName}; in 
       lib.nixosSystem {
         specialArgs = { 
           inherit inputs lib;
@@ -36,14 +36,17 @@
         ];
       }
     );
+
     homeConfigurations = lib.listToAttrs (
       map ({ userName, hostName }: {
         name = "${userName}@${hostName}";
         value = inputs.home-manager.lib.homeManagerConfiguration {
           # legacy packaging (flat) instead of nested (import nixpkgs)
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          pkgs = let
+            system = meta.hosts.${hostName}.system or meta.systems.x86_linux;
+          in nixpkgs.legacyPackages.${system};
           # pull inputs into args of home submodules
-          extraSpecialArgs = { 
+          extraSpecialArgs = {
             inherit inputs;
             aln = mkAln { inherit hostName; inherit userName; };
           };
@@ -55,6 +58,22 @@
           ];
         };
       }) meta.userHostPairs
+    );
+
+    devShells = lib.genAttrs meta.systemsList (
+      (system: {
+        default = let 
+          pkgs = nixpkgs.legacyPackages.${system};
+        in pkgs.mkShell {
+          packages = with pkgs; [
+            age
+            git
+            just
+            sops
+            ssh-to-age
+          ];
+        };
+      })
     );
   };
 

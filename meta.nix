@@ -1,17 +1,16 @@
 # metadata of hosts and users
 { lib, ... }:
 
-let
-  system = {
+rec {
+  systems = {
     x86_linux = "x86_64-linux";
-  };
-in rec
-{
+  }; 
+
   hosts = {
     # vm
     guinea = {
       name = "guinea";
-      system = system.x86_linux;
+      system = systems.x86_linux;
       users = with users; [ pig.name ];
     };
   };
@@ -24,7 +23,7 @@ in rec
     };
   };
 
-  # Derived from meta
+  systemsList = builtins.attrValues systems;
   hostNames = builtins.attrNames hosts;
   userNames = builtins.attrNames users;
 
