@@ -14,6 +14,14 @@ My NixOS and Home-Manager Configs
 - `meta.nix` - supported host and user pairings (for each nixos host) and their metadata, used by both users and hosts
 - `secrets` and `.sops.yaml` - read by sops-nix for host and user secrets at various sops.nix files throughout home and user directories
 
+## Hosts
+| Name    | Hardware   | Type | Status | Note |
+|-----|----|----|----|---|
+|guinea|QEMU/KVM|VM|🚧|Used to build this config.|
+|barrybenson|Beelink Mini PC|server|📝|Homeserver, headless and mostly running containers.|
+|??|Framework Laptop 13 (Ryzen AI 5 340)|laptop|📝|Plan to run hyprland. Currently running Fedora Gnome.|
+|louisxvi|Macbook Air M1|laptop|📝|Broke the screen so now it's running "headless". Plan to test Asahi with NixOSl
+
 ## Project Location in System
 For each user of NixOS/non-NixOS machines who can edit this repository, it is required that the project is cloned to `~/nix-config`. This allows symlinking out of store files in home-manager modules to work correctly, and sidestep file permission issues.
 
