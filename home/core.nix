@@ -16,6 +16,7 @@
   home.homeDirectory = "/home/${aln.ctx.userName}";
 
   home.packages = with pkgs; [
+    fastfetch
   ];
 
   # This value determines the Home Manager release that your
