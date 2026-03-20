@@ -1,5 +1,5 @@
 # metadata of hosts and users
-{ lib, config, ... }:
+{ lib, config, alnLib, ... }:
 
 {
   hosts = {
@@ -16,7 +16,7 @@
     # vm user
     pig = {
       name = "pig";
-      can.deploy_nix_config = true;
+      can.deployNixConfig = true;
     };
   };
 }

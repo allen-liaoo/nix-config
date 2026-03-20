@@ -1,4 +1,4 @@
-{ lib, config, options, ... }:
+{ lib, config, options, alnLib, ... }:
 
 let 
   systemsList = [
@@ -18,10 +18,15 @@ let
         default = [ ];
       };
       can = {
-        deploy_nix_config = lib.mkOption {
+        deployNixConfig = lib.mkOption {
           type = lib.types.bool;
           default = false;
         };
+      };
+      sopsFilePath = lib.mkOption {
+        type = lib.types.path;
+        default = alnLib.relToRoot "secrets/user/${config.name}.yaml";
+        readOnly = true;
       };
     };
   });
@@ -85,6 +90,11 @@ in
               default = config.host.os == "linux";
               readOnly = true;
             };
+          };
+          sopsFilePath = lib.mkOption {
+            type = lib.types.path;
+            default = alnLib.relToRoot "secrets/host/${config.name}.yaml";
+            readOnly = true;
           };
         };
       }));

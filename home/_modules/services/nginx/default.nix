@@ -108,12 +108,10 @@ in
 
   sops.secrets = {
     "nginx_cloudflare_account_id" = {
-      sopsFile = aln.lib.relToRoot "secrets/user/${config.home.username}.yaml";
       mode = "0400";
       key = "nginx/cloudflare_account_id";
     };
     "nginx_cloudflare_token" = {
-      sopsFile = aln.lib.relToRoot "secrets/user/${config.home.username}.yaml";
       mode = "0400";
       key = "nginx/cloudflare_token";
     };

@@ -4,11 +4,12 @@
   outputs = { nixpkgs, ... } @ inputs: 
   let 
     lib = nixpkgs.lib;
-    inventory = import ./inventory { inherit lib; };
+    alnLib = import ./lib { inherit lib; };
+    inventory = import ./inventory { inherit lib alnLib; };
     # my namespace; everything I define will be accessible in "aln" attr of module inputs
     mkAln = ctx: {
       inherit inventory;
-      lib = import ./lib { inherit lib; };
+      lib = alnLib;
       ctx = import ./ctx.nix ({ inherit lib inventory; } // ctx);
     };
   in

@@ -1,4 +1,4 @@
-{ lib, ... }@args:
+{ lib, alnLib, ... }@args:
 
 (lib.evalModules {
   specialArgs = args;
