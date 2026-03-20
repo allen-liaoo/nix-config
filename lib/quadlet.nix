@@ -2,7 +2,21 @@
 # see https://seiarotg.github.io/quadlet-nix/home-manager-options.html for options
 {...}:
 
-{
+let 
+  restartDefault = {
+    unitConfig = {
+      # Allow at most 5 restarts in 30s, then permanently give up
+      StartLimitIntervalSec = 30;
+      StartLimitBurst = 5;
+    };
+    serviceConfig = {
+      Restart = "on-failure";
+      RestartSec = 3;
+      RestartSteps = 4; # rate of exponential timeout
+      RestartMaxDelaySec = 300; # max timeout
+    };
+  };
+in {
   mkContainer = (name: config: {
     autoStart = true;
     containerConfig = {
@@ -12,16 +26,8 @@
       noNewPrivileges = true;
       startWithPod = true;
     };
-    unitConfig = {
-      # Dont limit restarts
-      StartLimitIntervalSec = 0;
-    };
-    serviceConfig = {
-      Restart = "always";
-      RestartSec = "30min";
-    };
     quadletConfig.defaultDependencies = true;
-  } // config);
+  } // restartDefault // config);
 
   mkImage = (name: config: {
     autoStart = true;
@@ -29,14 +35,7 @@
       name = "${name}-image";
       retry = 3;
     };
-    unitConfig = {
-      StartLimitIntervalSec = 0;
-    };
-    serviceConfig = {
-      Restart = "on-failure";
-      RestartSec = "1min";
-    };
-  } // config);
+  } // restartDefault // config);
  
   mkNetwork = (name: config: {
     autoStart = true;
@@ -44,15 +43,7 @@
       name = "${name}-network";
       disableDns = false;
     };
-    unitConfig = {
-      # Dont limit restarts
-      StartLimitIntervalSec = 0;
-    };
-    serviceConfig = {
-      Restart = "on-failure";
-      RestartSec = "5min";
-    };
-  } // config);
+  } // restartDefault // config);
 
   mkPod = (name: config: {
     autoStart = true;
@@ -62,18 +53,13 @@
       exitPolicy = "stop";
       stopTimeout = "120"; # kill units after timeout
     };
-    unitConfig = {
-      # Dont limit restarts
-      StartLimitIntervalSec = 0;
-    };
     serviceConfig = {
       Restart = "always";
       # with exitPolicy = stop, pod exists cleanly when all the container stops,
       # does not matter if container stops with failure. so set this as always
       RestartSec = "15min";
-
     };
-  } // config);
+  } // restartDefault // config);
 
   mkVolume = (name: config: {
     autoStart = true;
@@ -82,13 +68,5 @@
       copy = true;
       device = "tmpfs";
     };
-    unitConfig = {
-      # Dont limit restarts
-      StartLimitIntervalSec = 0;
-    };
-    serviceConfig = {
-      Restart = "on-failure";
-      RestartSec = "5min";
-    };
-  } // config);
+  } // restartDefault // config);
 }
