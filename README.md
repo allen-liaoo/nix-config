@@ -3,16 +3,30 @@ My NixOS and Home-Manager Configs
 
 ## Structure
 - `hosts` - NixOS host configurations, including hardware, system configs and host-specific user configs (at a system level)
-  - `_modules` - nix modules for nixos configs, imported at will by presets and hosts
+  - `_modules` - nix modules for nixos configs
   - `<hostname>` - configs for the host, should contain `configuration.nix` and others
-  - presets - `core.nix` etc, shared by multiple hosts
 - `home` - **Standalone** user home configurations, should include as many general-purposed use programs/services as possible for portability
-  - `_modules` - nix modules for home-manager configs, imported at will by presets and users
+  - `_modules` - nix modules for home-manager configs 
   - `<username>` - configs for the user, including host-specific user configs
-  - presets - `core.nix` etc, shared by multiple users
-- `lib`- custom library functions exposed under my namespace `aln.lib`
-- `meta.nix` - supported host and user pairings (for each nixos host) and their metadata, used by both users and hosts
+- `lib`- custom library functions
+- `inventory` - metadata about users and hosts and valid pairings, used by home/nixos modules, users, and hosts
+- `ctx.nic` - supplies current eval context to NixOS/Home modules (i.e. current host and user inventory info)
 - `secrets` and `.sops.yaml` - read by sops-nix for host and user secrets at various sops.nix files throughout home and user directories
+
+### `aln` namespace
+To avoid namespace conflicts, everything I want to expose to nix modules live inside of the namespace `aln`.
+- `alb.lib` is `/lib`
+- `alb.inventory` is `/inventory`
+- `alb.ctx` is `ctx.nix`
+
+### Self-Gating Modules
+Modules in `_modules`are self gating, meaning they determine if they should be enabled or not by looking at the context.
+This is different from how they're usually implemented, where hosts and users conditionally import modules or "presets", and one needs to carefully maintain lists of imports. 
+Consequently, modules are always wholly imported, and most `default.nix` on modules just import every file in its directory and every
+`default.nix` in subdirectories.
+
+### Project Location in any system
+For each user of NixOS/non-NixOS machines who can edit this repository, it is required that the project is cloned to `~/nix-config`. This allows symlinking out of store files in home-manager modules to work correctly, and sidesteps file permission issues.
 
 ## Hosts
 | Name | Hardware | Type | Note | Status |
@@ -22,8 +36,8 @@ My NixOS and Home-Manager Configs
 |louisxvi|Macbook Air M1|laptop|Broke the screen so now it's running "headless". Plan to test Asahi with NixOS. Currently retired.|📝|
 |guinea|QEMU/KVM|VM|Used to build this config. Currently on theseus.|🚧|
 
-## Project Location in System
-For each user of NixOS/non-NixOS machines who can edit this repository, it is required that the project is cloned to `~/nix-config`. This allows symlinking out of store files in home-manager modules to work correctly, and sidestep file permission issues.
+🚧 - In progress
+📝 - Planing
 
 ## Secrets
 Handled by `sops-nix`. In particular:
