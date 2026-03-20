@@ -3,9 +3,33 @@
   config = {
     programs.fish = {
       enable = true;
+      generateCompletions = true;
       
       interactiveShellInit = ''
+        # disable fish greeting
         set fish_greeting
+
+        fish_default_key_bindings
+
+        # use vim keybindings
+        # not working in alacritty
+        #fish_vi_key_bindings
+        #set fish_cursor_default block
+        #set fish_cursor_insert block blink
+        #set fish_cursor_replace_one underscore
+        #set fish_cursor_replace underscore
+        #set fish_cursor_external line # cursor when command starts
+
+        # n dots = go up (n-1) dirs: ... = cd ../../
+        function multicd
+          echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)
+        end
+        abbr --add dotdot --regex '^\.\.+$' --function multicd
+ 
+        # choose theme based on environment variable
+        function apply-my-theme --on-variable=fish_theme
+          fish_config theme choose $fish_theme
+        end
       '' + lib.optionalString config.programs.yazi.enable ''
         # Yazi specific init (replaces the need for abbreviation
         # press q to quit with auto cd; press Q to quit without cd

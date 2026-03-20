@@ -26,6 +26,7 @@
     
       username = {
         show_always = false;
+        format = "[$user]($style) ";
       };
     
       directory = {

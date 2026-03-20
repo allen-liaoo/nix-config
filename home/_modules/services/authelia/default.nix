@@ -20,7 +20,7 @@ in
           authelia_conf = config.lib.file.mkOutOfStoreSymlink (aln.lib.outOfStoreRelToRoot config.home.homeDirectory ./configuration.yml);
           users_db = config.lib.file.mkOutOfStoreSymlink (aln.lib.outOfStoreRelToRoot config.home.homeDirectory ./users_database.yml);
         in [
-          #"${authelia_conf}:/config/configuration.yml:ro"
+          "${authelia_conf}:/config/configuration.yml:ro"
           #"${users_db}:/config/users_database.yml:ro"
           "${volumes.${logs_volume_name}.ref}:/logs:rw"
 

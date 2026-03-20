@@ -1,4 +1,4 @@
-{ lib, pkgs, aln, ... }:
+{ lib, pkgs, inputs, aln, ... }:
 
 {
   programs.home-manager.enable = true;
@@ -8,7 +8,13 @@
 
   home.packages = with pkgs; [
     fastfetch
+    github-copilot-cli
   ];
+
+  nixpkgs.config.allowUnfreePredicate = p:
+    builtins.elem (lib.getName p) [
+      "github-copilot-cli"
+    ];
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

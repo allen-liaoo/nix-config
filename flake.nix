@@ -43,8 +43,8 @@
           pkgs = let
             system = inventory.hosts.${hostName}.system or inventory.systems.x86_linux;
           in nixpkgs.legacyPackages.${system};
-          # pull inputs into args of home submodules
           extraSpecialArgs = {
+            # pull inputs into args of home submodules
             inherit inputs;
             aln = mkAln { inherit hostName; inherit userName; };
           };
@@ -99,8 +99,5 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
-    vscode-server.inputs.nixpkgs.follows = "nixpkgs";
   };
 }
