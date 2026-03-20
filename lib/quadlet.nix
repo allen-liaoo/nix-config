@@ -56,8 +56,8 @@
 
   mkPod = (name: config: {
     autoStart = true;
-    networkConfig = {
-      name = "${name}-pod";
+    podConfig = {
+      name = name; # can't add -pod postfix as pod name must be unique, so postfix must be in the input name
       disableDns = false;
       exitPolicy = "stop";
       stopTimeout = "120"; # kill units after timeout

@@ -30,7 +30,7 @@
       } // lib.optionalAttrs config.programs.git.enable {
         g = "git";
         gs = "git status";
-        ga = "git add .";
+        ga = "git add";
         gb = "git branch";
         gch = "git checkout";
         gc = "git commit -m";
