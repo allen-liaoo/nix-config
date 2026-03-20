@@ -2,8 +2,8 @@
 My NixOS and Home-Manager Configs
 
 Featuring:
-- Declarative disks partitining with `disko`
-- Secret management via `sops-nix`
+- Declarative disks partitioning with `disko`
+- Secrets management via `sops-nix`
 - Podman rootless containers via `quadlet-nix`
 
 Todo:
