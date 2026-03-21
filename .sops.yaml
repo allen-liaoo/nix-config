@@ -15,8 +15,12 @@ creation_rules:
 # Path relative to location of this file
 - path_regex: secrets/common.yaml
   age: *all # potentially need to restrict users
+- path_regex: secrets/host/barrybenson+
+  age: [*sops_admin]
 - path_regex: secrets/host/guinea+
   age: [*guinea, *sops_admin]
+- path_regex: secrets/user/allenl+
+  age: [*sops_admin]
 - path_regex: secrets/user/pig+
   age: [*pig, *sops_admin]
 - path_regex: secrets/authelia_users.yaml
