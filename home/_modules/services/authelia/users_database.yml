@@ -1,0 +1,31 @@
+users:
+  allenliao:
+    disabled: false
+    displayname: 'Allen Liao'
+    email: 'wcliaw610@gmail.com'
+    password: '{{- secret "/run/secrets/allenliao/password_hashed" -}}'
+    groups:
+      - 'admin'
+      - 'authelia_users'
+      - 'traccar_users'
+  allenliao_radicale:
+    disabled: false
+    displayname: 'Allen Liao Radicale'
+    email: 'allenliao_radicale@dummy'
+    password: '{{- secret "/run/secrets/allenliao_radicale/password_hashed" -}}'
+    groups:
+      - 'radicale_users'
+  authelia:
+    disabled: false
+    displayname: 'Authelia'
+    email: 'authelia@dummy'
+    password: '{{- secret "/run/secrets/authelia/password_hashed" -}}'
+    groups:
+      - 'service'
+  radicale:
+    disabled: false
+    displayname: 'Radicale'
+    email: 'radicale@dummy'
+    password: '{{- secret "/run/secrets/radicale/password_hashed" -}}'
+    groups:
+      - 'service'

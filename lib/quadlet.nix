@@ -6,12 +6,13 @@ let
   restartDefault = {
     unitConfig = {
       # Allow at most 5 restarts in 30s, then permanently give up
+      #StartLimitIntervalSec = 30;
       StartLimitIntervalSec = 30;
-      StartLimitBurst = 5;
+      #StartLimitBurst = 5;
     };
     serviceConfig = {
       Restart = "on-failure";
-      RestartSec = 3;
+      RestartSec = "10s";
       RestartSteps = 4; # rate of exponential timeout
       RestartMaxDelaySec = 300; # max timeout
     };

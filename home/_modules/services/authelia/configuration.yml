@@ -444,13 +444,13 @@ authentication_backend:
   ## This is the recommended Authentication Provider in production
   ## because it allows Authelia to offload the stateful operations
   ## onto the LDAP service.
-  ldap:
+  #ldap:
     ## The address of the directory server to connect to in the address common syntax.
     ## Format: [<scheme>://]<hostname>[:<port>].
     ## Square brackets indicate optional portions of the format. Scheme must be 'ldap', 'ldaps', or 'ldapi`.
     ## The default scheme is 'ldapi' if the address is an absolute path otherwise it's 'ldaps'.
     ## The default port is '636', unless the scheme is 'ldap' in which case it's '389'.
-    address: 'ldap://lldap:8090'
+    #address: 'ldap://lldap:8090'
 
     ## The LDAP implementation, this affects elements like the attribute utilised for resetting a password.
     ## Acceptable options are as follows:
@@ -463,7 +463,7 @@ authentication_backend:
     ## Depending on the option here certain other values in this section have a default value, notably all of the
     ## attribute mappings have a default value that this config overrides, you can read more about these default values
     ## at https://www.authelia.com/c/ldap#defaults
-    implementation: 'lldap'
+    #implementation: 'lldap'
 
     ## The dial timeout for LDAP in the duration common syntax.
     # timeout: '20 seconds'
@@ -524,7 +524,7 @@ authentication_backend:
 
     ## The distinguished name of the container searched for objects in the directory information tree.
     ## See also: additional_users_dn, additional_groups_dn.
-    base_dn: 'dc=allenl,dc=me'
+    #base_dn: 'dc=allenl,dc=me'
 
     ## The additional_users_dn is prefixed to base_dn and delimited by a comma when searching for users.
     ## i.e. with this set to OU=Users and base_dn set to DC=a,DC=com; OU=Users,DC=a,DC=com is searched for users.
@@ -543,7 +543,7 @@ authentication_backend:
     ## To allow sign in both with username and email, one can use a filter like
     ## (&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person))
     # users_filter: '(&({username_attribute}={input})(objectClass=person))'
-    users_filter: '(&({username_attribute}={input})(objectClass=person)(memberOf=cn=authelia_users,ou=groups,dc=allenl,dc=me))'
+    #users_filter: '(&({username_attribute}={input})(objectClass=person)(memberOf=cn=authelia_users,ou=groups,dc=allenl,dc=me))'
 
     ## The additional_groups_dn is prefixed to base_dn and delimited by a comma when searching for groups.
     ## i.e. with this set to OU=Groups and base_dn set to DC=a,DC=com; OU=Groups,DC=a,DC=com is searched for groups.
@@ -565,9 +565,9 @@ authentication_backend:
     # permit_referrals: false
 
     ## The username and password of the admin user.
-    user: 'cn=authelia,ou=people,dc=allenl,dc=me'
+    #user: 'cn=authelia,ou=people,dc=allenl,dc=me'
     ## Password can also be set using a secret: https://www.authelia.com/c/secrets
-    password: '{{- secret "/run/secrets/ldap_password" }}'
+    #password: '- secret "/run/secrets/ldap_password" -' # removed double angle bracekts to disable template
 
     ## The attributes for users and objects from the directory server.
     # attributes:
@@ -611,8 +611,8 @@ authentication_backend:
   ##
   ## Important: Kubernetes (or HA) users must read https://www.authelia.com/t/statelessness
   ##
-  # file:
-  #   path: '/config/users_database.yml'
+  file:
+    path: '/config/users_database.yml'
     # watch: false
     # search:
       # email: false
@@ -1312,23 +1312,23 @@ notifier:
 ##
 ## Identity Providers
 ##
-identity_providers:
+#identity_providers:
 
   ##
   ## OpenID Connect (Identity Provider)
   ##
   ## It's recommended you read the documentation before configuration of this section.
   ## See: https://www.authelia.com/c/oidc/provider
-  oidc:
+  #oidc:
     ## The hmac_secret is used to sign OAuth2 tokens (authorization code, access tokens and refresh tokens).
     ## HMAC Secret can also be set using a secret: https://www.authelia.com/c/secrets
     # hmac_secret: 'this_is_a_secret_abc123abc123abc'
 
     ## The JWK's issuer option configures multiple JSON Web Keys. It's required that at least one of the JWK's
     ## configured has the RS256 algorithm. For RSA keys (RS or PS) the minimum is a 2048 bit key.
-    jwks:
-    -  
-      key: {{ secret "/run/secrets/oidc_jwk_key_priv" | mindent 10 "|" | msquote }}
+    #jwks:
+    #-  
+      #key: { secret "/run/secrets/oidc_jwk_key_priv" | mindent 10 "|" | msquote }
     # -
       ## Key ID embedded into the JWT header for key matching. Must be an alphanumeric string with 7 or less characters.
       ## This value is automatically generated if not provided. It's recommended to not configure this.
@@ -1381,12 +1381,12 @@ identity_providers:
 
     ## Authorization Policies which can be utilized by clients. The 'policy_name' is an arbitrary value that you pick
     ## which is utilized as the value for the 'authorization_policy' on the client.
-    authorization_policies:
-      traccar:
-        default_policy: 'deny'
-        rules:
-          - policy: 'one_factor'
-            subject: 'group:traccar_users'
+    #authorization_policies:
+      #traccar:
+        #default_policy: 'deny'
+        #rules:
+          #- policy: 'one_factor'
+            #subject: 'group:traccar_users'
       # policy_name:
         # default_policy: 'two_factor'
         # rules:
@@ -1406,15 +1406,15 @@ identity_providers:
       # refresh_token: '90 minutes'
 
     ## Cross-Origin Resource Sharing (CORS) settings.
-    cors:
+    #cors:
       ## List of endpoints in addition to the metadata endpoints to permit cross-origin requests on.
-      endpoints:
+      #endpoints:
         #  - 'authorization'
         #  - 'pushed-authorization-request'
         #  - 'token'
         #  - 'revocation'
         #  - 'introspection'
-        - 'userinfo'
+        #- 'userinfo'
 
       ## List of allowed origins.
       ## Any origin with https is permitted unless this option is configured or the
@@ -1424,24 +1424,24 @@ identity_providers:
 
       ## Automatically adds the origin portion of all redirect URI's on all clients to the list of allowed_origins,
       ## provided they have the scheme http or https and do not have the hostname of localhost.
-      allowed_origins_from_client_redirect_uris: true
+      #allowed_origins_from_client_redirect_uris: true
 
     ## Clients is a list of registered clients and their configuration.
     ## It's recommended you read the documentation before configuration of a registered client.
     ## See: https://www.authelia.com/c/oidc/registered-clients
-    clients:
-      - client_id: '{{- secret "/run/secrets/traccar_client_id" -}}'
-        client_name: 'traccar'
-        client_secret: '{{- secret "/run/secrets/traccar_client_secret_hashed" -}}'
-        public: false
-        redirect_uris:
-          - 'https://gps.allenl.me/api/session/openid/callback'
-        pre_configured_consent_duration: '3 months'
-        authorization_policy: 'traccar'
-        grant_types: 
-          - authorization_code
-        response_types:
-          - code
+    #clients:
+      #- client_id: '- secret "/run/secrets/traccar_client_id" -'
+        #client_name: 'traccar'
+        #client_secret: '- secret "/run/secrets/traccar_client_secret_hashed" -'
+        #public: false
+        #redirect_uris:
+          #- 'https://gps.allenl.me/api/session/openid/callback'
+        #pre_configured_consent_duration: '3 months'
+        #authorization_policy: 'traccar'
+        #grant_types: 
+          #- authorization_code
+        #response_types:
+          #- code
         # setting scopes resuls in "groups" scope not being included!?
 
       # -

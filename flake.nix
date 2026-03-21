@@ -4,7 +4,7 @@
   outputs = { nixpkgs, ... } @ inputs: 
   let 
     lib = nixpkgs.lib;
-    alnLib = import ./lib { inherit lib; };
+    alnLib = import ./lib { inherit nixpkgs; };
     inventory = import ./inventory { inherit lib alnLib; };
     # my namespace; everything I define will be accessible in "aln" attr of module inputs
     mkAln = ctx: {
@@ -97,6 +97,10 @@
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    vscode-server = {
+      url = "github:nix-community/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
