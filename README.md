@@ -24,9 +24,9 @@ Todo:
 
 ### `aln` namespace
 To avoid namespace conflicts, everything I want to expose to nix modules live inside of the namespace `aln`.
-- `alb.lib` is `/lib`
-- `alb.inventory` is `/inventory`
-- `alb.ctx` is `ctx.nix`
+- `aln.lib` is `/lib`
+- `aln.inventory` is `/inventory`
+- `aln.ctx` is `ctx.nix`
 
 ### Self-Gating Modules
 Modules in `_modules`are self gating, meaning they determine if they should be enabled or not by looking at the context.

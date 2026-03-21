@@ -1,5 +1,5 @@
+# represents the content of users_database.yml
 {
-  # represents the content of users_database.yml
   users = {
     allenliao = {
       disabled = false;
@@ -8,7 +8,6 @@
       groups = [
         "admin"
         "authelia_users"
-        "traccar_users"
       ];
     };
 
