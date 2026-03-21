@@ -1,18 +1,13 @@
-{ config, lib, aln, pkgs, ... }:
+{ config, lib, aln, pkgs, ... }@args:
 
 let
   name = "authelia";
   db_name = name + "_db";
   pod_name = name + "-pod";
   logs_volume_name = name + "_logs";
-  users_db = (aln.lib.withPkgs pkgs).fromYaml ./users_database.yml;
-  # names of authelia users
-  user_names = builtins.attrNames users_db.users;
-  user_secrets = lib.genAttrs user_names (name: {
-      name = "authelia_users_${name}_password_hashed";
-      key = "${name}/password_hashed";
-      mountPath = "/run/secrets/${name}/password_hashed";
-  });
+  users_database = import ./users_database.nix; 
+  # sops of user hashed passwords
+  password_sops_name_from_user = (name: "authelia_users_${name}_password_hashed");
 in
 {
   virtualisation.quadlet = let
@@ -26,7 +21,6 @@ in
         startWithPod = true;
         volumes = let
           authelia_conf = config.lib.file.mkOutOfStoreSymlink (aln.lib.outOfStoreRelToRoot config.home.homeDirectory ./configuration.yml);
-          #users_db = config.lib.file.mkOutOfStoreSymlink (aln.lib.outOfStoreRelToRoot config.home.homeDirectory ./users_database.yml);
         in [
           "${authelia_conf}:/config/configuration.yml:ro"
           "${config.sops.templates.users_database.path}:/config/users_database.yml:ro"
@@ -37,10 +31,6 @@ in
           "${config.sops.secrets.authelia_postgres_password.path}:/run/secrets/postgres_password:ro"
           "${config.sops.secrets.authelia_oidc_jwk_key_priv.path}:/run/secrets/oidc_jwk_key_priv:ro"
         ];
-        # mount secrets per authelia user
-        #(user_secrets
-        #|> builtins.attrValues
-        #|> map (secret: "${config.sops.secrets.${secret.name}.path}:${secret.mountPath}:ro") user_secret_attrs);
         environments = {
           X_AUTHELIA_CONFIG = "/config/configuration.yml";
           X_AUTHELIA_CONFIG_FILTERS = "template";
@@ -49,8 +39,7 @@ in
         healthInterval = "5m";
         healthStartPeriod = "5s";
       };
-      unitConfig.StartLimitBurst = 1;
-      serviceConfig = {
+      unitConfig = {
         Requires = containers.${db_name}.ref;
         After = containers.${db_name}.ref;
       };
@@ -91,28 +80,26 @@ in
     volumes.${db_name} = aln.lib.mkVolume db_name {};
   };
 
-  sops.secrets = (
-  # secrets for authelia to function
-  lib.genAttrs 
-    [
-      "authelia_session_secret"
-      "authelia_storage_encryption_key"
-      "authelia_postgres_password"
-      "authelia_oidc_jwk_key_priv"
-    ]
-    (secret_key: {
-      # key in sops is: authelia/secret_key_without_authelia_prefix
-      key = "authelia/" + builtins.substring 9 (builtins.stringLength secret_key) secret_key;
-    })
-  ) //
-  # secrets for users of authelia
-  # in secrets/authelia_users.yml
-  lib.mergeAttrsList (map (secret: {
-    ${secret.name} = {
-      sopsFile = aln.lib.relToRoot "secrets/authelia_users.yaml";
-      key = secret.key;
-    };
-  }) (builtins.attrValues user_secrets);
+  sops.secrets =
+    # secrets for authelia to function
+    (lib.genAttrs
+      [
+        "authelia_session_secret"
+        "authelia_storage_encryption_key"
+        "authelia_postgres_password"
+        "authelia_oidc_jwk_key_priv"
+      ]
+      (secret_key: {
+        # key in sops is: authelia/secret_key_without_authelia_prefix
+        key = "authelia/" + builtins.substring 9 (builtins.stringLength secret_key) secret_key;
+      }))
+    //
+    # secrets for users of authelia
+    # in secrets/authelia_users.yaml
+    (lib.mapAttrs' (user_name: _user: lib.nameValuePair (password_sops_name_from_user user_name) {
+        sopsFile = aln.lib.relToRoot "secrets/authelia_users.yaml";
+        key = "${user_name}/password_hashed";
+      }) users_database.users);
 
   # inject secret as env var to db
   sops.templates.authelia_db_env = {
@@ -122,40 +109,16 @@ in
     '';
   };
 
+  # generate users_database.yml from users_database.nix and add password from sops secrets
   sops.templates.users_database = {
     mode = "0400";
-    content = ''
-      users:
-      allenliao:
-        disabled: false
-        displayname: 'Allen Liao'
-        email: 'wcliaw610@gmail.com'
-        password: '${config.sops.placeholder.${user_secrets.allenliao.name}}'
-        groups:
-          - 'admin'
-          - 'authelia_users'
-          - 'traccar_users'
-      allenliao_radicale:
-        disabled: false
-        displayname: 'Allen Liao Radicale'
-        email: 'allenliao_radicale@dummy'
-        password: '${config.sops.placeholder.${user_secrets.allenliao_radicale.name}}'
-        groups:
-          - 'radicale_users'
-      authelia:
-        disabled: false
-        displayname: 'Authelia'
-        email: 'authelia@dummy'
-        password: '${config.sops.placeholder.${user_secrets.authelia.name}}'
-        groups:
-          - 'service'
-      radicale:
-        disabled: false
-        displayname: 'Radicale'
-        email: 'radicale@dummy'
-        password: '${config.sops.placeholder.${user_secrets.radicale.name}}'
-        groups:
-          - 'service'
-    '';
+    # json is subset of yaml
+    content = builtins.toJSON {
+      users = lib.mapAttrs (user_name: user:
+        user // {
+          password = config.sops.placeholder.${password_sops_name_from_user user_name};
+        }
+      ) users_database.users;
+    };
   };
 }
