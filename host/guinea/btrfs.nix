@@ -23,7 +23,7 @@
       snapshot_preserve = "7d 4w 6m"; # keep 7 daily, 4 weekly, 6 monthly
 
       volume."/mnt/btrfsroot" = {
-        snapshot_dir = ".snapshots";
+        snapshot_dir = "@snapshots";
         subvolume = {
           "@" = {};
           "@home" = {};

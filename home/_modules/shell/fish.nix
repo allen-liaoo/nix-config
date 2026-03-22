@@ -58,6 +58,7 @@
         gb = "git branch";
         gch = "git checkout";
         gc = "git commit -m";
+        gd = "git diff";
         gf = "git fetch";
         gp = "git push";
         gpl = "git pull";
