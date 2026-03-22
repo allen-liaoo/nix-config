@@ -1,8 +1,9 @@
 current_hostname := `hostname -s`
 current_user := `whoami`
-nix_config_path := justfile_directory() + "?submodules=1" # include 1 level of git submodules
+nix_config_path := justfile_directory() 
 host_key_path := env_var_or_default("HOST_KEY_PATH", "/etc/ssh/ssh_host_ed25519_key")
 nix_flags := "--extra-experimental-features 'nix-command flakes pipe-operators'"
+nix_query_param := "?submodules=1"
 
 dir := justfile_directory()
 
@@ -15,13 +16,13 @@ default:
 [group("update")]
 os-switch host=current_hostname:
     @echo "Running for host: {{host}}"
-    sudo nixos-rebuild switch --flake {{dir}}#{{host}}
+    sudo nixos-rebuild switch --flake {{dir}}{{nix_query_param}}#{{host}}
 
 # Rebuild a Home Manager config
 [group("update")]
 hm-switch user=current_user host=current_hostname:
     @echo "Running for user: {{user}}"
-    home-manager switch --flake {{dir}}#{{user}}@{{host}}
+    home-manager switch --flake {{dir}}{{nix_query_param}}#{{user}}@{{host}}
 
 # Update flake inputs
 [group("update")]
