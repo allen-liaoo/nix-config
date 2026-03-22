@@ -24,7 +24,11 @@
             size = "100%";
             content = {
               type = "btrfs";
-              extraArgs = [ "-f" ]; # force overwrite
+              extraArgs = [ 
+                "-f" # force overwrite
+                # TODO: Uncomment this on next install
+                #"-L" "btrfsroot" # btrfs partition label used by btrbk
+              ];
               subvolumes = {
                 "@" = {
                   mountpoint = "/";
@@ -38,6 +42,11 @@
                   mountpoint = "/nix";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
+                # TODO: Uncomment this on next install
+                #"@containers" = {
+                  #mountpoint = "/var/lib/containers";
+                  #mountOptions = [ "compress=zstd" "noatime" ];
+                #};
                 "@snapshots" = {
                   mountpoint = "/.snapshots";
                   mountOptions = [ "compress=zstd" "noatime" ];

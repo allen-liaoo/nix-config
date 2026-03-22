@@ -8,8 +8,9 @@
     enable = true;
     device = "/dev/nvme0n1"; # install to the disk, not a partition
     useOSProber = false;     # headless server, no dual-boot needed
-    boot.tmp.useTmpfs = true;
   };
+
+  boot.tmp.useTmpfs = true;
 
   networking.useNetworkd = true;
   systemd.network = {
