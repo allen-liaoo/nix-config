@@ -3,6 +3,13 @@
 
 {
   hosts = {
+    # homeserver
+    barrybenson = {
+      name = "barrybenson";
+      system = "x86_64-linux";
+      kind = "server";
+      users = with config.users; [ allenl ];
+    };
     # vm
     guinea = {
       name = "guinea";
@@ -13,6 +20,11 @@
   };
 
   users = {
+    # me
+    allenl = {
+      name = "allenl";
+      can.deployNixConfig = true;
+    };
     # vm user
     pig = {
       name = "pig";

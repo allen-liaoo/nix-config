@@ -37,7 +37,7 @@
           mode = "0400";
           neededForUsers = true;
         };
-      }) (aln.ctx.host.users))
+      }) aln.ctx.host.users)
     );
   };
 }

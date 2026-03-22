@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, aln, ... }:
 
 {
   time.timeZone = "America/Chicago";
@@ -29,9 +29,7 @@
   # Need network-online for podman-user-wait-network-online.service
   systemd.targets.network-online.wantedBy = [ "multi-user.target" ];
 
-  users.mutableUsers = false;
-
-  users.users."pig" = {
+  users.users.${aln.inventory.users.pig.name} = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
     linger = true;
@@ -43,7 +41,4 @@
     # required for rootless container w multiple users
     autoSubUidGidRange = true;
   };
-
-  # to enable podman & podman systemd generator
-  # virtualisation.quadlet.enable = true;
 }
