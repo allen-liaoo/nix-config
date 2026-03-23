@@ -101,8 +101,9 @@ gen-install-host-key host persist:
 # Generate hardware configuration
 [group("initial")]
 gen-hardware-config:
-    sudo nixos-generate-config --no-filesystems --root /mnt --dir {{dir}}
-    @echo "Hardware configuration generated at {{dir}}/hardware-configuration.nix. Copy it to remote, commit, and push to apply it to the flake."
+    mkdir -p {{dir}}/tmp
+    sudo nixos-generate-config --no-filesystems --root /mnt --dir {{dir}}/tmp
+    @echo "Hardware configuration generated at {{dir}}/tmp/hardware-configuration.nix. Copy it to remote, commit, and push to apply it to the flake."
 
 # Install NixOS using the specified hostname
 [group("initial")]
