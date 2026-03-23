@@ -29,6 +29,9 @@
   # Need network-online for podman-user-wait-network-online.service
   systemd.targets.network-online.wantedBy = [ "multi-user.target" ];
 
+  # for debugging purposes
+  users.users.root.password = "fgh";
+  services.openssh.settings.PermitRootLogin = "yes";
   users.users.${aln.inventory.users.pig.name} = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
