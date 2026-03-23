@@ -75,6 +75,28 @@ disko host:
         --flake "{{dir}}#{{host}}"
     @lsblk
 
+# Generate SSH host key, install to /mnt (and /mnt/persist if persist=true), and print age key
+[group("initial")]
+gen-install-host-key host persist:
+    @echo "Generating SSH host key..."
+    ssh-keygen -t ed25519 -f /tmp/ssh_host_ed25519_key -N "" -C "" -q
+
+    @echo "Installing key to /mnt/etc/ssh..."
+    mkdir -p /mnt/etc/ssh
+    install -m 600 /tmp/ssh_host_ed25519_key     /mnt/etc/ssh/ssh_host_ed25519_key
+    install -m 644 /tmp/ssh_host_ed25519_key.pub /mnt/etc/ssh/ssh_host_ed25519_key.pub
+
+    #!/usr/bin/env bash
+    if [ "{{persist}}" = "true" ]; then
+        echo "Installing key to /mnt/persist/etc/ssh..."
+        mkdir -p /mnt/persist/etc/ssh
+        install -m 600 /tmp/ssh_host_ed25519_key     /mnt/persist/etc/ssh/ssh_host_ed25519_key
+        install -m 644 /tmp/ssh_host_ed25519_key.pub /mnt/persist/etc/ssh/ssh_host_ed25519_key.pub
+    fi
+
+    @echo "\nAge public key (add to .sops.yaml in machine with sops admin key):"
+    nix-shell -p ssh-to-age --run 'cat /tmp/ssh_host_ed25519_key.pub | ssh-to-age'
+
 # Install NixOS using the specified hostname
 [group("initial")]
 os-install host:
@@ -92,12 +114,6 @@ os-setup host:
     @echo "Adding hardware-configuration.nix... remember to commit it"
     sudo nixos-generate-config --no-filesystems --root /mnt --dir {{dir}}
     just os-switch {{host}}
-
-# Generate host age key for .sops.yaml (based on ssh host public key)
-[group("initial")]
-gen-host-key:
-    nix-shell -p ssh-to-age --run 'cat {{host_key_path}}.pub | ssh-to-age'
-    @echo "Add the above output to .sops.yaml under 'keys' > '&hosts'."
 
 # Switch current repository remote url (Only run after home-manager setup)
 [group("initial")]

@@ -47,39 +47,38 @@ lib.optionalAttrs (aln.ctx.host.hasTags [ "impermanent" ]) {
   '';
 
   # below paths shoud only contain data that are under root subvolume
+  # NOTE: do not persist both a file and its parent directory
   environment.persistence."/persist" = {
     enable = true;
     hideMounts = true;
     directories = [
-      "/etc/ssh"
+      "/etc/ssh"  # Necessary for sops
       "/var/lib/nixos" # nixos state
 
       "/var/log" # system logs
       "/var/lib/systemd/coredump" # crash dumps
       "/var/lib/systemd/timers"
-
-      "/home" # TODO: REMOVE
     ] ++ lib.optionals (aln.ctx.host.is.server) [
-      #"/var/lib/containers" # since this is on separate subvolume, no need to explicitly persist it as it wont be wiped
       "/var/lib/systemd/network" 
+      #"/var/lib/containers" # since this is on separate subvolume, no need to persist it as it wont be wiped
     ] ++ lib.optionals (!aln.ctx.host.is.server) [
       "/var/lib/bluetooth"
       "/etc/NetworkManager/system-connections"
       "/var/lib/cups" # printer
 
     # always persist these user dir
-    ] ++ lib.concatMap (user: [
-      "/home/${user.name}/.ssh"
-      "/home/${user.name}/.config/sops"
-      "/home/nix-config"
-    ] ++ lib.optionals (!aln.ctx.host.hasTags [ "impermanent" ]) [
-      "/home/${user.name}"
-    ]) aln.ctx.host.users;
+    ] ++ lib.concatMap (user:
+      if (!user.hasTags [ "impermanent" ]) then [
+        "/home/${user.name}"
+      ] else [
+        "/home/${user.name}/.ssh"
+        "/home/${user.name}/.config/sops"
+        "/home/${user.name}/nix-config"
+      ]
+    ) aln.ctx.host.users;
 
     files = [
       "/etc/machine-id"  # stable machine identity
-      "/etc/ssh/ssh_host_ed25519_key" # NECESSARTY FOR SOPS
-      "/etc/ssh/ssh_host_ed25519_key.pub"
     ];
   };
 }
