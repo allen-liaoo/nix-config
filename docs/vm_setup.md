@@ -1,5 +1,12 @@
-1. Download NixOS minimal ISO
-2. Create VM:
+1. Download NixOS minimal ISO to 
+```
+$HOME/.local/share/libvirt/images/
+```
+2. Make directory to store VM:
+```
+mkdir -p $HOME/.local/share/libvirt/images/NixOS-25.11/
+```
+3. Create VM:
 ```
 sudo virt-install --name guinea \
          --connect qemu:///session \
@@ -21,6 +28,7 @@ sudo virsh destroy guinea ; sudo virsh undefine guinea --remove-all-storage --nv
 4. SSH into VM once OS is installed (statically set to `192.168.122.100`)
 
 If SSH is not working:
+
 3. Make VM console temporarily accessible in host (run in VM console):
 ```
 sudo systemctl start serial-getty@ttyS0.service
