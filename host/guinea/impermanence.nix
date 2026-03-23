@@ -66,20 +66,25 @@ lib.optionalAttrs (aln.ctx.host.hasTags [ "impermanent" ]) {
       "/var/lib/cups" # printer
 
     # always persist these user dir
-    ] ++ lib.concatMap (user:
-      if (!user.hasTags [ "impermanent" ]) then [
-        "/home/${user.name}"
-      ] else [
-        "/home/${user.name}/.ssh"
-        "/home/${user.name}/.config/sops"
-        "/home/${user.name}/nix-config"
-      ]
-    ) aln.ctx.host.users;
+    ] ;
 
     files = [
       "/etc/machine-id"  # stable machine identity
       "/etc/ssh/ssh_host_ed25519_key" # necessary for sops
       "/etc/ssh/ssh_host_ed25519_key.pub" # these are the only files necessary to persist on initial install, the rest of the system can be generated from the config with these keys
     ];
+
+    users = lib.mergeAttrsList (map (user: {
+      ${user.name} = {
+        directories = if (!user.hasTags [ "impermanent" ]) then [
+          "/home/${user.name}"
+          ] else [
+            { directory = "/home/${user.name}/.ssh"; mode = "0700"; }
+            { directory = "/home/${user.name}/.config/sops"; mode = "0700"; }
+            "/home/${user.name}/nix-config"
+          ];
+        files = [];
+      };
+    }) aln.ctx.host.users);
   };
 }
