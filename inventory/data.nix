@@ -8,6 +8,7 @@
       name = "barrybenson";
       system = "x86_64-linux";
       kind = "server";
+      tags = [ "impermanent" ];
       users = with config.users; [ allenl ];
     };
     # vm
@@ -15,6 +16,7 @@
       name = "guinea";
       system = "x86_64-linux";
       kind = "server";
+      tags = [ "impermanent" ];
       users = with config.users; [ pig ];
     };
   };
@@ -23,11 +25,13 @@
     # me
     allenl = {
       name = "allenl";
+      tags = [ "sudoer" ];
       can.deployNixConfig = true;
     };
     # vm user
     pig = {
       name = "pig";
+      tags = [ "sudoer" ];
       can.deployNixConfig = true;
     };
   };

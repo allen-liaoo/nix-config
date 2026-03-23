@@ -27,6 +27,7 @@
           ./host/${hostName}
 
           disko.nixosModules.disko
+          impermanence.nixosModules.impermanence
           sops-nix.nixosModules.sops
           # If using HM as a NixOS Module (We dont as we want HM to be usable in other OSes)
           # home-manager.nixosModules.home-manager
@@ -51,6 +52,7 @@
           modules = with inputs; [
             ./home/${userName}
 
+            impermanence.homeManagerModules.impermanence
             quadlet-nix.homeManagerModules.quadlet
             sops-nix.homeManagerModules.sops
             vscode-server.nixosModules.home
@@ -85,6 +87,12 @@
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs.nixpkgs.follows = ""; # dependency not needed for use
+      inputs.home-manager.follows = "";
     };
 
     nixpkgs = {

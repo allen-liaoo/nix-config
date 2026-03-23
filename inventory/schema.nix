@@ -6,6 +6,13 @@ let
     # "aarch64-linux"
     # "aarch64-darwin"
   ];
+  hostTags = lib.types.enum [
+    "impermanent"
+  ];
+  userTags = lib.types.enum [
+    "sudoer"
+    "impermanent"
+  ];
   userType = lib.types.submodule ({config,...}: {
     options = {
       name = lib.mkOption {
@@ -13,8 +20,14 @@ let
         default = "nobody";
       };
       tags = lib.mkOption {
-        type = lib.types.listOf lib.types.str;
+        type = lib.types.listOf (lib.types.enum userTags);
         default = [ ];
+      };
+      hasTags = lib.mkOption {
+        type = lib.types.functionTo lib.types.bool;
+        default = tags:
+          lib.all (tag: builtins.elem tag config.tags) tags;
+        readOnly = true;
       };
       can = {
         deployNixConfig = lib.mkOption {
@@ -57,6 +70,12 @@ in
             type = lib.types.listOf lib.types.str;
             default = [ ];
           };
+          hasTags = lib.mkOption {
+            type = lib.types.functionTo lib.types.bool;
+            default = tags:
+              lib.all (tag: builtins.elem tag config.tags) tags;
+            readOnly = true;
+          };
 
           # derived / read-only
           os = lib.mkOption {
@@ -69,6 +88,11 @@ in
           };
 
           is = {
+            server = lib.mkOption {
+              type = lib.types.bool;
+              default = config.kind == "server";
+              readOnly = true;
+            };
             headless = lib.mkOption {
               type = lib.types.bool;
               default = config.kind == "server";
