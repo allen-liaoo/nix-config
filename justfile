@@ -95,7 +95,7 @@ gen-install-host-key host persist:
         sudo install -m 644 /tmp/ssh_host_ed25519_key.pub /mnt/persist/etc/ssh/ssh_host_ed25519_key.pub
     fi
 
-    @echo "\nAge public key (add to .sops.yaml in machine with sops admin key):"
+    echo "\nAge public key (add to .sops.yaml in machine with sops admin key):"
     nix-shell -p ssh-to-age --run 'cat /tmp/ssh_host_ed25519_key.pub | ssh-to-age'
 
 # Install NixOS using the specified hostname
