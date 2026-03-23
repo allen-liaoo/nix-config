@@ -14,7 +14,7 @@ let
   domain = "allenl.me";
   email = "wcliaw610@gmail.com";
 in
-{
+lib.optionalAttrs false {
   virtualisation.quadlet = let
     inherit (config.virtualisation.quadlet) images volumes;
   in {
