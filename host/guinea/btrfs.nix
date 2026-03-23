@@ -3,7 +3,11 @@
 
 {
   boot.tmp.useTmpfs = true;
-  #boot.tmp.tmpfsSize = "1G";
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    # memoryPercent defaults to 50, adjust as needed
+  };
 
   # mount bbtrfs partition for btrbk
   fileSystems."/mnt/btrfsroot" = {
