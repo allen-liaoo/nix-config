@@ -52,7 +52,6 @@ lib.optionalAttrs (aln.ctx.host.hasTags [ "impermanent" ]) {
     enable = true;
     hideMounts = true;
     directories = [
-      "/etc/ssh"  # Necessary for sops
       "/var/lib/nixos" # nixos state
 
       "/var/log" # system logs
@@ -79,6 +78,8 @@ lib.optionalAttrs (aln.ctx.host.hasTags [ "impermanent" ]) {
 
     files = [
       "/etc/machine-id"  # stable machine identity
+      "/etc/ssh/ssh_host_ed25519_key" # necessary for sops
+      "/etc/ssh/ssh_host_ed25519_key.pub" # these are the only files necessary to persist on initial install, the rest of the system can be generated from the config with these keys
     ];
   };
 }
