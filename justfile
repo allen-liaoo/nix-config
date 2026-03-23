@@ -2,7 +2,7 @@ current_hostname := `hostname -s`
 current_user := `whoami`
 nix_config_path := justfile_directory() 
 host_key_path := env_var_or_default("HOST_KEY_PATH", "/etc/ssh/ssh_host_ed25519_key")
-nix_flags := "--extra-experimental-features 'nix-command flakes pipe-operators'"
+nix_config := "NIX_CONFIG=\"extra-experimental-features = nix-command flakes pipe-operators\"" # setting this as merely a flag does not work; need the config to persist on child processes
 nix_query_param := "?submodules=1"
 
 dir := justfile_directory()
@@ -16,22 +16,27 @@ default:
 [group("update")]
 os-switch host=current_hostname:
     @echo "Running for host: {{host}}"
-    sudo nixos-rebuild switch --flake {{dir}}{{nix_query_param}}#{{host}}
+    sudo {{nix_config}}
+    nixos-rebuild switch --flake {{dir}}{{nix_query_param}}#{{host}}
 
 # Rebuild a Home Manager config
 [group("update")]
 hm-switch user=current_user host=current_hostname:
     @echo "Running for user: {{user}}"
+    {{nix_config}} \
     home-manager switch --flake {{dir}}{{nix_query_param}}#{{user}}@{{host}}
 
 # Update flake inputs
 [group("update")]
 fl-update:
-    nix {{nix_flags}} flake update
+    {{nix_config}} \
+    nix flake update
 
 [group("update")]
 sops-rekey:
-    cd {{nix_config_path}}/secrets && nix {{nix_flags}} develop --command bash -c \
+    cd {{nix_config_path}}/secrets && \
+    {{nix_config}} \
+    nix develop --command bash -c \
     'for file in $(find . \( -name "*.yaml" -o -name "*.json" -o -name "*.env" \)); do \
       sops updatekeys $file; \
     done'
@@ -39,17 +44,19 @@ sops-rekey:
 # check the flake for errors
 [group("utility")]
 fl-meta:
-    nix {{nix_flags}} flake metadata .
+    nix flake metadata .
 
 # check the flake for errors
 [group("utility")]
-fl-check:
-    nix {{nix_flags}} flake check
+fl-check: 
+    {{nix_config}} \
+    nix flake check
 
 # Enter dev shell
 [group("utility")]
 dev:
-    nix {{nix_flags}} develop
+    {{nix_config}} \
+    nix develop
 
 # Collect Nix garbage
 [group("utility")]
@@ -62,7 +69,8 @@ gc:
 # Run disko to format and mount disks
 [group("initial")]
 disko host:
-    sudo nix {{nix_flags}} run github:nix-community/disko/latest -- \
+    sudo {{nix_config}} \
+    nix  run github:nix-community/disko/latest -- \
         --mode destroy,format,mount \
         --flake "{{dir}}#{{host}}"
     @lsblk
@@ -70,7 +78,8 @@ disko host:
 # Install NixOS using the specified hostname
 [group("initial")]
 os-install host:
-    sudo nixos-install --no-channel-copy --no-root-password \
+    sudo {{nix_config}} \
+    nixos-install --no-channel-copy --no-root-password \
         --flake "{{dir}}#{{host}}" \
         --root /mnt
     @echo "NixOS installed. Please reboot, clone repository, and run 'just os-setup' to use new configuration."
@@ -82,7 +91,7 @@ os-setup host:
     sudo ln -s {{dir}} /etc/nixos
     @echo "Adding hardware-configuration.nix... remember to commit it"
     sudo nixos-generate-config --no-filesystems --root /mnt --dir {{dir}}
-    just switch-all {{host}}
+    just os-switch {{host}}
 
 # Generate host age key for .sops.yaml (based on ssh host public key)
 [group("initial")]
