@@ -67,7 +67,7 @@ lib.optionalAttrs (aln.ctx.host.hasTags [ "impermanent" ]) {
     ] ++
     # for each user NOT using impermanence, persist their home directory
     lib.concatMap (user: lib.optionals (!user.hasTags [ "impermanent" ]) [
-      { directory = "/home/${user.name}"; user = user.name; mode = "0755"; }
+      { directory = "/home/${user.name}"; user = user.name; mode = "0700"; }
     ]) aln.ctx.host.users;
 
     files = [
