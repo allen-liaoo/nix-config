@@ -31,7 +31,7 @@
 
   # for debugging purposes
   users.users.root.password = "fgh";
-  services.openssh.settings.PermitRootLogin = "yes";
+  services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
   users.users.${aln.inventory.users.pig.name} = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
