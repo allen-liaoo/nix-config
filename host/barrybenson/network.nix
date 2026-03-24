@@ -1,12 +1,16 @@
 { lib, config, pkgs, ... }:
 
+let
+  eth_intf = "enp1s0";
+  wg_intf = "wg_vps";
+in
 {
   networking.useNetworkd = true;
   systemd.network = {
     enable = true;
     wait-online.enable = true;
-    networks."10-enp1s0" = {
-      matchConfig.Name = "enp1s0";
+    networks."10-${eth_intf}" = {
+      matchConfig.Name = "${eth_intf}";
       DHCP = "ipv4";
       linkConfig.RequiredForOnline = "routable";
       dns = [ "1.1.1.1" "1.0.0.1" "8.8.8.8" "8.8.4.4" ];
@@ -18,8 +22,9 @@
 
   # wireguard tunnel to vps
   environment.systemPackages = with pkgs; [ wireguard-tools ];
-  systemd.network.networks."20-wg_vps" = {
-    matchConfig.Name = "wg_vps";
+
+  systemd.network.networks."20-${wg_intf}" = {
+    matchConfig.Name = "${wg_intf}";
     address = [ "10.0.0.2/24" ]; # this server's wg ip
     #routingPolicyRules = [{
       #FirewallMark = 51820;
@@ -32,9 +37,9 @@
     #}];
   };
 
-  systemd.network.netdevs."20-wg_vps" = {
+  systemd.network.netdevs."20-${wg_intf}" = {
     netdevConfig = {
-      Name = "wg_vps";
+      Name = wg_intf;
       Kind = "wireguard";
     };
     wireguardConfig = {
