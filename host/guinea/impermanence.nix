@@ -16,6 +16,61 @@ let
   root_subvol = "@";
 in 
 lib.optionalAttrs (aln.ctx.host.hasTags [ "impermanent" ]) {
+  # below paths shoud only contain data that are under root subvolume
+  # NOTE: do not persist both a file and its parent directory
+  environment.persistence."/persist" = {
+    enable = true;
+    hideMounts = true;
+    directories = [
+      "/var/lib/nixos" # nixos state
+
+      "/var/log" # system logs
+      "/var/lib/systemd/coredump" # crash dumps
+      "/var/lib/systemd/timers"
+    ] ++ 
+    lib.optionals (aln.ctx.host.is.server) [
+      "/var/lib/systemd/network" 
+      #"/var/lib/containers" # since this is on separate subvolume, no need to persist it as it wont be wiped
+    ] ++
+    lib.optionals (!aln.ctx.host.is.server) [
+      "/var/lib/bluetooth"
+      "/etc/NetworkManager/system-connections"
+      "/var/lib/cups" # printer
+    ] ++
+    # For each user NOT using impermanence: persist their home directory
+    lib.concatMap (user: lib.optionals (!user.hasTags [ "impermanent" ]) [
+      { directory = "/home/${user.name}"; user = user.name; mode = "0700"; }
+    ]) aln.ctx.host.users;
+
+    files = [
+      "/etc/machine-id"  # stable machine identity
+
+      # these are the only files necessary to persist on initial install,
+      # the rest of the configs can be generated from the config with these keys
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+    ];
+
+    # For each user using impermanence: persist specific directories
+    # TODO: Not working!! Can't get home-manager state to persist for some reason, 
+    # and it's not trivial to widen or narrow persistence
+    # also may need systemd service to auto activate home manager; not desirable
+    users = lib.mergeAttrsList (map (user: {
+      ${user.name} = lib.optionalAttrs (user.hasTags [ "impermanent" ]) {
+        directories = [
+            { directory = ".ssh"; mode = "0700"; }
+            { directory = ".config/sops"; mode = "0700"; }
+            "nix-config"
+
+            # Supposedly these saves home manger state
+            ".local/share/state/nix"
+            ".local/share/state/home-manager"
+          ];
+        files = [];
+      };
+    }) aln.ctx.host.users);
+  };
+
   #  Reset root subvolume on boot
   boot.initrd.postResumeCommands = lib.mkAfter ''
     # Mount the raw btrfs top-level somewhere temporary
@@ -48,54 +103,6 @@ lib.optionalAttrs (aln.ctx.host.hasTags [ "impermanent" ]) {
     umount /btrfs_tmp
     # Now NixOS mounts this fresh /root subvolume as /
   '';
-
-  # below paths shoud only contain data that are under root subvolume
-  # NOTE: do not persist both a file and its parent directory
-  environment.persistence."/persist" = {
-    enable = true;
-    hideMounts = true;
-    directories = [
-      "/var/lib/nixos" # nixos state
-
-      "/var/log" # system logs
-      "/var/lib/systemd/coredump" # crash dumps
-      "/var/lib/systemd/timers"
-    ] ++ 
-    lib.optionals (aln.ctx.host.is.server) [
-      "/var/lib/systemd/network" 
-      #"/var/lib/containers" # since this is on separate subvolume, no need to persist it as it wont be wiped
-    ] ++
-    lib.optionals (!aln.ctx.host.is.server) [
-      "/var/lib/bluetooth"
-      "/etc/NetworkManager/system-connections"
-      "/var/lib/cups" # printer
-    ] ++
-    # for each user NOT using impermanence, persist their home directory
-    lib.concatMap (user: lib.optionals (!user.hasTags [ "impermanent" ]) [
-      { directory = "/home/${user.name}"; user = user.name; mode = "0700"; }
-    ]) aln.ctx.host.users;
-
-    files = [
-      "/etc/machine-id"  # stable machine identity
-
-      # these are the only files necessary to persist on initial install,
-      # the rest of the configs can be generated from the config with these keys
-      "/etc/ssh/ssh_host_ed25519_key"
-      "/etc/ssh/ssh_host_ed25519_key.pub"
-    ];
-
-    # persist specific directories of users using impermanence
-    users = lib.mergeAttrsList (map (user: {
-      ${user.name} = lib.optionalAttrs (user.hasTags [ "impermanent" ]) {
-        directories = [
-            { directory = ".ssh"; mode = "0700"; }
-            { directory = ".config/sops"; mode = "0700"; }
-            "nix-config"
-          ];
-        files = [];
-      };
-    }) aln.ctx.host.users);
-  };
 
   # Need to mark all btrfs subvolumes who are source or target of persistence bind mounts as neededForBoot
   # Otherwiswe there will be no subvolume to bind mount from/to
