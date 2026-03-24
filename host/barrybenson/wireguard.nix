@@ -1,7 +1,6 @@
 { lib, aln, config, ... }:
 
-# TODO: enable
-lib.optionalAttrs false {
+{
   networking.wg-quick.interfaces = {
     # TODO: Table routing management??
     wg_vps = {
