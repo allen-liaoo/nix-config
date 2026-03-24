@@ -22,17 +22,18 @@ just disko <hostname>
 #### Obtain ssh host key and encrypt secrets
 5. (host) Generate host ssh key that will be used to boot (by sops nix). Note that if using impermanence, second param shoud be true. This will print an age key. Copy it.
 ```
-just gen-install-host-key <hostname> <persist>
+just gen-install-host-key <hostname> <impermanent>
 ```
 6. (admin) Update the secrets so they are decryptable by the host key generated
 
-a. Edit `.sops.yaml` by adding the host and its age key. Make sure to add secrets for the host user, including user age key and password. To create a new secret file:
+a. Edit `.sops.yaml` by adding the host and its age key.  
+b. Add secrets for the host, its user. Especially include user age key and password. To create a new secret file:
 ```
-# enters dev shell which install sops
+# Enter dev shell which installs sops
 just dev 
 sops secrets/<path/to/secret/file>
 ```
-   b. Update secret encryption and push changes
+   c. Update secret encryption and push changes
 ```
 just sops-rekey
 git push
@@ -53,14 +54,22 @@ just os-install <hostname>
 sudo reboot now
 ```
 
-## Home Manger Install (On NixOS)
-After reboot, the users with password should be created. We just need to install their home manager modules
+## Home Manger Install
+### On NixOS
+After installing NixOS and rebooting, the users with passwords should be created. We just need to install their home manager modules.
 1. Clone repository
 2. Switch home manager
 ```
 just hm-switch
 ```
-3. Switch repository to ssh
+3. Switch repository to ssh (ssh keys to push to repo should automatically be detected)
 ```
 just repo-switch-ssh
 ```
+
+### Non-NixOS
+> NOT TESTED
+1. Clone repository
+2. Drop age (private) key in `~/.config/sops/age/key.txt`
+3. Switch home manager
+4. Switch repository to ssh
