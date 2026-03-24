@@ -1,6 +1,7 @@
 { ... }:
 
-{
+# TODO: enable
+lib.optionalAttrs false {
   # Use a fully custom nftables ruleset instead of the NixOS firewall abstraction.
   networking.firewall.enable = false;
 

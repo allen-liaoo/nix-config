@@ -12,6 +12,13 @@
   # Make network interfaces use predictable names (e.g. eth0, wlan0) instead of the default (e.g. enp1s0)
   boot.kernelParams = [ "net.ifnames=0" "biosdevname=0" ];
 
+  boot.tmp.useTmpfs = true;
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    # memoryPercent defaults to 50, adjust as needed
+  };
+
   # Make VM IP predictable
   networking.useDHCP = false;
   networking.useNetworkd = true;

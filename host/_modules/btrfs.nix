@@ -5,14 +5,7 @@ let
   disk_root = "btrfsroot";
 in 
 {
-  boot.tmp.useTmpfs = true;
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    # memoryPercent defaults to 50, adjust as needed
-  };
-
-  # mount bbtrfs partition for btrbk
+  # mount btrfs partition for btrbk
   fileSystems."/mnt/${disk_root}" = {
     device = "/dev/disk/by-label/${disk_root}"; # stable across reboots/renames
     fsType = "btrfs";

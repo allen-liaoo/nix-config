@@ -6,9 +6,17 @@
 
   boot.loader.grub = {
     enable = true;
+    device = "nodev"; # "nodev" is used for UEFI
+    efiSupport = true;
   };
+  efi.canTouchEfiVariables = true;
 
   boot.tmp.useTmpfs = true;
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    # memoryPercent defaults to 50
+  };
 
   networking.useNetworkd = true;
   systemd.network = {
@@ -17,7 +25,6 @@
   };
   # Need network-online for podman-user-wait-network-online.service
   systemd.targets.network-online.wantedBy = [ "multi-user.target" ];
-
 
   users.users.${aln.inventory.users.allenl.name} = {
     isNormalUser = true;

@@ -19,7 +19,7 @@ Todo:
   - `<username>` - configs for the user, including host-specific user configs
 - `lib`- custom library functions
 - `inventory` - metadata about users and hosts and valid pairings, used by home/nixos modules, users, and hosts
-- `ctx.nic` - supplies current eval context to NixOS/Home modules (i.e. current host and user inventory info)
+- `ctx.nix` - supplies current eval context to NixOS/Home modules (i.e. current host and user inventory info)
 - `secrets` and `.sops.yaml` - read by sops-nix for host and user secrets at various sops.nix files throughout home and host directories
 
 ### `aln` namespace
