@@ -114,9 +114,6 @@ lib.optionalAttrs (aln.ctx.host.hasTags [ "impermanent" ]) {
   # so we explicitly point to persist location, then have impermanence mount the age key
   sops.secrets = lib.mergeAttrsList (map (user: {
     "age_key_${user.name}" = {
-      # key = "age/${user.name}";
-      # owner = user.name;
-      # mode = "0400";
       path = lib.mkForce "/persist/home/${user.name}/.config/sops/age/keys.txt";
     };
   }) aln.ctx.host.users);
