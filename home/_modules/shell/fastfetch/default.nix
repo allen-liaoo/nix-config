@@ -1,9 +1,8 @@
-{ lib, ... }:
+{ lib, config, aln, ... }:
 
 {
   programs.fastfetch = {
     enable = true;
+    settings = builtins.fromJSON (builtins.readFile ./config.json); # fastfetch default without ip
   };
-
-  xdg.configFile."fastfetch/config.jsonrc".source = config.lib.file.mkOutOfStoreSymlink (aln.lib.outOfStoreRelToRoot config.home.homeDirectory ./config.jsonrc);
 }
