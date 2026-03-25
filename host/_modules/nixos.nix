@@ -42,7 +42,8 @@
 
   users.mutableUsers = false;
   security.sudo.extraConfig = ''
-    Defaults pwfeedback # password input feedback - makes typed password visible as asterisks
+    Defaults pwfeedback # typed password visible as asterisks
+    Defaults lecture = never # dont display warning
     Defaults timestamp_timeout=15 # only ask for password every 15min
   '';
 
