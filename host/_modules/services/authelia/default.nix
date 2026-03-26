@@ -38,7 +38,7 @@ in
         healthStartPeriod = "5s";
       };
       unitConfig = {
-        Requires = containers.${dbName}.ref;
+        BindsTo = containers.${dbName}.ref; # ensure if db exists after starting, this exits
         After = containers.${dbName}.ref;
       };
     };
@@ -64,6 +64,10 @@ in
       podConfig = {
         userns = "auto";
         publishPorts = [ "9080:80" ];
+      };
+      unitConfig = {
+        Requires = [ "sops-install-secrets.service" ]; # ensures secrets exist
+        After = [ "sops-install-secrets.service" ];
       };
     };
 
