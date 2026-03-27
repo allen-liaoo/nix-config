@@ -18,13 +18,7 @@
     # memoryPercent defaults to 50
   };
 
-  users.users.${aln.inventory.users.allenl.name} = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-    linger = true;
-    hashedPasswordFile = config.sops.secrets.passwd_allenl.path;
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPevSDBLs3jQWYE8sq2Dx6S2qQ4VzpKn5RvS1zXkGfiW wcliaw610@gmail.com"
-    ];
-  };
+  users.users.${aln.inventory.users.allenl.name}.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPevSDBLs3jQWYE8sq2Dx6S2qQ4VzpKn5RvS1zXkGfiW wcliaw610@gmail.com"
+  ];
 }

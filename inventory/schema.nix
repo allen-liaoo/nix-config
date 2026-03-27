@@ -11,6 +11,8 @@ let
   ];
   userTags = lib.types.enum [
     "sudoer"
+    "system-user" # for normal users, ommit this
+    "linger"
   ];
   userType = lib.types.submodule ({config,...}: {
     options = {
