@@ -64,10 +64,15 @@ dev:
     {{nix_config}} \
     nix develop
 
-# Collect Nix garbage
+# Collect NixOS garbage
 [group("utility")]
-gc:
+os-gc:
     sudo nix-collect-garbage -d
+
+# Collect HM garbage
+[group("utility")]
+hm-gc:
+    nix-collect-garbage -d
 
 # Initial targets
 # Dont infer host/user when config has not been applied
@@ -81,9 +86,9 @@ disko host:
         --flake "{{dir}}#{{host}}"
     @lsblk
 
-# Generate SSH host key, install to /mnt (and /mnt/persist if impermanent=true), and print age key
+# Generate SSH host key, install to /mnt, and print age key
 [group("initial")]
-gen-install-host-key host impermanent:
+gen-install-host-key host:
     #!/usr/bin/env bash
     set -euo pipefail
     echo "Generating SSH host key..."
@@ -93,13 +98,6 @@ gen-install-host-key host impermanent:
     sudo mkdir -p /mnt/etc/ssh
     sudo install -m 600 /tmp/ssh_host_ed25519_key     /mnt/{{host_key_path}}
     sudo install -m 644 /tmp/ssh_host_ed25519_key.pub /mnt/{{host_key_path}}.pub
-
-    if [ "{{impermanent}}" = "true" ]; then
-        echo "Installing key to /mnt/persist/etc/ssh..."
-        sudo mkdir -p /mnt/persist/etc/ssh
-        sudo install -m 600 /tmp/ssh_host_ed25519_key     /mnt/persist/{{host_key_path}}
-        sudo install -m 644 /tmp/ssh_host_ed25519_key.pub /mnt/persist/{{host_key_path}}.pub
-    fi
 
     echo "\nAge public key (add to .sops.yaml in machine with sops admin key):"
     nix-shell -p ssh-to-age --run 'cat /tmp/ssh_host_ed25519_key.pub | ssh-to-age'
@@ -111,14 +109,23 @@ gen-hardware-config:
     sudo nixos-generate-config --no-filesystems --root /mnt --dir {{dir}}/tmp
     @echo "Hardware configuration generated at {{dir}}/tmp/hardware-configuration.nix. Copy it to remote, commit, and push to apply it to the flake."
 
-# Install NixOS using the specified hostname
+# Install NixOS using the specified hostname (if impermanent=true, copy ssh key to /persist)
 [group("initial")]
-os-install host:
+os-install host impermanent:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [ "{{impermanent}}" = "true" ]; then
+        echo "Installing key to /mnt/persist/etc/ssh..."
+        sudo mkdir -p /mnt/persist/etc/ssh
+        sudo install -m 600 /tmp/ssh_host_ed25519_key     /mnt/persist/{{host_key_path}}
+        sudo install -m 644 /tmp/ssh_host_ed25519_key.pub /mnt/persist/{{host_key_path}}.pub
+    fi
+
     sudo {{nix_config}} \
     nixos-install --no-channel-copy --no-root-password \
         --flake "{{dir}}#{{host}}" \
         --root /mnt
-    @echo "NixOS installed. Please reboot, clone repository, and run 'just os-setup' to use new configuration."
+    echo "NixOS installed. Please reboot, clone repository, and run 'just os-setup' to use new configuration."
 
 # Switch current repository remote url (Only run after home-manager setup)
 [group("initial")]

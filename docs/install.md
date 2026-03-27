@@ -19,15 +19,19 @@ nix-shell -p just
 ```
 just disko <hostname>
 ```
-#### Obtain ssh host key and encrypt secrets
-5. (host) Generate host ssh key that will be used to boot (by sops nix). Note that if using impermanence, second param shoud be true. This will print an age key. Copy it.
+#### Obtain ssh host key and hardware-configuration
+5. (host) Generate host ssh key that will be used to boot (by sops nix). This will print an age key. Copy it.
 ```
-just gen-install-host-key <hostname> <impermanent>
+just gen-install-host-key <hostname>
 ```
-6. (admin) Update the secrets so they are decryptable by the host key generated
+6. Generate hardware configuration on host
+```
+just gen-hardware-config
+```
+7. (admin) Update the secrets so they are decryptable by the host key generated
 
 a. Edit `.sops.yaml` by adding the host and its age key.  
-b. Add secrets for the host, its user. Especially include user age key and password. To create a new secret file:
+b. Add secrets for the host and its user. Include user age key and password. To create a new secret file:
 ```
 # Enter dev shell which installs sops
 just dev 
@@ -36,21 +40,14 @@ sops secrets/<path/to/secret/file>
    c. Update secret encryption and push changes
 ```
 just sops-rekey
-git push
 ```
-7. (host) Pull secret changes
-
-#### Obtain hardware configuration
-8. Generate hardware configuration on host
-```
-just gen-hardware-config
-```
-9. copy file to admin, push on admin, and pull on host
+8. Copy hardware configuration to admin
+9. Push on admin, and pull on host
 
 #### Install
-10. Install and reboot
+10. Install and reboot. Note that if using impermanence, second param shoud be true.
 ```
-just os-install <hostname>
+just os-install <hostname> <impermanent>
 sudo reboot now
 ```
 
