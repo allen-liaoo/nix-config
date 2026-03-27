@@ -105,18 +105,9 @@ lib.optionalAttrs (aln.ctx.host.hasTags [ "impermanent" ]) {
           mv /btrfs_tmp/${root_subvol} "/btrfs_tmp/old_roots/$timestamp"
         fi
     
-        # Delete archived roots older than 30 days
-        # Has to recurse because btrfs won't delete a subvolume with nested subvolumes
-        delete_subvolume_recursively() {
-          IFS=$'\n'
-          for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-            delete_subvolume_recursively "/btrfs_tmp/$i"
-          done
-          btrfs subvolume delete "$1"
-        }
-    
-        for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +30); do
-          delete_subvolume_recursively "$i"
+        # Delete archived roots older than 14 days
+        for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +14); do
+          btrfs subvolume delete --recursive "$i"
         done
     
         # Create a fresh empty root subvolume for this boot
