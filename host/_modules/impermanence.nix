@@ -11,7 +11,6 @@
 # - If data is large and noisy, put it in its own top level subvolume (i.e. @containers, @snapshots)
 # - Otherwise, if it is meaningful for system state, put in root volume and persist (i.e. /etc/ssh, /var/lib/nixos)
 # In other words, all subvolumes one wants to persist does not have the root subvolume @ as its parent (ok: another top level subvolume)
-# Special handling of sops-nix: See end of file
 let
   disk_root = "btrfsroot";
   root_subvol = "@";
@@ -73,19 +72,21 @@ lib.optionalAttrs (aln.ctx.host.hasTags [ "impermanent" ]) {
   };
 
   # Reset root subvolume on boot
+  # this is better than a initrd script because it allows us to specify service orders
   # https://www.notashelf.dev/posts/impermanence
+  # https://www.mankier.com/7/bootup
   boot.initrd.supportedFilesystems = [ "btrfs" ];
   boot.initrd.systemd = {
     enable = true;
     services.impermanence = {
       description = "Wipe BTRFS root subvolume on boot";
-      # https://www.mankier.com/7/bootup
       wantedBy = [ "initrd.target" ]; # technically unnecessary as this is after sysroot.mount
       before = [
         "sysroot.mount" # before /sysroot is mounted so we can wipe
-         # for some reason these are still necessary
-        "sops-install-secrets.service"
-        "sops-install-secrets-for-users.service"
+        
+        # IMPORTANT to make impermanence work with sops-nix without forcing it to read secrets/keys from /persist
+        "sops-install-secrets.service" # need sops.useSystemdActivation = true
+        "sops-install-secrets-for-users.service" # need services.userborn.enable = true (see users.nix)
       ];
       # need btrfs partition to be mounted
       after = [
@@ -123,21 +124,24 @@ lib.optionalAttrs (aln.ctx.host.hasTags [ "impermanent" ]) {
   # Need to mark all btrfs subvolumes who are source or target of persistence bind mounts as neededForBoot
   # Otherwiswe there will be no subvolume to bind mount from/to
   fileSystems."/persist".neededForBoot = true;
-
-  # when sops-nix tries to read the host key, it is still stored in the persist volume
-  # so we need to point it to the new location
-  #sops.age.sshKeyPaths = [
-    #"/persist/etc/ssh/ssh_host_ed25519_key" 
-  #];
-  # However: We don't need to add /persist path to ssh's hostKeys generation (sshd.nix) 
-  # because initial install takes care of generating the host keys in persist volume
-  # subsequent generation in /etc will be wiped and replaced by the one in persist on each boot
-  
-  # user age keys was decrypted then wiped if stored in home dir, I think?
-  # so we explicitly point to persist location, then have impermanence mount the age key
-  #sops.secrets = lib.mergeAttrsList (map (user: {
-    #"age_key_${user.name}" = {
-      #path = lib.mkForce "/persist/home/${user.name}/.config/sops/age/keys.txt";
-    #};
-  #}) aln.ctx.host.users);
 }
+
+# Below is old code that is necessary if one uses a initrd script (initrd.postResumeCommands)
+# with systemd service, we order impermanence before sops-install-secrets*.service
+
+# when sops-nix tries to read the host key, it is still stored in the persist volume
+# so we need to point it to the new location
+#sops.age.sshKeyPaths = [
+  #"/persist/etc/ssh/ssh_host_ed25519_key" 
+#];
+# However: We don't need to add /persist path to ssh's hostKeys generation (sshd.nix) 
+# because initial install takes care of generating the host keys in persist volume
+# subsequent generation in /etc will be wiped and replaced by the one in persist on each boot
+
+# user age keys was decrypted then wiped if stored in home dir, I think?
+# so we explicitly point to persist location, then have impermanence mount the age key
+#sops.secrets = lib.mergeAttrsList (map (user: {
+  #"age_key_${user.name}" = {
+    #path = lib.mkForce "/persist/home/${user.name}/.config/sops/age/keys.txt";
+  #};
+#}) aln.ctx.host.users);
