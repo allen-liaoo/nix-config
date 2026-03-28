@@ -4,6 +4,7 @@
   in {
     useSystemdActivation = true; # required by services that need to be before/after secrets are decrypted (i.e. impermanence)
     # adds "sops-install-secrets.service"
+    # for secrets flagged as neededForUsers, we need to enable userborn (see users.nix)
 
     defaultSopsFile = aln.ctx.host.sopsFilePath;
     # Host SSH Keys are used to decrypt secrets

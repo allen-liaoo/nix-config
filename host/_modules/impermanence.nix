@@ -85,7 +85,7 @@ lib.optionalAttrs (aln.ctx.host.hasTags [ "impermanent" ]) {
         "sysroot.mount" # before /sysroot is mounted so we can wipe
         
         # IMPORTANT to make impermanence work with sops-nix without forcing it to read secrets/keys from /persist
-        "sops-install-secrets.service" # need sops.useSystemdActivation = true
+        "sops-install-secrets.service" 
         "sops-install-secrets-for-users.service" # need services.userborn.enable = true (see users.nix)
       ];
       # need btrfs partition to be mounted

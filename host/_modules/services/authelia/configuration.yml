@@ -103,16 +103,16 @@ server:
 
     ## Configure the authz endpoints.
     authz:
-      # forward-auth:
-      #   implementation: 'ForwardAuth'
+      forward-auth: # caddy
+        implementation: 'ForwardAuth'
         # authn_strategies: []
       # ext-authz:
         # implementation: 'ExtAuthz'
         # authn_strategies: []
-      auth-request: # nginx
-        implementation: 'AuthRequest'
-        authn_strategies: 
-          - name: 'CookieSession' # for beszel-hub
+      #auth-request: # nginx
+        #implementation: 'AuthRequest'
+        #authn_strategies: 
+          #- name: 'CookieSession' # for beszel-hub
       # legacy:
         # implementation: 'Legacy'
         # authn_strategies: []
@@ -752,13 +752,13 @@ access_control:
     - domain: 
       - 'beszel.allenl.me' # TODO: Behind authelia but not vpn for convenience; cant get it to work rn
       - 'goaccess.allenl.me'
+      - 'pihole.allenl.me'
       subject: 'group:admin'
       policy: 'one_factor'
     
     - domain: 
       - 'lldap.allenl.me'
       - 'multi-scrobbler.allenl.me'
-      - 'pihole.allenl.me'
       subject: 'group:admin'
       networks: 
         - 'vpn'
