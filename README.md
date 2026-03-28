@@ -5,7 +5,7 @@ Featuring:
 - Declarative disks partitioning with `disko`
 - Secrets management via `sops-nix`
 - Podman rootless containers via `quadlet-nix`
-- Impermanence for servers
+- Impermanence
 
 Todo:
 - Todo: Impermanence for home dirs while auto activating (and perserving) home-manager
