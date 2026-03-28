@@ -1,0 +1,166 @@
+{
+	http_port 80
+	https_port 443
+
+	servers {
+		trusted_proxies static 10.0.0.1/32
+	}
+}
+
+# Common settings shared by all HTTPS virtual hosts.
+(common) {
+	tls {
+		dns cloudflare {env.CF_API_TOKEN}
+	}
+
+	encode zstd gzip
+
+	header {
+		X-XSS-Protection "1; mode=block"
+		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+		X-Frame-Options "SAMEORIGIN"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		-Server
+	}
+
+	log {
+		output stdout
+		format console
+		level WARN
+	}
+}
+
+# Shared reverse_proxy transport behavior.
+(proxy_transport) {
+	transport http {
+		dial_timeout 360s
+		read_timeout 360s
+		write_timeout 360s
+	}
+}
+
+# Authelia authorization for protected services.
+(authelia_protect) {
+	forward_auth http://host.containers.internal:9080 {
+		uri /api/authz/auth-request
+		copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+	}
+}
+
+{$DOMAIN}, *.{$DOMAIN} {
+	import common
+
+	@www host www.{$DOMAIN}
+	redir @www https://{$DOMAIN}{uri} permanent
+
+	@apex host {$DOMAIN}
+	redir @apex https://blog.{$DOMAIN}{uri} permanent
+
+	@blog host blog.{$DOMAIN}
+	handle @blog {
+		root * /srv/alsblog
+
+		@hidden path_regexp hidden (^|/)\.
+		respond @hidden 403
+
+		@static path_regexp static \.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot|webp|avif)$
+		header @static Cache-Control "public, immutable"
+
+		#try_files {path} {path}/ =404
+		file_server
+	}
+
+	# handle_errors {
+	# 	@blog_not_found expression `{http.error.status_code} == 404 && {http.request.host} == "blog.{$DOMAIN}"`
+	# 	handle @blog_not_found {
+	# 		root * /srv/alsblog
+	# 		rewrite * /404.html
+	# 		file_server
+	# 	}
+	# }
+
+	# @auth host auth.{$DOMAIN}
+	# handle @auth {
+	# 	reverse_proxy http://host.containers.internal:9080 {
+	# 		import proxy_transport
+	# 	}
+	# }
+
+	# @beszel host beszel.{$DOMAIN}
+	# handle @beszel {
+	# 	import authelia_protect
+	# 	reverse_proxy http://host.containers.internal:8090 {
+	# 		import proxy_transport
+	# 	}
+	# }
+
+	# @dav host dav.{$DOMAIN}
+	# handle @dav {
+	# 	@radicale_exact path /radicale
+	# 	redir @radicale_exact /radicale/ permanent
+
+	# 	@radicale_path path /radicale/*
+	# 	handle @radicale_path {
+	# 		import authelia_protect
+	# 		reverse_proxy http://host.containers.internal:15080 {
+	# 			import proxy_transport
+	# 			header_up X-Script-Name /radicale
+	# 			header_up Host {host}
+	# 		}
+	# 	}
+
+	# 	respond 404
+	# }
+
+	# @rss host rss.{$DOMAIN}
+	# handle @rss {
+	# 	import authelia_protect
+	# 	reverse_proxy http://host.containers.internal:53180 {
+	# 		import proxy_transport
+	# 	}
+	# }
+
+	# @jackett host jackett.{$DOMAIN}
+	# handle @jackett {
+	# 	import authelia_protect
+	# 	reverse_proxy http://host.containers.internal:20117 {
+	# 		import proxy_transport
+	# 	}
+	# }
+
+	# @koito host koito.{$DOMAIN}
+	# handle @koito {
+	# 	reverse_proxy http://host.containers.internal:20080 {
+	# 		import proxy_transport
+	# 	}
+	# }
+
+	# @lldap host lldap.{$DOMAIN}
+	# handle @lldap {
+	# 	import authelia_protect
+	# 	reverse_proxy http://host.containers.internal:18080 {
+	# 		import proxy_transport
+	# 	}
+	# }
+
+	# @multi_scrobbler host multi-scrobbler.{$DOMAIN}
+	# handle @multi_scrobbler {
+	# 	import authelia_protect
+	# 	reverse_proxy http://host.containers.internal:25080 {
+	# 		import proxy_transport
+	# 	}
+	# }
+
+	# @pihole host pihole.{$DOMAIN}
+	# handle @pihole {
+	# 	@pihole_root path /
+	# 	redir @pihole_root /admin permanent
+
+	# 	import authelia_protect
+	# 	reverse_proxy http://host.containers.internal:30080 {
+	# 		import proxy_transport
+	# 	}
+	# }
+
+	respond 404
+}
