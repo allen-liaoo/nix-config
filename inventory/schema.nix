@@ -1,15 +1,19 @@
 { lib, config, options, alnLib, ... }:
 
 let 
+  hostKinds = [
+    "server"
+    "laptop"
+  ];
   systemsList = [
     "x86_64-linux"
     # "aarch64-linux"
     # "aarch64-darwin"
   ];
-  hostTags = lib.types.enum [
+  hostTags = [
     "impermanent"
   ];
-  userTags = lib.types.enum [
+  userTags = [
     "sudoer"
     "system-user" # for normal users, ommit this
     "linger"
@@ -21,7 +25,7 @@ let
         default = "nobody";
       };
       tags = lib.mkOption {
-        type = lib.types.listOf userTags;
+        type = lib.types.listOf (lib.types.enum userTags);
         default = [ ];
       };
       hasTags = lib.mkOption {
@@ -57,10 +61,7 @@ in
             default = "x86_64-linux";
           };
           kind = lib.mkOption {
-            type = lib.types.enum [
-              "server"
-              "computer"
-            ];
+            type = lib.types.enum hostKinds;
             description = "Categorized by function";
           };
           users = lib.mkOption {
@@ -68,7 +69,7 @@ in
             default = [];
           };
           tags = lib.mkOption {
-            type = lib.types.listOf lib.types.str;
+            type = lib.types.listOf (lib.types.enum hostTags);
             default = [ ];
           };
           hasTags = lib.mkOption {

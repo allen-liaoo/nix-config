@@ -31,7 +31,7 @@ in
     guinea = {
       name = "guinea";
       system = "x86_64-linux";
-      kind = "server";
+      kind = "laptop";
       tags = [ "impermanent" ];
       users = with users; [ pig ];
     };
