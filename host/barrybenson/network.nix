@@ -58,6 +58,9 @@ in
       }
       chain wg_input {
         tcp dport { 80, 443 } accept
+        # private ports
+        ip saddr @WG_SUBNETS tcp dport { 53 } accept
+        ip saddr @WG_SUBNETS udp dport { 53 } accept
       }
       chain forward {
         type filter hook forward priority 30; policy drop;
@@ -82,8 +85,8 @@ in
       chain prerouting {
         type filter hook prerouting priority -150; policy accept;
         # mark conn from wg if conn new
-        iifname "${wg_intf}" ct state new ct mark set ${toString wg_mark} # mark conn if conn new
-        # mark meta of packet outgoing from podman in if conn marked (note: doing this in output will be useless in bridge mode)
+        iifname "${wg_intf}" ct state new ct mark set ${toString wg_mark}
+        # mark meta of packet outgoing from podman if conn marked (note: doing this in output will be useless in bridge mode)
         iifname "${podman_intf}" ct mark ${toString wg_mark} meta mark set ${toString wg_mark}
       }
     '';

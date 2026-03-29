@@ -17,7 +17,7 @@ in
         publishPorts = [ "53:53" "53:53/udp" "30080:80" ];
         userns = "auto";
         volumes = [
-          "${volumes.${dataVolumeName}.ref}:/data:rw"
+          "${volumes.${dataVolumeName}.ref}:/etc/pihole:rw"
         ];
         environments = {
           FTLCONF_webserver_api_password = ""; # disable password
@@ -29,7 +29,7 @@ in
           # Set allenl.me and its subdomains to use vps's vpn ip
           # Pihole itself doesn't support wildcard domain mapping, so we use dnsmasq config instead
           FTLCONF_misc_dnsmasq_lines = "address=/allenl.me/10.0.0.1";
-          FLCONF_misc_privacylevel = "2"; # hide domain and clients in query logs 
+          FTLCONF_misc_privacylevel = "2"; # hide domain and clients in query logs 
           PH_VERBOSE = "1";
           FTLCONF_debug_webserver = "true";
         };
