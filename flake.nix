@@ -30,6 +30,7 @@
           disko.nixosModules.disko
           impermanence.nixosModules.impermanence
           sops-nix.nixosModules.sops
+          stylix.nixosModules.stylix
           # If using HM as a NixOS Module (We dont as we want HM to be usable in other OSes)
           # home-manager.nixosModules.home-manager
           quadlet-nix.nixosModules.quadlet
@@ -56,6 +57,7 @@
             dms.homeModules.dank-material-shell
             quadlet-nix.homeManagerModules.quadlet
             sops-nix.homeManagerModules.sops
+            stylix.homeModules.stylix
             vscode-server.nixosModules.home
           ];
         };
@@ -118,6 +120,12 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    stylix = {
+      url = "github:nix-community/stylix/release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     vscode-server = {
       url = "github:nix-community/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
