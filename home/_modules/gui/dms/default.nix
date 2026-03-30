@@ -10,7 +10,7 @@
     };
 
     enableSystemMonitoring = true; # uses dms's dgop
-    dgop.package = inputs.dgop.packages.${pkgs.system}.default; # fix for dgop not in nixpkgs stable
+    dgop.package = inputs.dgop.packages.${pkgs.stdenv.hostPlatform.system}.default; # fix for dgop not in nixpkgs stable
     enableVPN = true;
     enableDynamicTheming = true; # metagen
     enableCalendarEvents = false; # khal - need extra setup
