@@ -12,14 +12,14 @@ My NixOS and Home-Manager Configs
 ### Dots
 | Feature | Component | Notes |
 |---|---|---|
-| Shell | `fish`, `starship` | [config](/home/_modules/shell) |
-| Editor | `vim` | Minimal for now, might switch to neovim. [config](/home/_modules/term/vim.nix) |
+| Shell | Fish, Starship | [config](/home/_modules/shell) |
+| Editor | Vim | Minimal for now, might switch to neovim. [config](/home/_modules/term/vim.nix) |
 | WM | Niri | TODO: Use niri-flake. [home config](/home/_modules/gui/niri), [host config](/host/_modules/de/niri.nix) |
-| Desktop Shell | `DankMaterialShell` | [config](/home/_modules/gui/dms) |
-| Theming | `stylix` | [config](/home/_modules/stylix.nix) |
-| Terminal | `foot` | [config](/home/_modules/program/foot.nix) |
-| Launcher | `vicinae` | TODO |
-| Browser | `firefox` | TODO |
+| Desktop Shell | DankMaterialShell | [config](/home/_modules/gui/dms) |
+| Theming | Stylix | [config](/home/_modules/stylix.nix) |
+| Terminal | Foot | [config](/home/_modules/program/foot.nix) |
+| Launcher | Vicinae | TODO |
+| Browser | Firefox | TODO |
 
 ## Structure
 - `hosts` - NixOS host configurations, including hardware, system configs and host-specific user configs
