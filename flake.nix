@@ -59,7 +59,7 @@
             quadlet-nix.homeManagerModules.quadlet
             sops-nix.homeManagerModules.sops
             stylix.homeModules.stylix
-            #vicinae.homeManagerModules.default
+            vicinae.homeManagerModules.default
             vscode-server.nixosModules.home
           ];
         };
@@ -83,10 +83,10 @@
     );
   };
 
-  #nixConfig = {
-    #extra-substituters = [ "https://vicinae.cachix.org" ];
-    #extra-trusted-public-keys = [ "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc=" ];
-  #};
+  nixConfig = {
+    extra-substituters = [ "https://vicinae.cachix.org" ];
+    extra-trusted-public-keys = [ "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc=" ];
+  };
 
   inputs = {
     dms = {
@@ -142,10 +142,10 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable"; # WARNING: This may break things as stylix's nixpkgs should match home-manager (stable)
     };
 
-    #vicinae = {
-      #url = "github:vicinaehq/vicinae";
-      #inputs.nixpkgs.follows = "nixpkgs";
-    #};
+    vicinae = {
+      url = "github:vicinaehq/vicinae";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     vscode-server = {
       url = "github:nix-community/nixos-vscode-server";

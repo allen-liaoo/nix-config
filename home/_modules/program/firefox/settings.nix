@@ -21,6 +21,17 @@
     "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
     "browser.newtabpage.activity-stream.showSponsoredCheckboxes" = false;
     "browser.newtabpage.activity-stream.showWeather" = false;
+    # shortcuts; have to fill 8 (a row) or firefox will fill them :(
+    "browser.newtabpage.pinned" = [
+      #{ url = "about:blank?1"; }
+      #{ url = "about:blank?2"; }
+      #{ url = "about:blank?3"; }
+      #{ url = "about:blank?4"; }
+      #{ url = "about:blank?4"; }
+      #{ url = "about:blank?4"; }
+      #{ url = "about:blank?4"; }
+      #{ url = "about:blank?4"; }
+    ];
     "browser.promo.focus.enabled" = false;
     "browser.startup.homepage_override.mstone" = "ignore";
     "browser.startup.homepage" = "about:blank";
