@@ -1,7 +1,7 @@
 { lib, config, aln, ... }:
 
 {
-  imports = aln.lib.listDirFiles ./.;
+  imports = builtins.filter (f: !(lib.hasSuffix "extensions_meta.nix" f)) (aln.lib.listDirFiles ./.);
 
   programs.firefox.enable = true;
 

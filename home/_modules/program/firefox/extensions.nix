@@ -1,22 +1,7 @@
 { lib, pkgs-nur, ... }:
 
 let 
-  # id is name@dev or {uuid}
-  # name is name in mozilla store (if not 3rd party)
-  extensions = [
-    {
-      id = "addon@darkreader.org";
-      name = "darkreader";
-    }
-    {
-      id = "uBlock0@raymondhill.net";
-      name = "ublock-origin";
-    }
-    {
-      id = "{446900e4-71c2-419f-a6a7-df9c091e268b}";
-      name = "bitwarden-password-manager";
-    }
-  ];
+  extensions = import ./extensions_meta.nix;
 in
 {
   programs.firefox = {
@@ -45,7 +30,3 @@ in
     };
   };
 }
-
-# To find extension ids/uuids, go to about:debugging#/runtime/this-firefox
-# To find extension name, check extension url in webstore, which should be something like
-# https://addons.mozilla.org/en-US/firefox/addon/${name}/
