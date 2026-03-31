@@ -14,7 +14,6 @@ let
     "impermanent"
   ];
   userTags = [
-    "sudoer"
     "system-user" # for normal users, ommit this
     "linger"
   ];
@@ -23,6 +22,10 @@ let
       name = lib.mkOption {
         type = lib.types.str;
         default = "nobody";
+      };
+      groups = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [ ];
       };
       tags = lib.mkOption {
         type = lib.types.listOf (lib.types.enum userTags);

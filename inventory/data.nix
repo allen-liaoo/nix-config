@@ -6,13 +6,13 @@ let
     # me
     allenl = {
       name = "allenl";
-      tags = [ "sudoer" ];
+      groups = [ "wheel" "input" ];
       can.deployNixConfig = true;
     };
     # vm user
     pig = {
       name = "pig";
-      tags = [ "sudoer" ];
+      groups = [ "wheel" "input" ];
       can.deployNixConfig = true;
     };
   };

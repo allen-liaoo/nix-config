@@ -30,8 +30,6 @@
           disko.nixosModules.disko
           impermanence.nixosModules.impermanence
           sops-nix.nixosModules.sops
-          # If using HM as a NixOS Module (We dont as we want HM to be usable in other OSes)
-          # home-manager.nixosModules.home-manager
           quadlet-nix.nixosModules.quadlet
         ];
       }
@@ -144,7 +142,14 @@
 
     vicinae = {
       url = "github:vicinaehq/vicinae";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # need to follow nixpkgs-unstable
+      # https://github.com/vicinaehq/vicinae/issues/907
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     vscode-server = {
