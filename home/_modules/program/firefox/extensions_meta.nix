@@ -22,4 +22,4 @@
 
 # To find extension ids/uuids, go to about:debugging#/runtime/this-firefox
 # To find extension name, check extension url in webstore, which should be something like
-# https://addons.mozilla.org/en-US/firefox/addon/${name}/
+# https://addons.mozilla.org/en-US/firefox/addon/ADDON_NAME/

@@ -5,21 +5,20 @@ My NixOS and Home-Manager Configs
 ### Nix-Specific
 - Declarative disks partitioning via `disko` ([plain btrfs config](host/barrybenson/disko.nix))
 - Secrets management via `sops-nix` ([host config](host/_modules/sops.nix), [home config](home/_modules/sops.nix)) 
-- Wipe storage on boot via `impermanence` ([config](host/_modules/impermanence.nix) 
-- Podman rootless containers via `quadlet-nix` ([config](host/_modules/services)
-- nftables for policy based routing of Wireguard and containers (TODO) ([config](/host/barrybenson/network.nix))
+- Wipe storage on boot via `impermanence` ([config](host/_modules/impermanence.nix))
+- Podman containers via `quadlet-nix` ([config](host/_modules/services)). Rootful, `userns=auto`.
 
 ### Dots
 | Feature | Component | Notes |
 |---|---|---|
 | Shell | Fish, Starship | [config](/home/_modules/shell) |
 | Editor | Vim | Minimal for now, might switch to neovim. [config](/home/_modules/term/vim.nix) |
-| WM | Niri | TODO: Use niri-flake. [home config](/home/_modules/gui/niri), [host config](/host/_modules/de/niri.nix) |
+| WM | Niri | TODO: Use niri-flake. [config](/home/_modules/gui/niri) |
 | Desktop Shell | DankMaterialShell | [config](/home/_modules/gui/dms) |
 | Theming | Stylix | [config](/home/_modules/stylix.nix) |
 | Terminal | Foot | [config](/home/_modules/program/foot.nix) |
 | Launcher | Vicinae | TODO |
-| Browser | Firefox | TODO |
+| Browser | Firefox | [config](/home/_modules/program/firefox) |
 
 ## Structure
 - `hosts` - NixOS host configurations, including hardware, system configs and host-specific user configs
@@ -68,3 +67,7 @@ This allows symlinking out of store files to work correctly, and sidesteps file 
 - For each user of a NixOS host, the host decrypts the user's password for its own setup, and the user's age key to a location that the home-manager sops expects (`~/.config/sops/age/key.txt`).
   The user's home manager config then uses the age key to decrypt secrets.
 - Each NixOS host should have access to the secret `nix_config_deploy` which is used to push to this repository. Additionally, each authorized user should have this secret under `~/.ssh` as well.
+
+### Networking
+nftables for policy based routing of Wireguard and containers (TODO) ([config](/host/barrybenson/network.nix))
+

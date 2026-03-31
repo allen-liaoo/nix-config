@@ -63,3 +63,6 @@ in
     newElementCount = 12;
   };
 }
+
+# To get previous customization state:
+# cat ~/.mozilla/firefox/PROFILE/prefs.js | grep uiCustomization.state | sed -E 's/^user_pref\("[^"]+", "(.*)"\);$/\1/' | sed 's/\\//g' | jq .
