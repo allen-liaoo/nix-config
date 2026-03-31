@@ -6,7 +6,6 @@ My NixOS and Home-Manager Configs
 - [Declarative disks partitioning](host/barrybenson/disko.nix) via `disko`
 - Secrets management via `sops-nix` (configs: [host](host/_modules/sops.nix), [home](home/_modules/sops.nix)) 
 - [Wipe storage on boot](host/_modules/impermanence.nix) via `impermanence`
-- [Podman containers](host/_modules/services) via `quadlet-nix` (Rootful, `userns=auto`)
 
 ### Dots
 | Feature | Component |
@@ -19,6 +18,17 @@ My NixOS and Home-Manager Configs
 | Terminal | [Foot](/home/_modules/program/foot.nix) |
 | Launcher | [Vicinae](/home/_modules/program/vicinae.nix) |
 | Browser | [Firefox](/home/_modules/program/firefox) |
+
+### Self-Hosted
+[Podman containers](host/barrybenson/selfhosted/podman.nix) via `quadlet-nix` (Rootful, `userns=auto`).
+| Service | Component |
+|---|---|
+| Authentication | [Authelia](/host/barrybenson/selfhosted/authelia) |
+| Reverse Proxy | [Caddy](/host/barrybenson/selfhosted/rproxy) |
+| Adblock | [Pihole](/host/barrybenson/selfhosted/pihole.nix) |
+| CalDAV/CardDAV | Radicale (TODO) |
+| Music Stats | Multi-scrobbler, Koito (TODO) |
+| RSS Aggregator | FreshRSS (TODO) |
 
 ## Structure
 - `hosts` - NixOS host configurations, including hardware, system configs and host-specific user configs
