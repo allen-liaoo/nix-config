@@ -56,8 +56,8 @@
       shell = {
         disabled = false;
         style = "#696969";
-        fish_indicator = "";
         format = "[$indicator]($style)";
+        fish_indicator = "";
         bash_indicator = "bsh ";
         zsh_indicator = "zsh ";
         unknown_indicator = "unknown shell ";
@@ -67,7 +67,7 @@
         disabled = false;
         format = "[$symbol]($style) ";
         symbol = if aln.ctx.host.is.gui
-          then "\udb84\udd05" # nix nerd-font
+          then "" # nix nerd-font
           else "❄️";
       };
     };
