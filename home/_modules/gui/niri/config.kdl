@@ -1,3 +1,5 @@
+spawn-at-startup "vicinae" "server"
+
 window-rule {
   geometry-corner-radius 5
   clip-to-geometry true
@@ -324,6 +326,8 @@ binds {
     // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
     // Mod+Space       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
+
+    Mod+Space repeat=false { spawn "vicinae" "toggle"; }
 
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }

@@ -3,6 +3,7 @@
 {
   imports = aln.lib.listDirFiles ./.;
 
+  # stylix styling for dms does not exist for stable version of home manager  
   stylix.targets.dank-material-shell.enable = true;
 
   programs.dank-material-shell = {

@@ -7,7 +7,7 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/snazzy.yaml";
     image = aln.lib.relToRoot "assets/wallpaper/wallpaper-night.jpg";
     imageScalingMode = "fill";
-    #polarity = "dark"; # for theme gen based on image if base scheme unset
+    polarity = "dark";
 
     #base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-city-light.yaml";
     #image = aln.lib.relToRoot "assets/wallpaper/wallpaper-light.jpeg";

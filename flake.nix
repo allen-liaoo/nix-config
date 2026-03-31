@@ -30,7 +30,6 @@
           disko.nixosModules.disko
           impermanence.nixosModules.impermanence
           sops-nix.nixosModules.sops
-          stylix.nixosModules.stylix
           # If using HM as a NixOS Module (We dont as we want HM to be usable in other OSes)
           # home-manager.nixosModules.home-manager
           quadlet-nix.nixosModules.quadlet
@@ -50,6 +49,7 @@
             # pull inputs into args of home submodules
             inherit inputs;
             pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+            pkgs-nur = inputs.nur.legacyPackages.${system};
             aln = mkAln { inherit hostName; inherit userName; };
           };
           modules = with inputs; [
@@ -59,6 +59,7 @@
             quadlet-nix.homeManagerModules.quadlet
             sops-nix.homeManagerModules.sops
             stylix.homeModules.stylix
+            #vicinae.homeManagerModules.default
             vscode-server.nixosModules.home
           ];
         };
@@ -80,6 +81,11 @@
         };
       })
     );
+  };
+
+  nixConfig = {
+    extra-substituters = [ "https://vicinae.cachix.org" ];
+    extra-trusted-public-keys = [ "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc=" ];
   };
 
   inputs = {
@@ -117,6 +123,11 @@
       url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     };
 
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     quadlet-nix = {
       url = "github:SEIAROTg/quadlet-nix";
     };
@@ -128,8 +139,13 @@
 
     stylix = {
       url = "github:nix-community/stylix"; #/release-25.11";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable"; # WARNING: This may break things as stylix's nixpkgs should match home-manager (stable)
     };
+
+    #vicinae = {
+      #url = "github:vicinaehq/vicinae";
+      #inputs.nixpkgs.follows = "nixpkgs";
+    #};
 
     vscode-server = {
       url = "github:nix-community/nixos-vscode-server";
