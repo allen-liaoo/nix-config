@@ -14,7 +14,7 @@
 
     # stylix adds fonts to certain programs who don't read from fontconfig
     # but doesnt support fallbacks (for now)
-    fonts = {
+    fonts = lib.mkIf aln.ctx.host.is.gui {
       serif = {
         package = pkgs.dejavu_fonts;
         name = "Dejavu Serif";

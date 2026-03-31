@@ -14,12 +14,14 @@
     };
 
     plugins = with pkgs.vimPlugins; [
-      commentary          # gcc to comment
+      commentary          # gcc to comment line, or gc + motion
       indentLine
-      surround            # motion + s + char, i.e. cs" = change surrounding to "
-      vim-airline
+      surround            # motion + s + char, i.e. cs( = change surrounding to (
+      vim-airline         # bottom bar
       vim-airline-themes
-      vim-gitgutter
+      vim-cool            # disable search highlight after search
+      vim-gitgutter       # git diff on the left
+      vim-peekaboo        # show contents of registers when pressing "
     ];
   
     extraConfig = ''
@@ -41,6 +43,9 @@
 
       " configure char to display for indent
       let g:indentLine_char = '¦'
+
+      " show git diff relative to head (dont ignore staged changes)
+      let g:gitgutter_diff_base = 'HEAD'
     '';
   };
 }
