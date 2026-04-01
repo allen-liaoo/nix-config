@@ -127,7 +127,7 @@ in
   environment.systemPackages = with pkgs; [ wireguard-tools ];
 
   sops.secrets.wg_privkey = {
-    sopsFile = aln.lib.relToRoot "secrets/host/barrybenson/secrets.yaml";
+    sopsFile = aln.lib.relToRoot "secrets/host/barrybenson/common.yaml";
     key = "wg_privkey";
     group = "systemd-network"; # ensure privkey readable by systemd-network
     mode = "0440";
