@@ -28,6 +28,10 @@ in rec
         (builtins.attrNames entries);
     in map (name: dir + "/${name}") subdirs);
 
+  # filters importsList by removing occurences of blackList
+  importExcept = importsList: blackList:
+    builtins.filter (f: !(builtins.any (b: lib.hasSuffix b f) blackList)) importsList;
+
   ## HOME MANAGER EXCLUSIVE ##
 
   # Directory of current repository relative to a user's $HOME

@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, aln, ... }:
 
 let
   eth_intf = "enp1s0";
@@ -127,6 +127,7 @@ in
   environment.systemPackages = with pkgs; [ wireguard-tools ];
 
   sops.secrets.wg_privkey = {
+    sopsFile = aln.lib.relToRoot "secrets/host/barrybenson/secrets.yaml";
     key = "wg_privkey";
     group = "systemd-network"; # ensure privkey readable by systemd-network
     mode = "0440";

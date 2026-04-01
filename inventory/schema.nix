@@ -43,11 +43,6 @@ let
           default = false;
         };
       };
-      sopsFilePath = lib.mkOption {
-        type = lib.types.path;
-        default = alnLib.relToRoot "secrets/user/${config.name}.yaml";
-        readOnly = true;
-      };
     };
   });
 in 
@@ -118,11 +113,6 @@ in
               default = config.host.os == "linux";
               readOnly = true;
             };
-          };
-          sopsFilePath = lib.mkOption {
-            type = lib.types.path;
-            default = alnLib.relToRoot "secrets/host/${config.name}.yaml";
-            readOnly = true;
           };
         };
       }));

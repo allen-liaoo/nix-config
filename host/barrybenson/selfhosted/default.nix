@@ -1,5 +1,5 @@
 { lib, aln, ... }:
 
 {
-  imports = aln.lib.listDirFiles ./. ++ aln.lib.listSubdirs ./.;
+  imports = (aln.lib.importExcept (aln.lib.listDirFiles ./.) [ "secrets_dir.nix" ]) ++ aln.lib.listSubdirs ./.;
 }

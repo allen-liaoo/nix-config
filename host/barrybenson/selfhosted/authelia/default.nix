@@ -1,4 +1,4 @@
-{ config, lib, aln, pkgs, ... }@args:
+{ config, lib, aln, pkgs, ... }:
 
 let
   name = "authelia";
@@ -6,6 +6,7 @@ let
   podName = name + "-pod";
   logsVolumeName = name + "_logs";
   usersDatabase = import ./users_database.nix; 
+  secretsDir = import ../secrets_dir.nix aln;
   # sops of user hashed passwords
   password_sops_name_from_user = (name: "authelia_users_${name}_password_hashed");
 in
@@ -88,7 +89,7 @@ in
     lib.listToAttrs (map (secret_key: {
       name = "authelia_" + secret_key;
       value = {
-        sopsFile = aln.lib.relToRoot "secrets/services/authelia.yaml";
+        sopsFile = secretsDir + "/authelia.yaml";
         key = "authelia/" + secret_key;
       };
     }) [
@@ -102,7 +103,7 @@ in
     lib.listToAttrs (map (user_name: {
       name = password_sops_name_from_user user_name;
       value = {
-        sopsFile = aln.lib.relToRoot "secrets/services/authelia_users.yaml";
+        sopsFile = secretsDir + "/authelia_users.yaml";
         key = "${user_name}/password_hashed";
       };
     }) (builtins.attrNames usersDatabase.users));
