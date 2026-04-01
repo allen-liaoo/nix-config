@@ -23,7 +23,7 @@ os-switch host=current_hostname:
 hm-switch user=current_user host=current_hostname:
     @echo "Running for user: {{user}}"
     {{nix_config}} \
-    home-manager switch --flake {{dir}}{{nix_query_param}}#{{user}}@{{host}} --accept-flake-config
+    home-manager switch --flake {{dir}}{{nix_query_param}}#{{user}}@{{host}}
 
 # Update flake inputs
 [group("update")]
