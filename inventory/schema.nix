@@ -1,19 +1,23 @@
 { lib, config, options, alnLib, ... }:
 
 let 
-  hostKinds = [
-    "server"
-    "laptop"
+  osKinds = [
+    "darwin"
+    "generic-linux"
+    "nixos"
   ];
   systemsList = [
     "x86_64-linux"
-    # "aarch64-linux"
-    # "aarch64-darwin"
+  ];
+  hostKinds = [
+    "server"
+    "laptop"
   ];
   hostTags = [
     "impermanent"
   ];
   userTags = [
+    # Tags for users in nixos systems
     "system-user" # for normal users, ommit this
     "linger"
   ];
@@ -54,6 +58,9 @@ in
           name   = lib.mkOption {
             type = lib.types.str;
           };
+          os = lib.mkOption {
+            type = lib.types.enum osKinds;
+          };
           system = lib.mkOption {
             type = lib.types.enum systemsList;
             default = "x86_64-linux";
@@ -76,23 +83,7 @@ in
               lib.all (tag: builtins.elem tag config.tags) tags;
             readOnly = true;
           };
-
-          # derived / read-only
-          os = lib.mkOption {
-            type = lib.types.enum [
-              "linux"
-              "darwin"
-            ];
-            default = if lib.hasSuffix "-linux" config.system then "linux" else "darwin";
-            readOnly = true;
-          };
-
           is = {
-            server = lib.mkOption {
-              type = lib.types.bool;
-              default = config.kind == "server";
-              readOnly = true;
-            };
             headless = lib.mkOption {
               type = lib.types.bool;
               default = config.kind == "server";
@@ -103,17 +94,21 @@ in
               default = config.kind != "server";
               readOnly = true;
             };
-            darwin = lib.mkOption {
+          }
+          // (lib.mergeAttrsList (map (os: {
+            ${os} = lib.mkOption {
               type = lib.types.bool;
-              default = config.host.os == "darwin";
+              default = config.os == os;
               readOnly = true;
             };
-            linux = lib.mkOption {
+          }) osKinds))
+          // (lib.mergeAttrsList (map (kind: {
+            ${kind} = lib.mkOption {
               type = lib.types.bool;
-              default = config.host.os == "linux";
+              default = config.os == kind;
               readOnly = true;
             };
-          };
+          }) hostKinds));
         };
       }));
     };
@@ -133,6 +128,12 @@ in
     hostNames = lib.mkOption {
       type     = lib.types.listOf lib.types.str;
       default = builtins.attrNames config.hosts;
+      readOnly = true;
+    };
+
+    nixosHostNames = lib.mkOption {
+      type     = lib.types.listOf lib.types.str;
+      default = config.hosts |> lib.filterAttrs (_: h: h.is.nixos) |> builtins.attrNames;
       readOnly = true;
     };
 

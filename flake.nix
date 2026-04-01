@@ -14,7 +14,7 @@
     };
   in
   {
-    nixosConfigurations = lib.genAttrs inventory.hostNames (
+    nixosConfigurations = lib.genAttrs inventory.nixosHostNames (
       hostName:
       let host = inventory.hosts.${hostName}; in 
       lib.nixosSystem {
