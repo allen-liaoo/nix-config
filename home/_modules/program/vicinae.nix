@@ -11,7 +11,6 @@
 
   services.vicinae = {
     enable = true;
-    #package = vicinaePatched;
     systemd = {
       enable = true;
       autoStart = true;

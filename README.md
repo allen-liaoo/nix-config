@@ -15,7 +15,7 @@ My NixOS and Home-Manager Configs
 | WM | [Niri](/home/_modules/gui/niri) |
 | Desktop Shell | [DankMaterialShell](/home/_modules/gui/dms) |
 | Theming | [Stylix](/home/_modules/stylix.nix) |
-| Terminal | [Foot](/home/_modules/program/foot.nix) |
+| Terminal | [Alacritty](/home/_modules/program/alacritty.nix) |
 | Launcher | [Vicinae](/home/_modules/program/vicinae.nix) |
 | Browser | [Firefox](/home/_modules/program/firefox) |
 

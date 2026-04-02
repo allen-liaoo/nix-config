@@ -12,13 +12,12 @@
         fish_default_key_bindings
 
         # use vim keybindings
-        # not working in alacritty
-        #fish_vi_key_bindings
-        #set fish_cursor_default block
-        #set fish_cursor_insert block blink
-        #set fish_cursor_replace_one underscore
-        #set fish_cursor_replace underscore
-        #set fish_cursor_external line # cursor when command starts
+        fish_vi_key_bindings
+        set fish_cursor_default block
+        set fish_cursor_insert block
+        set fish_cursor_replace_one underscore
+        set fish_cursor_replace underscore
+        set fish_cursor_external line # cursor when command starts
 
         # n dots = go up (n-1) dirs: ... = cd ../../
         function multicd
@@ -78,7 +77,7 @@
       if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
       then
         shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-        exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
+        SHELL=${pkgs.fish} exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
       fi
     '';
   };

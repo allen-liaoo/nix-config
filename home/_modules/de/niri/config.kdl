@@ -23,7 +23,7 @@ window-rule {
 
 // Open terminal in single column
 window-rule {
-  match app-id=r#"foot"#
+  match app-id=r#"Alacritty"#
   open-maximized false
   open-maximized-to-edges false
 }
@@ -118,7 +118,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T hotkey-overlay-title="Open a Terminal" { spawn "foot"; }
+    Mod+T hotkey-overlay-title="Open a Terminal" { spawn "~/.nix-profile/bin/alacritty"; }
     // Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "swaylock"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
