@@ -76,6 +76,12 @@ overview {
   }
 }
 
+gestures {
+  hot-corners {
+    off
+  }
+}
+
 environment {
   XDG_CURRENT_DESKTOP "niri"
   QT_QPA_PLATFORM "wayland"
@@ -115,7 +121,7 @@ binds {
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
     // or do a four-finger swipe up on a touchpad.
-    Mod+Y repeat=false { toggle-overview; } // TODO: change back to Mod+O outside VM
+    Mod+O repeat=false { toggle-overview; }
 
     Mod+Q repeat=false { close-window; }
 

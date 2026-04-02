@@ -39,8 +39,11 @@
     settings = {
       dynamicTheming = true;
       clipboardSettings.disabled = true;
+
       blurredWallpaperLayer = false;
       blurredWallpaperOnOverview = true;
+
+      appIdSubstitutions = [];
 
       # Cannot figure out how to set position and interval of this widget
       # Bugged: need to set its instance?

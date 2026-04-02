@@ -9,6 +9,7 @@
     showWorkspaceIndex = false;
     showWorkspaceName = false;
     showWorkspaceApps = true;
+    showOccupiedWorkspacesOnly = true;
     maxWorkspaceIcons = 3;
     workspaceDragReorder = true;
     centeringMode = "index"; # mode to center bar widgets
