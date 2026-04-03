@@ -11,14 +11,6 @@
 
         fish_default_key_bindings
 
-        # use vim keybindings
-        fish_vi_key_bindings
-        set fish_cursor_default block
-        set fish_cursor_insert block
-        set fish_cursor_replace_one underscore
-        set fish_cursor_replace underscore
-        set fish_cursor_external line # cursor when command starts
-
         # n dots = go up (n-1) dirs: ... = cd ../../
         function multicd
           echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)

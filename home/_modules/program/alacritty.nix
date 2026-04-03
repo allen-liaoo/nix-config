@@ -6,7 +6,7 @@
     settings = {
       general.live_config_reload = true;
       window = {
-        padding = { x = 5; y = 5; };
+        padding = { x = 10; y = 10; };
         decorations = "None";
       };
       terminal.osc52 = "OnlyCopy"; # for copying from remote server
