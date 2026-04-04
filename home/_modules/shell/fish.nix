@@ -10,6 +10,9 @@
         set fish_greeting
 
         fish_default_key_bindings
+        fish_vi_key_bindings
+        set fish_cursor_default block
+        set fish_cursor_insert block blink
 
         # n dots = go up (n-1) dirs: ... = cd ../../
         function multicd

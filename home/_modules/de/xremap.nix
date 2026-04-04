@@ -13,9 +13,16 @@ lib.optionalAttrs (with aln.ctx.user.inGroup; input && wheel) {
         name = "Space as meta";
         remap."SPACE" = {
           held = "LEFTMETA";
-          alone = "SPACE"; # when released or timeout reached
-          free_hold = true;
-          #alone_timeout_millis = "1000"; #ms # doesnt seem to work
+          alone = "SPACE";
+          free_hold = true; # when released, treat as alone
+        };
+      }
+      {
+        name = "Capslock as esc";
+        remap."CAPSLOCK" = {
+          held = "CAPSLOCK";
+          alone = "ESC";
+          alone_timeout_millis = 200; # if held for this ms or longer, then treat as held
         };
       }
     ] ++ 
@@ -26,6 +33,11 @@ lib.optionalAttrs (with aln.ctx.user.inGroup; input && wheel) {
         "RIGHTALT" = "RIGHTCTRL";
       };
       device.only = "AT Translated Set 2 keyboard";
+    }];
+
+    config.keymap = [{
+      name = "Shift+capslock as capslock";
+      remap."SHIFT-CAPSLOCK" = "CAPSLOCK";
     }];
   };
 }

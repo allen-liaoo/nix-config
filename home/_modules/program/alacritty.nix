@@ -10,6 +10,7 @@
         padding = { x = 10; y = 10; };
         decorations = "None";
       };
+      cursor.style.shape = "Block";
       terminal.osc52 = "OnlyCopy"; # for copying from remote server
     };
   };

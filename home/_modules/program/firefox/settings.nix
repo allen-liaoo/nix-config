@@ -36,6 +36,7 @@
     "browser.startup.homepage_override.mstone" = "ignore";
     "browser.startup.homepage" = "about:blank";
     "browser.uitour.enabled" = false;
+    "browser.urlbar.showSearchSuggestionsFirst" = false;
     "browser.urlbar.suggest.realtimeOptIn" = false;
     "browser.urlbar.suggest.sports" = false;
     "browser.urlbar.suggest.topsites" = false;
