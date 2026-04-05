@@ -38,5 +38,6 @@ creation_rules:
 - path_regex: secrets/user/common.yaml
   age:
   - *allenl
+  - *al
   - *pig
   - *sops_admin
