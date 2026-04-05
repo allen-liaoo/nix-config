@@ -8,11 +8,16 @@
   users.users = lib.mergeAttrsList (map (user: {
     ${user.name} = {
       isNormalUser = !(user.hasTag.system-user);
+      group = user.name;
       extraGroups = user.groups;
       linger = user.hasTag.linger;
       hashedPasswordFile = config.sops.secrets."passwd_${user.name}".path;
     };
   }) aln.ctx.host.users);
+  users.groups = lib.genAttrs 
+    (map (user: user.name) aln.ctx.host.users)
+    (name: { });
+    
 
   # enable sudoers to use some commands without sudo
   security.sudo = {

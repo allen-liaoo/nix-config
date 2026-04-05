@@ -66,7 +66,7 @@
     );
 
     devShells = lib.genAttrs inventory.systems (
-      (system: {
+      system: {
         default = let 
           pkgs = nixpkgs.legacyPackages.${system};
         in pkgs.mkShell {
@@ -77,8 +77,9 @@
             sops
             ssh-to-age
           ];
+          shellHook = ''exec ${pkgs.fish}/bin/fish'';
         };
-      })
+      }
     );
   };
 

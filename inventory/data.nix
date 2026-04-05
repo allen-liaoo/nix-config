@@ -3,9 +3,13 @@
 
 let 
   users = {
-    # me
+    # me (full privileges)
     allenl = {
       name = "allenl";
+    };
+    # me on servers (i.e. restricted no ssh priv keys)
+    al = {
+      name = "al";
     };
     # vm user
     pig = {
@@ -24,7 +28,7 @@ in
       gpu = "amd";
       tags = [ "impermanent" ];
       users = with users; [ 
-        (allenl // {
+        (al // {
           groups = [ "wheel" "input" ];
           can.deployNixConfig = true;
         })

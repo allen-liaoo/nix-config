@@ -31,7 +31,14 @@ just gen-hardware-config
 7. (admin) Update the secrets so they are decryptable by the host key generated
 
 a. Edit `.sops.yaml` by adding the host and its age key.  
-b. Add secrets for the host and its user. Include user age key and password. To create a new secret file:
+b. Add secrets for the host and its user. Include user age key and password.
+
+To generate an age key and its public key, respectively (i.e. for a user):
+```
+age-keygen -o ~/tmp_key.txt
+
+```
+To create a new secret file:
 ```
 # Enter dev shell which installs sops
 just dev 

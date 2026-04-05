@@ -4,6 +4,7 @@ keys:
   - &guinea age1hwdz0a8uc6un69ratp3eed9z4xd5c7279khpy66d7tcw8nlpfpgs8wkp2r
 - users:
   - &allenl age16cn0jup2jdfejqxm0l60tkvtnd43t8aaqvs39qpy5q2nruvzu4jqvr8d7u
+  - &al age1srvnkxt9eekss9wr5n60ftcpxug6yk2rvkzzytf0majvqqys098qgg2645
   - &pig age1ypf3q60pdwtj3j5c2zmd79z6ukwzlknm268gdkh3uj5mj89qyq7qw3pgmx
 # ALWAYS add this key to secrets
 - &sops_admin age1w4vzylklxkw07e0n86sz5yf7ug9akpq93z8uqwm83v4rvg7hhutqh05mgc
@@ -16,6 +17,8 @@ creation_rules:
 # User secrets to be used by hosts
 - path_regex: secrets/user/allenl/for_hosts.yaml
   age: [*allenl, *barrybenson, *sops_admin]
+- path_regex: secrets/user/al/for_hosts.yaml
+  age: [*al, *barrybenson, *sops_admin]
 - path_regex: secrets/user/pig/for_hosts.yaml
   age: [*pig, *guinea, *sops_admin]
 
@@ -26,6 +29,8 @@ creation_rules:
   age: [*guinea, *sops_admin]
 - path_regex: secrets/user/allenl+
   age: [*allenl, *sops_admin]
+- path_regex: secrets/user/al+
+  age: [*al, *sops_admin]
 - path_regex: secrets/user/pig+
   age: [*pig, *sops_admin]
 
