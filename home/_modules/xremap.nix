@@ -5,9 +5,12 @@
 # run as user: programs always launch as one user
 { lib, aln, ... }:
 
-lib.optionalAttrs (!aln.ctx.host.is.server && (with aln.ctx.user.inGroup; input && wheel)) {
+let
+  shouldEnable = !aln.ctx.host.is.server && (with aln.ctx.user.inGroup; input && wheel);
+in
+{
   services.xremap = {
-    enable = true;
+    enable = shouldEnable; # not guarding the whole module to prevent warning
     withNiri = true;
     watch = true; # watch for devices
     mouse = true; # watch for mouse
