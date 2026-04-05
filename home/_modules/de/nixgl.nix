@@ -4,9 +4,12 @@
 # https://github.com/nix-community/nixGL
 { lib, inputs, pkgs, aln, ... }:
 
+let
+  nixgl-pkg = inputs.nixgl.packages.${pkgs.stdenv.hostPlatform.system};
+in
 lib.optionalAttrs aln.ctx.host.is.generic-linux {
   targets.genericLinux.nixGL = {
-    packages = inputs.nixgl.packages.${pkgs.stdenv.hostPlatform.system};
+    packages = nixgl-pkg;
     defaultWrapper = 
       if aln.ctx.host.is.amd then "mesa"
       else if aln.ctx.host.is.nvidia then "nvidia"
