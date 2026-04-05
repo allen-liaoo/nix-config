@@ -8,20 +8,20 @@ in
   virtualisation.quadlet = let
     inherit (config.virtualisation.quadlet) images volumes;
   in {
-    images.${name} = aln.lib.mkImage name {
+    images.${name} = aln.lib.mkImage {
       imageConfig.image = "docker.io/pihole/pihole:latest";
     };
     containers.${name} = aln.lib.mkContainer name {
       containerConfig = {
         image = images.${name}.ref;
-        publishPorts = [ "53:53" "53:53/udp" "30080:80" ];
-        userns = "auto";
+        publishPorts = [ "53:5053" "53:5053/udp" "30080:8080" ];
         volumes = [
-          "${volumes.${dataVolumeName}.ref}:/etc/pihole:rw"
+          "${volumes.${dataVolumeName}.ref}:/etc/pihole:rw,U"
         ];
         environments = {
           FTLCONF_webserver_api_password = ""; # disable password
-          FTLCONF_webserver_port = "80,[::]:80";
+          FTLCONF_webserver_port = "8080,[::]:8080";
+          FTLCONF_dns_port = "5053";
           FTLCONF_dns_listeningMode = "single";
           # google and cloudflare dns
           FTLCONF_dns_upstreams = "8.8.8.8;8.8.4.4;2001:4860:4860:0:0:0:0:8888;2001:4860:4860:0:0:0:0:8844;1.1.1.1;1.0.0.1;2606:4700:4700::1111;2606:4700:4700::1001";

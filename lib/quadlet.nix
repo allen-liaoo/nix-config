@@ -1,73 +1,73 @@
 # Templates for quadlet units
 # see https://seiarotg.github.io/quadlet-nix/home-manager-options.html for options
-{...}:
+{ nixpkgs, ... }:
 
 let 
+  inherit (nixpkgs) lib;
   restartDefault = {
     unitConfig = {
-      # Allow at most 5 restarts in 30s, then permanently give up
-      #StartLimitIntervalSec = 30;
-      StartLimitIntervalSec = 30;
-      #StartLimitBurst = 5;
+      StartLimitIntervalSec = 0;
     };
     serviceConfig = {
       Restart = "on-failure";
-      RestartSec = "10s";
-      RestartSteps = 4; # rate of exponential timeout
-      RestartMaxDelaySec = 300; # max timeout
+      RestartSec = "5s";
+      RestartSteps = 6; # rate of exponential timeout
+      RestartMaxDelaySec = "5min"; # max timeout
+      TimeoutStartSec = 1000;
     };
   };
 in {
-  mkContainer = (name: config: {
-    autoStart = true;
-    containerConfig = {
-      inherit name;
-      autoUpdate = "registry";
-      logDriver = "journald";
-      noNewPrivileges = true;
-      startWithPod = true;
-    };
-    quadletConfig.defaultDependencies = true;
-  } // restartDefault // config);
+  mkContainer = (name:
+    lib.recursiveUpdate ({
+      autoStart = true;
+      containerConfig = {
+        inherit name;
+        userns = "auto";
+        autoUpdate = "registry";
+        logDriver = "journald";
+        noNewPrivileges = true;
+        startWithPod = true;
+      };
+      quadletConfig.defaultDependencies = true;
+    } // restartDefault));
 
-  mkImage = (name: config: {
-    autoStart = true;
-    imageConfig = {
-      name = "${name}-image";
-      retry = 3;
-    };
-  } // restartDefault // config);
+  mkImage = ( 
+    lib.recursiveUpdate ({
+      autoStart = true;
+      imageConfig.retry = 3;
+    } // restartDefault));
  
-  mkNetwork = (name: config: {
-    autoStart = true;
-    networkConfig = {
-      name = "${name}-network";
-      disableDns = false;
-    };
-  } // restartDefault // config);
+  mkNetwork = (name:
+    lib.recursiveUpdate ({
+      autoStart = true;
+      networkConfig = {
+        name = "${name}-network";
+        disableDns = false;
+      };
+    } // restartDefault));
 
-  mkPod = (name: config: {
-    autoStart = true;
-    podConfig = {
-      name = name; # can't add -pod postfix as pod name must be unique, so postfix must be in the input name
-      disableDns = false;
-      exitPolicy = "stop";
-      stopTimeout = "120"; # kill units after timeout
-    };
-    serviceConfig = {
-      Restart = "always";
-      # with exitPolicy = stop, pod exists cleanly when all the container stops,
-      # does not matter if container stops with failure. so set this as always
-      RestartSec = "15min";
-    };
-  } // restartDefault // config);
+  mkPod = (name:
+    lib.recursiveUpdate ({
+      autoStart = true;
+      podConfig = {
+        name = name; # can't add -pod postfix as pod name must be unique, so postfix must be in the input name
+        userns = "auto";
+        exitPolicy = "stop";
+        stopTimeout = 120; # kill units after timeout
+      };
+      serviceConfig = {
+        Restart = "always";
+        # with exitPolicy = stop, pod exists cleanly when all the container stops,
+        # does not matter if container stops with failure. so set this as always
+        RestartSec = "15min";
+      };
+    } // restartDefault));
 
-  mkVolume = (name: config: {
-    autoStart = true;
-    volumeConfig = {
-      name = "${name}-volume";
-      copy = true;
-      device = "tmpfs";
-    };
-  } // restartDefault // config);
+  mkVolume = (name:
+    lib.recursiveUpdate ({
+      autoStart = true;
+      volumeConfig = {
+        name = "${name}-volume";
+      };
+    } // restartDefault));
 }

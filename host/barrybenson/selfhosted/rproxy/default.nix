@@ -17,14 +17,12 @@ in
     containers.${name} = aln.lib.mkContainer name {
       containerConfig = {
         image = images.${name}.ref;
-        # exec = "caddy run --config /etc/caddy/Caddyfile";
   
         publishPorts = [ "80:80" "443:443" ];
-        userns = "auto";
         volumes = [
           "${./conf}:/etc/caddy:ro"
           "${blogCache}/build:/srv/alsblog:ro"
-          "${volumes.${dataVolumeName}.ref}:/data:rw"
+          "${volumes.${dataVolumeName}.ref}:/data:rw,U"
         ];
 
         environments = {
@@ -32,6 +30,12 @@ in
         };
         # secret passed in as environment variable for caddy dns provider
         environmentFiles = [ config.sops.templates.${cloudflare_secret_name}.path ];
+      };
+      unitConfig = {
+        PartOf = [
+          images.${name}.ref
+          volumes.${dataVolumeName}.ref
+        ];
       };
       serviceConfig = {
         # Check if blog files exists, if not, build it
@@ -65,7 +69,7 @@ in
       };
     };
 
-    images.${name} = aln.lib.mkImage name {
+    images.${name} = aln.lib.mkImage {
       imageConfig.image = "ghcr.io/caddy-dns/cloudflare";
     };
 

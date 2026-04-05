@@ -19,6 +19,7 @@ in
       containerConfig = {
         image = images.${name}.ref;
         pod = pods.${podName}.ref;
+        userns = ""; # pod sets userns, container shouldn't
         startWithPod = true;
         volumes = [
           "${./configuration.yml}:/config/configuration.yml:ro"
@@ -49,6 +50,7 @@ in
       containerConfig = {
         image = images.${dbName}.ref;
         pod = pods.${podName}.ref;
+        userns = ""; # pod sets userns
         startWithPod = true;
         volumes = [
           "${volumes.${dbName}.ref}:/var/lib/postgresql/18/data:rw"
@@ -63,7 +65,6 @@ in
 
     pods.${podName} = aln.lib.mkPod podName {
       podConfig = {
-        userns = "auto";
         publishPorts = [ "9080:80" ];
       };
       unitConfig = {
@@ -72,11 +73,11 @@ in
       };
     };
 
-    images.${name} = aln.lib.mkImage name {
+    images.${name} = aln.lib.mkImage {
       imageConfig.image = "docker.io/authelia/authelia:latest";
     };
 
-    images.${dbName} = aln.lib.mkImage dbName {
+    images.${dbName} = aln.lib.mkImage {
       imageConfig.image = "docker.io/library/postgres:18.1";
     };
 
