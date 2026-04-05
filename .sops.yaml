@@ -16,7 +16,7 @@ creation_rules:
 #
 # User secrets to be used by hosts
 - path_regex: secrets/user/allenl/for_hosts.yaml
-  age: [*allenl, *barrybenson, *sops_admin]
+  age: [*allenl, *sops_admin]  #OTOD: Add theseus
 - path_regex: secrets/user/al/for_hosts.yaml
   age: [*al, *barrybenson, *sops_admin]
 - path_regex: secrets/user/pig/for_hosts.yaml
