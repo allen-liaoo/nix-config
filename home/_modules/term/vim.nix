@@ -17,19 +17,18 @@
       commentary          # gcc to comment line, or gc + motion
       indentLine
       surround            # motion + s + char, i.e. cs( = change surrounding to (
-      vim-airline         # bottom bar
-      vim-airline-themes
+      lightline-vim       # status line
       vim-cool            # disable search highlight after search
       vim-signify         # git diff on the left
       vim-peekaboo        # show contents of registers when pressing "
     ];
   
     extraConfig = ''
-      set backupcopy=yes
-      set softtabstop=2
       set autoindent
+      set backupcopy=yes
       set noshiftround
       set showcmd
+      set softtabstop=2
       syntax on
   
       nnoremap <Esc> :noh<CR>
@@ -38,10 +37,10 @@
       autocmd ModeChanged *:[vV\x16]* set nonumber
       autocmd ModeChanged [vV\x16]*:* set number
 
-      " vim airline themes
-      let g:airline_theme='base16'
+      let g:lightline = {
+      \ 'colorscheme': 'one',
+      \ }
 
-      " configure char to display for indent
       let g:indentLine_char = '¦'
 
       " show git diff relative to head (dont ignore staged changes)

@@ -1,11 +1,16 @@
-# Should run xremap as non root, otherwide programs get launched as root
+# TODO: Move to NixOS Module
+# It doesnt make sense as a hm module because it remaps keys across user boundaries
+# SHOULD NOT LAUNCH PROGRAMS with xremap; use WM
+# run as root: programs always launch as root
+# run as user: programs always launch as one user
 { lib, aln, ... }:
 
 lib.optionalAttrs (with aln.ctx.user.inGroup; input && wheel) {
   services.xremap = {
     enable = true;
-    #withNiri = true;
-    #userName = aln.ctx.user.name;
+    withNiri = true;
+    watch = true; # watch for devices
+    mouse = true; # watch for mouse
 
     # Modmap for single key rebinds
     config.modmap = [

@@ -142,8 +142,8 @@
     };
 
     stylix = {
-      url = "github:nix-community/stylix"; #/release-25.11";
-      inputs.nixpkgs.follows = "nixpkgs-unstable"; # WARNING: This may break things as stylix's nixpkgs should match home-manager (stable)
+      url = "github:nix-community/stylix/release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     vicinae = {

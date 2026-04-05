@@ -1,4 +1,4 @@
-{ aln, ... }:
+{ lib, aln, ... }:
 
 lib.optionalAttrs (aln.ctx.host.is.gui) {
   # Stylix with gtk needs dconf enabled

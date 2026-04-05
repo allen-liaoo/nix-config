@@ -6,13 +6,21 @@
     use24HourClock = false;
     showSeconds = false;
     useFahrenheit = false;
+
+    centeringMode = "index"; # mode to center bar widgets
     showWorkspaceIndex = false;
     showWorkspaceName = false;
     showWorkspaceApps = true;
     showOccupiedWorkspacesOnly = true;
     maxWorkspaceIcons = 3;
     workspaceDragReorder = true;
-    centeringMode = "index"; # mode to center bar widgets
+    workspaceColorMode = "none";
+    workspaceOccupiedColorMode = "none";
+    workspaceUnfocusedColorMode = "default";
+    workspaceUrgentColorMode = "default";
+    workspaceFocusedBorderEnabled = true;
+    workspaceFocusedBorderColor = "surfaceText";
+    workspaceFocusedBorderThickness = 2;
     
     controlCenterWidgets = [
       { id = "brightnessSlider"; width = 50; }
@@ -48,6 +56,7 @@
       widgetOutlineEnabled = false;
       autoHide = false;
       scrollEnabled = false;
+      openOnOverview = true;
   
       leftWidgets = [
         { id = "clock"; }

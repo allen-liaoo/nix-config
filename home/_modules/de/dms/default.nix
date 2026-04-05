@@ -7,8 +7,8 @@ in
 {
   imports = aln.lib.listDirFiles ./.;
 
-  # WARNING: stylix styling for dms does not exist for stable version of home manager  
-  stylix.targets.dank-material-shell.enable = true;
+  # waiting for this target; currently in nixpkgs-unstable (not in 25.11)
+  #stylix.targets.dank-material-shell.enable = true;
 
   # dms is ride or die for niri
   systemd.user.services.dms = {
@@ -35,12 +35,17 @@ in
     enableCalendarEvents = false; # khal - need extra setup
     enableClipboardPaste = false; # wtype ; use vicinae for this
 
-    #session = {
+    session = {
+      showThirdPartyPlugins = true;
+      hiddenTrayIds = [
+        "spotify-client"
+      ];
       #wallpaperPath = aln.lib.relToRoot "assets/wallpaper/wallpaper-night.jpg";
-    #};
+    };
 
     settings = {
-      dynamicTheming = true;
+      dynamicTheming = false;
+      soundsEnabled = false;
       clipboardSettings.disabled = true;
 
       blurredWallpaperLayer = false;
@@ -48,6 +53,8 @@ in
 
       niriOverviewOverlayEnabled = false; # disable dms launcher
       appIdSubstitutions = [];
+
+      waveProgressEnabled = false;
 
       # Cannot figure out how to set position and interval of this widget
       # Bugged: need to set its instance?

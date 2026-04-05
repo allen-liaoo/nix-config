@@ -13,7 +13,7 @@ window-rule {
 
 window-rule {
   match is-active=false
-  opacity 0.87
+  opacity 0.94
 }
 
 // Open DMS windows as floating by default
@@ -28,6 +28,25 @@ window-rule {
   match app-id=r#"Alacritty"#
   open-maximized false
   open-maximized-to-edges false
+}
+
+layer-rule {
+  match namespace="^dms:control-center$"
+  match namespace="^dms:battery$"
+  match namespace="^dms:vpn$"
+  match namespace="^dms:process-list-popout$"
+  match namespace="^dms:popout$"
+  match namespace="^dms:tray-menu-window$"
+  opacity 0.9
+}
+
+layer-rule{
+  match namespace="^dms:toast$"
+  match namespace="^dms:notification-popup$"
+  match namespace="^dms:osd$"
+  match namespace="^dms:dash$"
+  match namespace="^dms:notification-center-popout$"
+  opacity 0.95
 }
 
 // No client side decorations
