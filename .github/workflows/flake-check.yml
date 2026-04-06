@@ -3,10 +3,12 @@ name: nix-flake-check
 on:
   push:
     paths:
+      - ".github/**"
       - "**.nix"
       - "flake.lock"
   pull_request:
     paths:
+      - ".github/**"
       - "**.nix"
       - "flake.lock"
 
@@ -21,6 +23,8 @@ jobs:
         uses: nixbuild/nix-quick-install-action@v34
         with:
           nix_conf: |
+            experimental-features = nix-command flakes pipe-operators
+            accept-flake-config = true
             keep-env-derivations = true
             keep-outputs = true
 
@@ -34,5 +38,4 @@ jobs:
           purge-prefixes: nix-${{ runner.os }}-
 
       - name: Run checks
-        working-directory: nix
-        run: nix shell nixpkgs#just -c just flake-check
+        run: nix shell nixpkgs#just -c just fl-check
