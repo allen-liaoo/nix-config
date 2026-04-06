@@ -15,7 +15,7 @@
   # LUKS devices
   boot.initrd.luks.devices = {
     cryptroot = {
-      device = "/dev/disk/by-partlabel/disk-main-luks";
+      device = lib.mkForce "/dev/disk/by-partlabel/disk-main-luks";
       allowDiscards = true;
     };
   };
