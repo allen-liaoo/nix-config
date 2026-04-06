@@ -41,6 +41,7 @@ in
       os = "nixos";
       system = "x86_64-linux";
       gpu = "amd";
+      tags = [ "gui" ];
       users = with users; [
         (allenl // {
           groups = [ "wheel" "input" ];
@@ -55,7 +56,7 @@ in
       os = "nixos";
       system = "x86_64-linux";
       gpu = "amd";
-      tags = [];
+      tags = [ "gui" ];
       users = with users; [
         (pig // {
           groups = [ "wheel" "input" ];

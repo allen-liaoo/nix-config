@@ -25,11 +25,12 @@ in
 
       volume."/mnt/${disk_root}" = {
         snapshot_dir = "@snapshots";
+        # TODO: Change to module
         subvolume = lib.optionalAttrs aln.ctx.host.is.server {
-          # servers use impermance, only need to snapshot containers
+          # servers only need to snapshot containers
           "@containers" = {};
-        } // (lib.optionalAttrs (!aln.ctx.host.is.server)) {
-          # nonservers - no impermanence 
+        } // (lib.optionalAttrs (!aln.ctx.host.is.server) {
+          # nonservers 
           "@" = {};
           "@home" = {};
         };

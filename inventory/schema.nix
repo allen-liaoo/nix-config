@@ -19,6 +19,7 @@ let
   ];
   hostTags = [
     "impermanent"
+    "gui" # otherwise assumed headless
   ];
   userTags = [
   ];
@@ -122,12 +123,12 @@ in with lib.types; {
           is = {
             headless = lib.mkOption {
               type = bool;
-              default = config.kind == "server";
+              default = !config.hasTag.gui;
               readOnly = true;
             };
             gui = lib.mkOption {
               type = bool;
-              default = config.kind != "server";
+              default = config.hasTag.gui;
               readOnly = true;
             };
           } //
