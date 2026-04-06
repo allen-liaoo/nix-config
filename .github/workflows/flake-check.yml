@@ -2,7 +2,13 @@ name: nix-flake-check
 
 on:
   push:
+    paths:
+      - "**.nix"
+      - "flake.lock"
   pull_request:
+    paths:
+      - "**.nix"
+      - "flake.lock"
 
 jobs:
   flake-check:
