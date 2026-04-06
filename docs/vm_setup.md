@@ -27,7 +27,7 @@ sudo virsh destroy guinea ; sudo virsh undefine guinea --remove-all-storage --nv
 3. Install OS and reboot (see install doc)
 4. SSH into VM once OS is installed (statically set to `192.168.122.100`)
 
-If SSH is not working:
+#### If SSH is not working
 
 3. Make VM console temporarily accessible in host (run in VM console):
 ```
@@ -41,3 +41,13 @@ I have to set stty dimensions to prevent vanishing lines:
 ```
 stty rows 40 cols 181
 ```
+
+#### Enable graphic display
+Under `Display Spice`:
+- Type: `spice server`
+- Listen type: `none`
+- OpenGL: `checked`
+
+Under `Video XQL`:
+- Model: `Virtio`
+- 3D Acceleration: `checked`
