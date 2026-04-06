@@ -26,14 +26,14 @@ in
       volume."/mnt/${disk_root}" = {
         snapshot_dir = "@snapshots";
         # TODO: Change to module
-        subvolume = lib.optionalAttrs aln.ctx.host.is.server {
+        subvolume = (lib.optionalAttrs aln.ctx.host.is.server {
           # servers only need to snapshot containers
           "@containers" = {};
-        } // (lib.optionalAttrs (!aln.ctx.host.is.server) {
+        }) // (lib.optionalAttrs (!aln.ctx.host.is.server) {
           # nonservers 
           "@" = {};
           "@home" = {};
-        };
+        });
       };
     };
   };
