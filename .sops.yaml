@@ -7,7 +7,7 @@ keys:
   - &al age1srvnkxt9eekss9wr5n60ftcpxug6yk2rvkzzytf0majvqqys098qgg2645
   - &pig age1ypf3q60pdwtj3j5c2zmd79z6ukwzlknm268gdkh3uj5mj89qyq7qw3pgmx
 # ALWAYS add this key to secrets
-- &sops_admin age1w4vzylklxkw07e0n86sz5yf7ug9akpq93z8uqwm83v4rvg7hhutqh05mgc
+- &sops_admin age1ry8em8ruxwnu2alusm29dhh9mtytcfhwyrmxp0g3zd2zg8rzkqms3kh2gh
 
 creation_rules:
 # IMPORTANT: ORDER MATTERS
