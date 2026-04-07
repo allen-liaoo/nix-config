@@ -3,7 +3,7 @@ My NixOS and Home-Manager Configs
 
 ## Features
 ### Nix-Specific
-- Declarative disks partitioning via [disko](https://github.com/nix-community/disko/) [⌃](host/barrybenson/disko.nix).
+- Declarative disks partitioning via [disko](https://github.com/nix-community/disko/) with BTRFS and LUKS [⌃](host/theseus/disko.nix).
 - Secrets management via [sops-nix](https://github.com/Mic92/sops-nix) [⌃](host/_modules/sops.nix),[⌃](home/_modules/sops.nix).
 - Wipe storage on boot via [impermanence](https://github.com/nix-community/impermanence) [⌃](host/_modules/impermanence.nix).
 
@@ -61,12 +61,12 @@ This allows symlinking out of store files to work correctly, and sidesteps file 
 ## Hosts
 | Name | Hardware | Type | Note | Status |
 |---|---|---|----|---|
-|barrybenson|Beelink Mini PC (Ryzen 7 5700U)|server|Headless homeserver mostly running containers. Containers setup in progress.|🚧|
-|theseus|Framework Laptop 13 (Ryzen AI 5 340)|laptop|Currently on Fedora with Home Manager.|🚧|
+|barrybenson|Beelink Mini PC (Ryzen 7 5700U)|server|Headless homeserver with impermanence. Containers setup in progress.|🚧|
+|theseus|Framework Laptop 13 (Ryzen AI 5 340)|laptop|On NixOS with LUKS.|✅|
 |louisxvi|Macbook Air M1|laptop|Broke the screen so now it's running "headless". Plan to test Asahi with NixOS. Currently retired.|📝|
 |ionobro|IONOS VPS (1G RAM, 10G Storage)|server|Acts as the router/firewall for barrybenson who is behind CGNAT. I need a minimal NixOS install to run wireguard + nftables.|📝|
 |guinea|QEMU/KVM|VM|Used to build this config. On theseus.|🚧|
-
+✅ - Setup completed 
 🚧 - In progress
 📝 - Planing
 
