@@ -37,15 +37,12 @@ in
 
     session = {
       showThirdPartyPlugins = true;
-      hiddenTrayIds = [
-        "spotify-client"
-      ];
       # TODO: Remove when stylix is updated
-      wallpaperPath = aln.lib.relToRoot "assets/wallpaper/wallpaper-night.jpg";
+      wallpaperPath = aln.lib.relToRoot "assets/wallpaper/wallpaper-blue.jpg";
     };
 
     settings = {
-      #enableFprint = aln.ctx.host.equals aln.inventory.hosts.theseus; # TODO: refactor or keep track of this
+      enableFprint = aln.ctx.host.equals aln.inventory.hosts.theseus; # TODO: refactor or keep track of this
       maxFprintTries = 8;
       loginctlLockIntegration = true;
       lockBeforeSuspend = true;

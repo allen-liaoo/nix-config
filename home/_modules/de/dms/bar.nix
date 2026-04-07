@@ -1,6 +1,14 @@
 { lib, ... }:
 
 {
+  programs.dank-material-shell.session = {
+    hiddenTrayIds = [
+      "Fcitx"
+      "spotify-client"
+      "chrome_status_icon_1::Vesktop"
+      "qBittorrent::DL speed: 0 B/s\nUP speed: 0 B/s"
+    ];
+  };
   programs.dank-material-shell.settings = {
     clockDateFormat = "ddd MMM d"; # weekday month date
     use24HourClock = false;
@@ -67,8 +75,8 @@
         { id = "workspaceSwitcher"; }
       ];
       rightWidgets = [
-        { id = "privacyIndicator"; }
         { id = "systemTray"; }
+        { id = "privacyIndicator"; }
         { id = "keyboard_layout_name"; keyboardLayoutNameCompactMode = true; }
         { id = "battery"; }
         {

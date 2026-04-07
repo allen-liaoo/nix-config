@@ -92,7 +92,9 @@ in
         manage-shortcuts.entrypoints.create.enabled = false;
         power.entrypoints = {
           lock = { enabled = true; alias = "l"; };
-          suspend.enabled = true;
+          suspend = { enabled = true; alias = "s"; };
+          power-off = { enabled = true; alias = "p"; };
+          reboot = { enabled = true; alias = "r"; };
           hibernate.enabled = false;
           sleep.enabled = false;
           soft-reboot.enabled = false;
