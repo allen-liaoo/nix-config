@@ -1,6 +1,10 @@
-{ config, lib, pkgs, aln, ... }:
+{ inputs, config, lib, pkgs, aln, ... }:
 
 {
+  imports = [
+    inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
+  ];
+
   time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";
 

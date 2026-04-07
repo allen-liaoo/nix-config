@@ -1,6 +1,7 @@
 keys:
 - hosts:
   - &barrybenson age1vp49j2ldya959hu5xvxl2j0sdwtduazhzm7naylkxvvc9ywth93s7h9zux
+  - &theseus age1rmfp3lft6jnphmqhs52v2flwdau43x7ks2cxzyype2atzpv5ny5q99apxl
   - &guinea age1e6pdc4qve40wrpltpc8966c6lljwl2m047vkjz2zh7eyy5sy5caqvy0t60
 - users:
   - &allenl age16cn0jup2jdfejqxm0l60tkvtnd43t8aaqvs39qpy5q2nruvzu4jqvr8d7u
@@ -13,10 +14,10 @@ creation_rules:
 # IMPORTANT: ORDER MATTERS
 # once a file is matched by regex, subsequent matches do not contribute to who can read a file. specific rules first
 # Paths should be relative to location of this file
-#
+
 # User secrets to be used by hosts
 - path_regex: secrets/user/allenl/for_hosts.yaml
-  age: [*allenl, *sops_admin]  #OTOD: Add theseus
+  age: [*allenl, *theseus, *sops_admin]
 - path_regex: secrets/user/al/for_hosts.yaml
   age: [*al, *barrybenson, *sops_admin]
 - path_regex: secrets/user/pig/for_hosts.yaml
@@ -24,7 +25,7 @@ creation_rules:
 
 # host/user can read
 - path_regex: secrets/host/theseus+
-  age: [*sops_admin]
+  age: [*theseus, *sops_admin]
 - path_regex: secrets/host/barrybenson+
   age: [*barrybenson, *sops_admin]
 - path_regex: secrets/host/guinea+
