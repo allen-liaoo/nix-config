@@ -45,6 +45,26 @@ in
     };
 
     settings = {
+      loginctlLockIntegration = true;
+      lockBeforeSuspend = true;
+      fadeToLockEnabled = true; # fade to lock screen before locking
+      fadeToLockGracePeriod = 5; # sec
+      fadeToDpmsEnabled = true; # fade to lock screen before turning off monitors
+      fadeToDpmsGracePeriod = 5;
+
+      # automatic lock, turn off monitor, or suspend (sec)
+      batteryMonitorTimeout = 300;
+      batteryLockTimeout = 180;
+      batterySuspendTimeout = 600;
+      batterySuspendBehavior = 0; # 0: suspend, 1: hibernate, 2: suspend then hibernate
+
+      acMonitorTimeout = 600;
+      acLockTimeout = 300;
+      acSuspendTimeout = 1800;
+      acSuspendBehavior = 0;
+
+      powerMenuDefaultAction = "lock";
+
       dynamicTheming = false;
       soundsEnabled = false;
       clipboardSettings.disabled = true;

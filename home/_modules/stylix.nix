@@ -20,9 +20,9 @@
 
     icons = {
       enable = true;
-      package = pkgs.whitesur-icon-theme;
-      dark = "Whitesur";
-      light = "Whitesur";
+      package = pkgs.adwaita-icon-theme;
+      dark = "Adwaita";
+      light = "Adwaita";
     };
 
     # stylix also adds fonts to certain programs who don't read from fontconfig
