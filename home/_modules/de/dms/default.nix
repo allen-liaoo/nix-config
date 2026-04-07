@@ -45,6 +45,8 @@ in
     };
 
     settings = {
+      #enableFprint = aln.ctx.host.equals aln.inventory.hosts.theseus; # TODO: refactor or keep track of this
+      maxFprintTries = 8;
       loginctlLockIntegration = true;
       lockBeforeSuspend = true;
       fadeToLockEnabled = true; # fade to lock screen before locking

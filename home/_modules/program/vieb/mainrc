@@ -1,6 +1,6 @@
 set newtaburl="vieb://help"
 
-nmap q <:close>
+nmap x <:close>
 
 nmap J <previousTab>
 nmap K <nextTab>

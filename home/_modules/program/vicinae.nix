@@ -91,11 +91,11 @@ in
         };
         manage-shortcuts.entrypoints.create.enabled = false;
         power.entrypoints = {
+          lock = { enabled = true; alias = "l"; };
+          suspend.enabled = true;
           hibernate.enabled = false;
-          lock.enabled = false;
           sleep.enabled = false;
           soft-reboot.enabled = false;
-          suspend.enabled = false;
         };
       };
     };
