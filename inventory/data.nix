@@ -26,7 +26,7 @@ in
       os = "nixos";
       system = "x86_64-linux";
       gpu = "amd";
-      tags = [ "gui" "impermanent" ];
+      tags = [ "impermanent" ];
       users = with users; [ 
         (al // {
           groups = [ "wheel" "input" ];
