@@ -2,12 +2,8 @@
 My NixOS and Home-Manager Configs
 
 ## Features
-### Nix-Specific
-- Declarative disks partitioning via [disko](https://github.com/nix-community/disko/) with BTRFS and LUKS [⌃](host/theseus/disko.nix).
-- Secrets management via [sops-nix](https://github.com/Mic92/sops-nix) [⌃](host/_modules/sops.nix),[⌃](home/_modules/sops.nix).
-- Wipe storage on boot via [impermanence](https://github.com/nix-community/impermanence) [⌃](host/_modules/impermanence.nix).
-
 ### Dots
+**Standalone** Home Manager modules
 | Feature | Component |
 |---|---|
 | Shell | [Fish](https://fishshell.com)[⌃](/home/_modules/shell/fish.nix), [Starship](https://starship.rs)[⌃](/home/_modules/shell/starship.nix) |
@@ -30,11 +26,16 @@ Podman containers via [quadlet-nix](https://seiarotg.github.io/quadlet-nix/) (Ro
 | Music Stats | Multi-scrobbler, Koito (TODO) |
 | RSS Aggregator | FreshRSS (TODO) |
 
+### Nix-Specific
+- Declarative disks partitioning via [disko](https://github.com/nix-community/disko/) with BTRFS and LUKS [⌃](host/theseus/disko.nix).
+- Secrets management via [sops-nix](https://github.com/Mic92/sops-nix) [⌃](host/_modules/sops.nix),[⌃](home/_modules/sops.nix).
+- Wipe storage on boot via [impermanence](https://github.com/nix-community/impermanence) [⌃](host/_modules/impermanence.nix).
+
 ## Structure
 - `hosts` - NixOS host configurations, including hardware, system configs and host-specific user configs
   - `_modules` - nix modules for nixos configs
   - `<hostname>` - configs for the host, should contain `configuration.nix` and others
-- `home` - **Standalone** user home configurations, should include as many general-purposed programs/services as possible for portability
+- `home` - Home manager configurations, should include as many general-purposed programs/services as possible for portability
   - `_modules` - nix modules for home-manager configs 
   - `<username>` - configs for the user, including host-specific user configs
 - `lib`- custom library functions
@@ -65,7 +66,7 @@ This allows symlinking out of store files to work correctly, and sidesteps file 
 |barrybenson|Beelink Mini PC (Ryzen 7 5700U)|server|Headless homeserver with impermanence. Containers setup in progress.|🚧|
 |louisxvi|Macbook Air M1|laptop|Broke the screen so now it's "headless". Plan to run Asahi with NixOS. Currently retired.|-|
 |ionobro|IONOS VPS (1G RAM, 10G Storage)|server|Acts as the router/firewall for barrybenson who is behind CGNAT. I need a minimal NixOS install to run wireguard + nftables.|📝|
-|guinea|QEMU/KVM|VM|Used to build this config. Need to configure declaratively on theseus.|🚧|
+|guinea|QEMU/KVM|VM|Used to build this config. Need to configure declaratively on theseus.|✅|
 
 ✅ - Setup completed 
 🚧 - In progress
@@ -80,5 +81,6 @@ This allows symlinking out of store files to work correctly, and sidesteps file 
 - Each NixOS host should have access to the secret `nix_config_deploy` which is used to push to this repository. Additionally, each authorized user should have this secret under `~/.ssh` as well.
 
 ### Networking
-`barrybenson` hosts services and lives behind CGNAT. It connects via a wireguard tunnel to `ionobro`, who forwards packets destined to the right port to `barrybenson` without source nat. Then `barrybenson` replies through tunnel. On the `barrybenson` side, its outgoing traffic goes through wireguard if it is a response from some incoming traffic from the tunnel, otherwise it goes through the normal internet. This is achieved via nftables for policy based routing of Wireguard[⌃](/host/barrybenson/network.nix).
+`barrybenson` hosts services and lives behind CGNAT. It connects via a wireguard tunnel to `ionobro`, who forwards packets destined to the right port to `barrybenson` without source nat. 
+Then `barrybenson` replies through tunnel. On the `barrybenson` side, its outgoing traffic goes through wireguard if it is a response from some incoming traffic from the tunnel, otherwise it goes through the normal internet. This is achieved via nftables for policy based routing of Wireguard[⌃](/host/barrybenson/network.nix).
 
