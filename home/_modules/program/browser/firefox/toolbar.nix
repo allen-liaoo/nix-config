@@ -1,5 +1,4 @@
-{ ... }:
-
+# In .profiles.<name>.settings
 let
   extns = map
     (ext: 
@@ -10,7 +9,7 @@ let
     (import ./extensions_meta.nix);
 in
 {
-  programs.firefox.profiles.default.settings."browser.uiCustomization.state" = {
+  "browser.uiCustomization.state" = {
     placements = {
       nav-bar = [
         "back-button"

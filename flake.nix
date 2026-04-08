@@ -54,6 +54,7 @@
             ./home/${userName}
 
             dms.homeModules.dank-material-shell
+            glide.homeModules.default
             quadlet-nix.homeManagerModules.quadlet
             sops-nix.homeManagerModules.sops
             stylix.homeModules.stylix
