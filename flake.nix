@@ -55,6 +55,7 @@
 
             dms.homeModules.dank-material-shell
             glide.homeModules.default
+            nix-index-database.homeModules.default
             quadlet-nix.homeManagerModules.quadlet
             sops-nix.homeManagerModules.sops
             stylix.homeModules.stylix
@@ -121,6 +122,12 @@
       inputs.nixpkgs.follows = "home-manager"; # dependency not needed for use
       inputs.home-manager.follows = "nixpkgs";
     };
+
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
 
     nixgl = {
       url = "github:guibou/nixGL";
