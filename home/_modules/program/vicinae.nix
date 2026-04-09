@@ -60,6 +60,11 @@ in
       ];
   
       providers = {
+        applications = {
+          preferences = {
+            defaultAction = "launch";
+          };
+        };
         clipboard = {
           preferences = {
             monitoring = false;

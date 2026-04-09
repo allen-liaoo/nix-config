@@ -30,6 +30,8 @@ creation_rules:
   age: [*barrybenson, *sops_admin]
 - path_regex: secrets/host/guinea+
   age: [*guinea, *sops_admin]
+- path_regex: secrets/host/wifi_passwd.yaml
+  age: [*theseus, *sops_admin]
 - path_regex: secrets/user/allenl+
   age: [*allenl, *sops_admin]
 - path_regex: secrets/user/al/+
