@@ -57,10 +57,11 @@ in
         elements = { 10.0.0.0/24, 10.0.10.0/24 }
       }
       chain wg_input {
-        tcp dport { 80, 443 } accept
+        # NOTE: Need to specify ct protocol and ct original proto-dst (dport)
+        # because using "tcp dport" directly would end up not matching due to podman dnat
+        ct protocol tcp ct original proto-dst { 80, 443 } accept
         # private ports
-        ip saddr @WG_SUBNETS tcp dport { 53 } accept
-        ip saddr @WG_SUBNETS udp dport { 53 } accept
+        ct original ip saddr @WG_SUBNETS ct original proto-dst { 53 } accept # tcp or udp
       }
       chain forward {
         type filter hook forward priority 30; policy drop;
