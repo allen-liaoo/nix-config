@@ -10,13 +10,14 @@
     lib.optionalAttrs (aln.ctx.user.can.deployNixConfig) {
       "gh_nix_config" = {
         hostname = "github.com";
+        identitiesOnly = true;
         identityFile = config.sops.secrets.nix_config_deploy.path;
       };
     } // {
       "*" = {
         forwardAgent = false;
-        addKeysToAgent = "yes";
         checkHostIP = true;
+        identitiesOnly = true;
         serverAliveCountMax = 3;
         serverAliveInterval = 60; # sec
         controlMaster = "auto"; # connection multiplexing
