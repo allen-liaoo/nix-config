@@ -34,6 +34,7 @@
     just
     lsof
     nmap
+    pciutils
     procps          # ps, top
     tcpdump
     traceroute
