@@ -21,7 +21,7 @@ in
   programs.dank-material-shell = {
     enable = true;
 
-    package = dms-pkg;
+    #package = dms-pkg; # wait for this option to be changed in nixos stable
 
     systemd = {
       enable = true;
