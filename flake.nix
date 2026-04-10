@@ -140,6 +140,12 @@
 
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
+    # my nixvim config
+    nvimx = {
+      url = "github:allen-liaoo/nvimx";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -19,6 +19,7 @@ nix-shell -p just
 ```
 just disko <hostname>
 ```
+If using LUKS, need to set LUKS password.
 #### Obtain ssh host key and hardware-configuration
 5. (host) Generate host ssh key that will be used to boot (by sops nix). This will print an age key. Copy it.
 ```
