@@ -1,5 +1,9 @@
-{ config, aln, ... }:
+{ lib, config, aln, ... }:
 
+let
+  # NM connections/profiles
+  connections = [ "hotspot_a16n" "wifi_eduroam" ];
+in
 {
   networking.networkmanager = {
     logLevel = "INFO";
@@ -19,7 +23,10 @@
             id = "a16n";
             type = "wifi";
           };
-          wifi.ssid = "a16n";
+          wifi = {
+            mode = "infrastructure";
+            ssid = "a16n";
+          };
           wifi-security = {
             auth-alg = "open";
             key-mgmt = "wpa-psk";
@@ -31,36 +38,56 @@
             method = "auto";
           };
         };
-        # TODO: school (always auth timeout)
-        # eduroam = {
-        #   connection = {
-        #     id = "eduroam";
-        #     type = "wifi";
-        #   };
-        #   wifi = {
-        #     ssid = "eduroam";
-        #   };
-        # };
+        eduroam = {
+          connection = {
+            id = "eduroam";
+            type = "wifi";
+          };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "eduroam";
+          };
+          wifi-security = {
+            auth-alg = "open";
+            key-mgmt = "wpa-eap";
+          };
+          "802-1x" = {
+            domain-suffix-match = "umn.edu";
+            eap = "peap;"; # trailing ; is important!!
+            identity = "liao0144@umn.edu";
+            password = "$PASSWD_WIFI_EDUROAM";
+            phase2-auth="mschapv2";
+          };
+          ipv4.method = "auto";
+          ipv6 = {
+            addr-gen-mode = "default";
+            method = "auto";
+          };
+        };
       };
       # Fine to use env vars since the generated .nmconnection files are not in store
       environmentFiles = [ config.sops.templates."nm-secrets-env".path ];
 
       # NOTE: DO NOT RECOMMEND USING ensureProfiles.secrets (which uses nm-file-secret-agent)
       # as it is unreliable especially if nmcli is called with a different user than the one who runs the agent (root)
+      # See: https://github.com/lilioid/nm-file-secret-agent/issues/4
+
       # To use it: set flags indicate field is agent owned (i.e. wifi-security.psk-flags = 1)
       # And it runs a systemd service "nm-file-secret-agent"
       # Note that in ensureProfiles.secrets, match names dont use aliases like above
     };
   };
 
-  sops.secrets = {
-    passwd_hotspot_a16n = {
-      sopsFile = aln.lib.relToRoot "secrets/host/wifi_passwd.yaml";
-      key = "hotspot_a16n";
-    };
-  };
+  sops.secrets = connections
+    |> map (key: {
+      "passwd_${key}" = {
+        sopsFile = aln.lib.relToRoot "secrets/host/wifi_passwd.yaml";
+        inherit key;
+      };
+    })
+    |> lib.mergeAttrsList;
 
-  sops.templates."nm-secrets-env".content = ''
-    PASSWD_HOTSPOT_A16N=${config.sops.placeholder.passwd_hotspot_a16n}
-  '';
+  sops.templates."nm-secrets-env".content = connections 
+    |> map (key: "PASSWD_${lib.toUpper key}=${config.sops.placeholder."passwd_${key}"}")
+    |> lib.concatMapStrings (s: s + "\n");
 }

@@ -4,7 +4,6 @@
   programs.dank-material-shell.greeter = {
     enable = true;
     compositor.name = "niri";
-    package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
     configFiles = [
       "/var/cache/dms-greeter/settings.json"
       "/var/cache/dms-greeter/session.json"
