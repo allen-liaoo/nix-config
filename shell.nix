@@ -11,7 +11,7 @@ system:
         
         nvimx.nixd = { # enable lsp to lookup options and pkgs
           nixpkgsName = "nixpkgs";
-          nixosConfKey = if userName == "" then hostName else ""; # dont load nixos configs if using home manager
+          nixosConfKey = hostName; # would like to disable this but nixd does not support it
           hmConfKey = if userName != "" then "${userName}@${hostName}" else "";
         };
       };
