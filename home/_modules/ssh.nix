@@ -13,6 +13,11 @@
         identitiesOnly = true;
         identityFile = config.sops.secrets.nix_config_deploy.path;
       };
+      "github.com" = {
+        # disable connection multiplexing to prevent private key conflicts
+        controlMaster = "no";
+        controlPath = "no"; # necessary when there is an existing master
+      };
     } // {
       "*" = {
         forwardAgent = false;
