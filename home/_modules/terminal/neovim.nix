@@ -10,4 +10,9 @@
     "vi" = lib.mkForce "nvim";
     "vim" = lib.mkForce "nvim"; 
   };
+
+  home.sessionVariables = {
+    "EDITOR" = lib.mkForce "nvim";
+    "VISUAL" = lib.mkForce "nvim";
+  };
 }
