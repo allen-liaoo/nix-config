@@ -43,6 +43,10 @@ let
         type = listOf (enum userTags);
         default = [ ];
       };
+      data = lib.mkOption {
+        type = attrs;
+        default = { };
+      };
     };
   });
   # Type of user tied to specific host
@@ -102,7 +106,7 @@ in with lib.types; {
           };
           users = lib.mkOption {
             type = listOf (submodule hostUserOpts);
-            default = [];
+            default = [ ];
           };
           tags = lib.mkOption {
             type = listOf (enum hostTags);

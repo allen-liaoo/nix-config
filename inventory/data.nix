@@ -5,6 +5,9 @@ let
   users = {
     allenl = { # full privileges
       name = "allenl";
+      data = {
+        ssh_pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPevSDBLs3jQWYE8sq2Dx6S2qQ4VzpKn5RvS1zXkGfiW wcliaw610@gmail.com";
+      };
     };
     al = { # restricted
       name = "al";

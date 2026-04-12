@@ -48,6 +48,6 @@
   users.users.root.password = "fgh";
   services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
   users.users.${aln.inventory.users.pig.name}.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPevSDBLs3jQWYE8sq2Dx6S2qQ4VzpKn5RvS1zXkGfiW wcliaw610@gmail.com"
+    aln.inventory.users.allenl.data.ssh_pubkey
   ];
 }

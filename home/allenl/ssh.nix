@@ -9,21 +9,21 @@ let
 in
 {
   programs.ssh.matchBlocks = {
-    "vps" = {
+    "ionobro" = {
       hostname = "allenl.me";
       user = "allenliao"; # TODO: Change to al
     };
-    "homeserver" = {
-      hostname = "10.0.0.2";
-      user = "al";
-      proxyJump = "vps";
+    "barrybenson" = with aln.inventory; {
+      hostname = hosts.barrybenson.data.wg_ip;
+      user = users.al.name;
+      proxyJump = "ionobro";
       serverAliveInterval = 60;
       serverAliveCountMax = 10;
     };
-    "guinea" = {
-      hostname = "192.168.122.100";
-      user = "pig";
-    };
+    # "guinea" = {
+    #   hostname = "192.168.122.100";
+    #   user = "pig";
+    # };
     "*".identityFile = (map (key: 
       config.sops.secrets."ssh_allenl_${key}".path
     ) keys);
