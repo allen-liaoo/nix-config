@@ -24,6 +24,7 @@ Podman containers via [quadlet-nix](https://seiarotg.github.io/quadlet-nix/) (Ro
 | Adblock | [Pihole](https://pi-hole.net/)[⌃](/host/barrybenson/selfhosted/pihole.nix) |
 | CalDAV/CardDAV | Radicale (TODO) |
 | Music Stats | Multi-scrobbler, Koito (TODO) |
+| Torrent Indexer | [Jackett](https://github.com/Jackett/Jackett)[⌃](/host/barrybenson/selfhosted/jackett.nix) |
 | RSS Aggregator | FreshRSS (TODO) |
 
 ### Nix-Specific
@@ -63,7 +64,7 @@ This allows symlinking out of store files to work correctly, and sidesteps file 
 | Name | Hardware | Type | Note | Status |
 |---|---|---|----|---|
 |theseus|Framework Laptop 13 (Ryzen AI 5 340)|laptop|My daily driver. NixOS + LUKS + everything in dots.|✅|
-|barrybenson|Beelink Mini PC (Ryzen 7 5700U)|server|Headless homeserver with impermanence. Containers setup in progress.|🚧|
+|barrybenson|Beelink Mini PC (Ryzen 7 5700U)|server|Headless homeserver with impermanence. Containers setup in progress.|✅|
 |louisxvi|Macbook Air M1|laptop|Broke the screen so now it's "headless". Plan to run Asahi with NixOS. Currently retired.|-|
 |ionobro|IONOS VPS (1G RAM, 10G Storage)|server|Acts as the router/firewall for barrybenson who is behind CGNAT. I need a minimal NixOS install to run wireguard + nftables.|📝|
 |guinea|QEMU/KVM|VM|Used to build this config. Need to configure declaratively on theseus.|✅|
@@ -78,9 +79,9 @@ This allows symlinking out of store files to work correctly, and sidesteps file 
 - Each NixOS host generates a ssh host key on initial install, which is used to derive the host age key (on boot). The age key is then used to decrypt host secrets. 
 - For each user of a NixOS host, the host decrypts the user's password for its own setup, and the user's age key to a location that the home-manager sops expects (`~/.config/sops/age/key.txt`).
   The user's home manager config then uses the age key to decrypt secrets.
-- Each NixOS host should have access to the secret `nix_config_deploy` which is used to push to this repository. Additionally, each authorized user should have this secret under `~/.ssh` as well.
+- Each user should have access to the secret `nix_config_deploy` which is used to push to this repository. Additionally, each authorized user should have this secret under `~/.ssh` as well.
 
-### Networking
-`barrybenson` hosts services and lives behind CGNAT. It connects via a wireguard tunnel to `ionobro`, who forwards packets destined to the right port to `barrybenson` without source nat. 
-Then `barrybenson` replies through tunnel. On the `barrybenson` side, its outgoing traffic goes through wireguard if it is a response from some incoming traffic from the tunnel, otherwise it goes through the normal internet. This is achieved via nftables for policy based routing of Wireguard[⌃](/host/barrybenson/network.nix).
+### Networking`barrybenson` hosts services and lives behind CGNAT. It connects via a wireguard tunnel to `ionobro`, who forwards packets destined to the right port to `barrybenson` without source nat. 
+Then `barrybenson` replies through tunnel. On the `barrybenson` side, its outgoing traffic goes through wireguard if it is a response from some incoming traffic from the tunnel, otherwise it goes through the normal internet. 
+This is achieved via nftables for policy based routing of Wireguard[⌃](/host/barrybenson/network.nix).
 
