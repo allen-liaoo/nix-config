@@ -74,6 +74,18 @@ in
       niriOverviewOverlayEnabled = false; # disable dms launcher
       appIdSubstitutions = [];
 
+
+      notificationRules = [
+        {
+          pattern = "Spotify";
+          enabled = true;
+          field = "appName";
+          matchType = "contains";
+          action = "no_history";
+          urgency = "default";
+        }
+      ];
+
       # Cannot figure out how to set position and interval of this widget
       # Bugged: need to set its instance?
       systemMonitorEnabled = false;

@@ -5,7 +5,7 @@
     inputs.nvimx.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
-  programs.fish.shellAbbrs = {
+  programs.fish.shellAliases = {
     "v" = lib.mkForce "nvim";
     "vi" = lib.mkForce "nvim";
     "vim" = lib.mkForce "nvim"; 
