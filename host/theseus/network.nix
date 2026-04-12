@@ -19,7 +19,9 @@ in
       # NOTE: trailing ":" is important in "list of ..." fields
       profiles = {
         # home server (DNS)
-        wg_hs_dns = {
+        wg_hs_dns = let 
+          ionobro = aln.inventory.hosts.ionobro.data; 
+        in {
           connection = {
             id = "wg_hs_dns";
             type = "wireguard";
@@ -27,14 +29,14 @@ in
           };
           wireguard.private-key = "$WG_PRIVKEY";
           # TODO: Centralize keys and ips
-          "wireguard-peer.CQvf4nOExaVkaiWpsxx0OctRU4N51xRYdKUoKteegQk=" = {
-            endpoint = "74.208.158.11:51820"; 
-            allowed-ips = "10.0.0.1/24;";
+          "wireguard-peer.${ionobro.wg_pubkey}" = {
+            endpoint = "${ionobro.ip}:${ionobro.wg_port}"; 
+            allowed-ips = "${ionobro.wg_ip}/24;";
             persistent-keepalive = 25;
           };
-          ipv4 = {
-            address1 = "10.0.10.1/32";
-            dns = "10.0.0.1;";
+          ipv4 = with aln.ctx.host.data; {
+            address1 = "${wg_ip}/32";
+            dns = "${ionobro.wg_ip};"; # trailing ";"!
             method = "manual";
           };
           ipv6.method = "disabled";

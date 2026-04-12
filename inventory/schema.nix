@@ -153,6 +153,10 @@ in with lib.types; {
               readOnly = true;
             };
           }) gpus));
+          data = lib.mkOption {
+            type = attrs;
+            default = { };
+          };
         };
       }));
     };

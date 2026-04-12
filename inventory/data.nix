@@ -3,12 +3,10 @@
 
 let 
   users = {
-    # me (full privileges)
-    allenl = {
+    allenl = { # full privileges
       name = "allenl";
     };
-    # me on servers (i.e. restricted no ssh priv keys)
-    al = {
+    al = { # restricted
       name = "al";
     };
     # vm user
@@ -33,6 +31,10 @@ in
           can.deployNixConfig = true;
         })
       ];
+      data = {
+        wg_ip = "10.0.0.2";
+        wg_pubkey = "g5YbSa4WFbDcnssaKGitMyN62ybeGGE/Mi3QDCkA5GA=";
+      };
     };
     # laptop
     theseus = {
@@ -48,6 +50,24 @@ in
           can.deployNixConfig = true;
         })
       ];
+      data = {
+        wg_ip = "10.0.10.1";
+        wg_pubkey = "UKasTBMjRPnxeyI0xHPbYGM6JuqW6+7fZUDOF5Fjslw=";
+      };
+    };
+    # vps (not on nixos and not managed by )
+    ionobro = {
+      name = "ionobro";
+      kind = "server";
+      os = "generic-linux";
+      system = "x86_64-linux";
+      tags = [ "impermanent" ];
+      data = {
+        ip = "74.208.158.11";
+        wg_port = "51820";
+        wg_ip = "10.0.0.1";
+        wg_pubkey = "CQvf4nOExaVkaiWpsxx0OctRU4N51xRYdKUoKteegQk=";
+      };
     };
     # vm
     guinea = {

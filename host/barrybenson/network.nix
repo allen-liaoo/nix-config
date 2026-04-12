@@ -102,10 +102,10 @@ in
       RouteTable = "off"; # dont configure route for outgoing packets destined for AllowedIPs
       # Don't configure FirewallMark (which marks out outgoing packets) 
     };
-    wireguardPeers = [{
+    wireguardPeers = with aln.inventory.hosts.ionobro.data; [{
       # vps
-      PublicKey = "CQvf4nOExaVkaiWpsxx0OctRU4N51xRYdKUoKteegQk=";
-      Endpoint = "74.208.158.11:51820";
+      PublicKey = wg_pubkey;
+      Endpoint = "${ip}:${wg_port}";
       AllowedIPs = [ "0.0.0.0/0" ]; # this wouldve route everything through tunnel if RouteTable is not off
       PersistentKeepalive = 25;
     }];
@@ -113,7 +113,7 @@ in
   # Wireguard network routing
   systemd.network.networks."20-${wg_intf}" = {
     matchConfig.Name = "${wg_intf}";
-    address = [ "10.0.0.2/24" ]; # this server's wg ip
+    address = [ "${aln.ctx.host.data.wg_ip}/24" ]; # this server's wg ip
     routingPolicyRules = [{
       FirewallMark = wg_mark; # for any packet marked
       Table = wg_table; # use this table
@@ -122,7 +122,7 @@ in
     routes = [{
       Table = wg_table; # route traffic of this table
       Destination = "0.0.0.0/0"; # default route for any traffic
-      Gateway = "10.0.0.1"; # go to vps ip
+      Gateway = aln.inventory.hosts.ionobro.data.wg_ip; # go to vps ip
     }];
   };
   environment.systemPackages = with pkgs; [ wireguard-tools ];
