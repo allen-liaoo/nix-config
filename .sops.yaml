@@ -15,7 +15,7 @@ creation_rules:
 # once a file is matched by regex, subsequent matches do not contribute to who can read a file. specific rules first
 # Paths should be relative to location of this file
 
-# User secrets to be used by hosts
+# user secrets used by hosts
 - path_regex: secrets/user/allenl/for_hosts.yaml
   age: [*allenl, *theseus, *sops_admin]
 - path_regex: secrets/user/al/for_hosts.yaml
@@ -23,15 +23,19 @@ creation_rules:
 - path_regex: secrets/user/pig/for_hosts.yaml
   age: [*pig, *guinea, *sops_admin]
 
-# host/user can read
+# host secrets
 - path_regex: secrets/host/theseus+
+  age: [*theseus, *sops_admin]
+- path_regex: secrets/host/wifi_passwd.yaml
   age: [*theseus, *sops_admin]
 - path_regex: secrets/host/barrybenson+
   age: [*barrybenson, *sops_admin]
+- path_regex: secrets/host/ionobro+
+  age: [*sops_admin]
 - path_regex: secrets/host/guinea+
   age: [*guinea, *sops_admin]
-- path_regex: secrets/host/wifi_passwd.yaml
-  age: [*theseus, *sops_admin]
+
+# user secrets
 - path_regex: secrets/user/allenl+
   age: [*allenl, *sops_admin]
 - path_regex: secrets/user/al/+
