@@ -692,14 +692,15 @@
         "nixpkgs": [
           "nixpkgs-unstable"
         ],
-        "nixvim": "nixvim"
+        "nixvim": "nixvim",
+        "tabby": "tabby"
       },
       "locked": {
-        "lastModified": 1775955971,
-        "narHash": "sha256-zF0ojnwkTlUtJd1TkoQNFZZYDbkFDb50FBcjX/2YMh4=",
+        "lastModified": 1776094476,
+        "narHash": "sha256-GuQzbtUaMIRfVPU1aCamHFsTJDJ3dhaq1FFXD2vt+J4=",
         "owner": "allen-liaoo",
         "repo": "nvimx",
-        "rev": "e77d87881f54ef08a2a2b808284269bf1730bb6f",
+        "rev": "3bb53992415555f6250b9a55b8f29246241eb36b",
         "type": "github"
       },
       "original": {
@@ -928,6 +929,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tabby": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767817260,
+        "narHash": "sha256-YAnw/FpSLqKjvnug4bdvbGHpYWwtDKuh/DmxhK+PSu0=",
+        "owner": "nanozuki",
+        "repo": "tabby.nvim",
+        "rev": "3c130e1fcb598ce39a9c292847e32d7c3987cf11",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nanozuki",
+        "repo": "tabby.nvim",
         "type": "github"
       }
     },

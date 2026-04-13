@@ -1,8 +1,12 @@
-{ lib, pkgs, inputs, ... }:
+{ lib, pkgs, inputs, config, ... }:
 
+let
+  nvimxPkg = inputs.nvimx.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  #extended-nixvim = nvimxPkg.extend config.stylix.targets.nixvim.exportedModule;
+in
 {
   home.packages = [
-    inputs.nvimx.packages.${pkgs.stdenv.hostPlatform.system}.default
+    nvimxPkg
   ];
 
   programs.fish.shellAliases = {
