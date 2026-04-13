@@ -7,7 +7,7 @@ My NixOS and Home-Manager Configs
 | Feature | Component |
 |---|---|
 | Shell | [Fish](https://fishshell.com)[⌃](/home/_modules/shell/fish.nix), [Starship](https://starship.rs)[⌃](/home/_modules/shell/starship.nix) |
-| Editor | [Vim](https://www.vim.org)[⌃](/home/_modules/terminal/vim.nix) |
+| Editor | [Neovim](https://neovim.io)[⌃](https://github.com/allen-liaoo/nvimx), [Vim](https://www.vim.org)[⌃](/home/_modules/terminal/vim.nix) |
 | WM | [Niri](https://niri-wm.github.io/niri/)[⌃](/home/_modules/de/niri) |
 | Desktop Shell | [DankMaterialShell](https://danklinux.com/)[⌃](/home/_modules/de/dms) |
 | Theming | [Stylix](https://nix-community.github.io/stylix/)[⌃](/home/_modules/stylix.nix) |
