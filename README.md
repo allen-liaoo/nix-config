@@ -33,16 +33,17 @@ Podman containers via [quadlet-nix](https://seiarotg.github.io/quadlet-nix/) (Ro
 - Wipe storage on boot via [impermanence](https://github.com/nix-community/impermanence) [⌃](host/_modules/fs/impermanence.nix).
 
 ## Structure
-- `hosts` - NixOS host configurations, including hardware, system configs and host-specific user configs
+- `host` - NixOS host configurations
   - `_modules` - nix modules for nixos configs
-  - `<hostname>` - configs for the host, should contain `configuration.nix` and others
-- `home` - Home manager configurations, should include as many general-purposed programs/services as possible for portability
-  - `_modules` - nix modules for home-manager configs 
+  - `<hostname>` - configs for each host
+- `home` - Home manager configurations
+  - `_modules` - nix modules for standalone home-manager configs 
   - `<username>` - configs for the user, including host-specific user configs
-- `lib`- custom library functions
-- `inventory` - metadata about users and hosts and valid pairings, used by home/nixos modules, users, and hosts
-- `ctx.nix` - supplies current eval context to NixOS/Home modules (i.e. current host and user inventory info)
+- `lib`- my library functions
+- `inventory` - metadata about users, hosts, and valid pairings
+- `ctx.nix` - supplies current eval context to NixOS/Home modules (i.e. current host and user info from inventory)
 - `secrets` and `.sops.yaml` - read by sops-nix for host and user secrets at various sops.nix files throughout home and host directories
+- `shell.nix` - devShells of this repository, notably including distinct Neovim instances and development environments for `home` and `host` dir (activated via direnv).
 
 ### `aln` namespace
 To avoid namespace conflicts, everything I want to expose to nix modules live inside of the namespace `aln`.
@@ -81,7 +82,8 @@ This allows symlinking out of store files to work correctly, and sidesteps file 
   The user's home manager config then uses the age key to decrypt secrets.
 - Each user should have access to the secret `nix_config_deploy` which is used to push to this repository. Additionally, each authorized user should have this secret under `~/.ssh` as well.
 
-### Networking`barrybenson` hosts services and lives behind CGNAT. It connects via a wireguard tunnel to `ionobro`, who forwards packets destined to the right port to `barrybenson` without source nat. 
+### Networking
+`barrybenson` hosts services and lives behind CGNAT. It connects via a wireguard tunnel to `ionobro`, who forwards packets destined to the right port to `barrybenson` without source nat. 
 Then `barrybenson` replies through tunnel. On the `barrybenson` side, its outgoing traffic goes through wireguard if it is a response from some incoming traffic from the tunnel, otherwise it goes through the normal internet. 
 This is achieved via nftables for policy based routing of Wireguard[⌃](/host/barrybenson/network.nix).
 
