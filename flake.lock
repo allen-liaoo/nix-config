@@ -572,6 +572,22 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1775888245,
+        "narHash": "sha256-nwASzrRDD1JBEu/o8ekKYEXm/oJW6EMCzCRdrwcLe90=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "13043924aaa7375ce482ebe2494338e058282925",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1772542754,
         "narHash": "sha256-WGV2hy+VIeQsYXpsLjdr4GvHv5eECMISX1zKLTedhdg=",
         "owner": "NixOS",
@@ -586,7 +602,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1768564909,
         "narHash": "sha256-Kell/SpJYVkHWMvnhqJz/8DqQg2b6PguxVWOuadbHCc=",
@@ -602,7 +618,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1767026758,
         "narHash": "sha256-7fsac/f7nh/VaKJ/qm3I338+wAJa/3J57cOGpXi0Sbg=",
@@ -621,10 +637,7 @@
     "nixvim": {
       "inputs": {
         "flake-parts": "flake-parts_2",
-        "nixpkgs": [
-          "nvimx",
-          "nixpkgs"
-        ],
+        "nixpkgs": "nixpkgs_2",
         "systems": "systems_3"
       },
       "locked": {
@@ -696,11 +709,11 @@
         "tabby": "tabby"
       },
       "locked": {
-        "lastModified": 1776094476,
-        "narHash": "sha256-GuQzbtUaMIRfVPU1aCamHFsTJDJ3dhaq1FFXD2vt+J4=",
+        "lastModified": 1776139166,
+        "narHash": "sha256-ov6zaKWuyt0WLHzNS2nstMpLYptMG8Y2GYJoXqheWUY=",
         "owner": "allen-liaoo",
         "repo": "nvimx",
-        "rev": "3bb53992415555f6250b9a55b8f29246241eb36b",
+        "rev": "0153f71e411240cf1e786c5e87cd7ccce644f4dc",
         "type": "github"
       },
       "original": {
@@ -1031,7 +1044,7 @@
     },
     "vicinae": {
       "inputs": {
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "systems": "systems_5"
       },
       "locked": {
@@ -1051,7 +1064,7 @@
     "vicinae-extensions": {
       "inputs": {
         "flake-compat": "flake-compat_2",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_4",
         "systems": "systems_6",
         "vicinae": "vicinae_2"
       },
@@ -1135,7 +1148,7 @@
       "inputs": {
         "crane": "crane_2",
         "flake-parts": "flake-parts_4",
-        "nixpkgs": "nixpkgs_4",
+        "nixpkgs": "nixpkgs_5",
         "xremap": "xremap_2"
       },
       "locked": {

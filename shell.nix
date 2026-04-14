@@ -7,13 +7,15 @@ system:
   mkDevShell = { hostName, userName ? "" }:
     let
       nixvimModule = {
-        imports = [ inputs.nvimx.nixvimModules.nix ];
-        
-        nvimx.nixd = { # enable lsp to lookup options and pkgs
-          nixpkgsName = "nixpkgs";
-          nixosConfKey = hostName; # would like to disable this but nixd does not support it
-          hmConfKey = if userName != "" then "${userName}@${hostName}" else "";
+        nvimx.nix = {
+          enable = true;
+          nixd = {
+            nixpkgsName = "nixpkgs";
+            nixosConfKey = hostName; # would like to disable this but nixd does not support it
+            hmConfKey = if userName != "" then "${userName}@${hostName}" else "";
+          };
         };
+        nvimx.configs.enable = true;
       };
 
       nixvimPkg = inputs.nvimx.makeNixvimWithModule system nixvimModule;
