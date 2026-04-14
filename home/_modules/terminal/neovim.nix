@@ -1,8 +1,9 @@
 { lib, pkgs, inputs, config, ... }:
 
 let
-  nvimxPkg = inputs.nvimx.packages.${pkgs.stdenv.hostPlatform.system}.default;
-  #extended-nixvim = nvimxPkg.extend config.stylix.targets.nixvim.exportedModule;
+  nvimxPkg = with inputs.nvimx; makeNixvimWithModule (pkgs.stdenv.hostPlatform.system) {
+    nvimx.shells.enable = true;
+  };
 in
 {
   home.packages = [
