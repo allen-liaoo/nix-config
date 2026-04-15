@@ -53,13 +53,14 @@ in
       search_files_in_root = true;
   
       favorites = [
-        "core:search-emojis"
-        #"@mmazzarolo/store.raycast.unicode-symbols:index"
-        "files:search"
         "clipboard:history"
+        "files:search"
+        "core:search-emojis"
+        "@mmazzarolo/unicode-symbols:index"
       ];
   
       providers = {
+        "@mmazzarolo/unicode-symbols".entrypoints.index.alias = "u";
         applications = {
           preferences = {
             defaultAction = "launch";
@@ -67,7 +68,7 @@ in
         };
         clipboard = {
           preferences = {
-            monitoring = false;
+            monitoring = true;
             encryption = true; # TODO: keychain?
             eraseOnStartup = true;
             ignorePasswords = true;
@@ -84,8 +85,8 @@ in
             oauth-token-store.enabled = false;
             open-config-file.enabled = false;
             open-default-config.enabled = false;
-            report-bug.enabled = false;
-            search-emojis.alias = "e";
+            report-bug.enabled = true;
+            search-emojis = { enabled = true; alias = "e"; };
             sponsor.enabled = false;
           };
         };
