@@ -3,8 +3,9 @@
  {
   home.packages = with pkgs; [
     bitwarden-desktop
-    loupe
-    nautilus
+    gpu-screen-recorder
+    loupe # image viewer
+    nautilus # file browser
     signal-desktop
     spotify
     zotero

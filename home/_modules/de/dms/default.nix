@@ -28,6 +28,9 @@ in
       restartIfChanged = true;
     };
 
+    # managePluginSettings = true;
+    # plugins = { };
+
     enableSystemMonitoring = true; # uses dms's dgop
     dgop.package = inputs.dgop.packages.${pkgs.stdenv.hostPlatform.system}.default; # fix for dgop not in nixpkgs stable
     enableVPN = true;
