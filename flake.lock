@@ -709,11 +709,11 @@
         "tabby": "tabby"
       },
       "locked": {
-        "lastModified": 1776139166,
-        "narHash": "sha256-ov6zaKWuyt0WLHzNS2nstMpLYptMG8Y2GYJoXqheWUY=",
+        "lastModified": 1776228720,
+        "narHash": "sha256-cYqVTcyctm0Dequg65bo5+/gZ7My10RR9qrfBpGnF/Y=",
         "owner": "allen-liaoo",
         "repo": "nvimx",
-        "rev": "0153f71e411240cf1e786c5e87cd7ccce644f4dc",
+        "rev": "7dccedccda75dccd9ef618fc08c677a6c71dd056",
         "type": "github"
       },
       "original": {

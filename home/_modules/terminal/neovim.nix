@@ -2,6 +2,7 @@
 
 let
   nvimxPkg = with inputs.nvimx; makeNixvimWithModule (pkgs.stdenv.hostPlatform.system) {
+    nvimx.configs.enable = true;
     nvimx.shells.enable = true;
   };
 in
