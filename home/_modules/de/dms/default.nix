@@ -68,6 +68,7 @@ in
       clipboardSettings.disabled = true;
       displayNameMode = "model"; # recognize monitors by model rather than name
 
+      popupTransparency = 0.4;
       currentThemeName = "dynamic";
       currentThemeCategory = "dynamic";
       matugenScheme = "scheme-neutral";

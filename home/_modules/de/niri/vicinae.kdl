@@ -1,0 +1,18 @@
+// launcher
+layer-rule {
+  match namespace=r#"^vicinae$"#
+  background-effect {
+    blur true
+    xray false
+  }
+}
+
+// vicinae settings
+window-rule {
+  match app-id="vicinae"
+  background-effect {
+    blur true
+    xray false
+  }
+}
+

@@ -1,0 +1,78 @@
+// No client side decorations
+prefer-no-csd
+
+blur {
+  passes 0
+  offset 3
+}
+
+window-rule {
+  geometry-corner-radius 1
+  clip-to-geometry true
+  open-maximized-to-edges true
+}
+
+window-rule {
+  match is-active=false
+  background-effect {
+    blur true
+    xray false
+  }
+  opacity 0.85
+}
+
+layout {
+  gaps 0
+  background-color "transparent"
+
+  always-center-single-column
+  empty-workspace-above-first
+
+  preset-column-widths {
+    proportion 0.33333
+    proportion 0.5
+    proportion 0.66667
+    proportion 1.0
+  }
+
+  preset-window-heights {
+    proportion 0.5
+    proportion 1.0
+  }
+  
+  focus-ring {
+    off
+  }
+
+  tab-indicator {
+    width 3
+    gap -2
+  }
+}
+
+overview {
+  workspace-shadow {
+    off
+  }
+}
+
+gestures {
+  hot-corners {
+    off
+  }
+}
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+input {
+  touchpad {
+    tap // tap for left click (instead of needing to physically click trackpad)
+    dwt // disable when typing
+    drag false // disable tap-and-drap
+    tap-button-map "left-right-middle" // (1-finger)-(2-finger)-(3-finger) tap corresponds to mouse buttons
+    natural-scroll
+  }
+  workspace-auto-back-and-forth // switching to same workspace twice will switch back to original workspace
+}

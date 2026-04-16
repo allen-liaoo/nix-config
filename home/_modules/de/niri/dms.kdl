@@ -1,0 +1,74 @@
+// Open DMS windows as floating by default
+window-rule {
+  match app-id=r#"org.quickshell$"#
+  open-floating true
+}
+
+// Put wallpaper in overview
+layer-rule {
+  match namespace="^quickshell$"
+  place-within-backdrop true
+}
+
+layer-rule {
+  match namespace="^dms:dash$"
+  //match namespace="^dms:control-center$" // has vertical region
+  match namespace="^dms:battery$"
+  match namespace="^dms:vpn$"
+  match namespace="^dms:process-list-popout$"
+  match namespace="^dms:popout$"
+  match namespace="^dms:tray-menu-window$"
+  //match namespace="^dms:toast$" // has region around
+  match namespace="^dms:notification-popup"
+  //match namespace="^dms:osd$" // has region around
+  //match namespace="^dms:notification-center-popout$" // has vertical region
+  background-effect {
+    blur true
+    xray false
+  }
+}
+
+binds {
+  Mod+Slash hotkey-overlay-title="Settings" {
+    spawn "dms" "ipc" "call" "settings" "focusOrToggle";
+  }
+  Mod+N hotkey-overlay-title="Notification Center" {
+    spawn "dms" "ipc" "call" "notifications" "toggle";
+  }
+
+  // Player
+  XF86AudioPlay allow-when-locked=true {
+    spawn "dms" "ipc" "call" "mpris" "playPause";
+  }
+  XF86AudioStop allow-when-locked=true {
+    spawn "dms" "ipc" "call" "mpris" "stop";
+  }
+  XF86AudioPrev allow-when-locked=true {
+    spawn "dms" "ipc" "call" "mpris" "previous";
+  }
+  XF86AudioNext allow-when-locked=true {
+    spawn "dms" "ipc" "call" "mpris" "next";
+  }
+
+  // Audio Controls
+  XF86AudioRaiseVolume allow-when-locked=true {
+    spawn "dms" "ipc" "call" "audio" "increment" "3";
+  }
+  XF86AudioLowerVolume allow-when-locked=true {
+    spawn "dms" "ipc" "call" "audio" "decrement" "3";
+  }
+  XF86AudioMute allow-when-locked=true {
+    spawn "dms" "ipc" "call" "audio" "mute";
+  }
+  XF86AudioMicMute allow-when-locked=true {
+    spawn "dms" "ipc" "call" "audio" "micmute";
+  }
+
+  // Brightness Controls
+  XF86MonBrightnessUp allow-when-locked=true {
+    spawn "dms" "ipc" "call" "brightness" "increment" "5" "";
+  }
+  XF86MonBrightnessDown allow-when-locked=true {
+    spawn "dms" "ipc" "call" "brightness" "decrement" "5" "";
+  }
+}
