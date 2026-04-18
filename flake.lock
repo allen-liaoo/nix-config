@@ -728,14 +728,15 @@
           "nixpkgs-unstable"
         ],
         "nixvim": "nixvim",
-        "tabby": "tabby"
+        "tabby": "tabby",
+        "winresize": "winresize"
       },
       "locked": {
-        "lastModified": 1776364256,
-        "narHash": "sha256-+ZC8usIYLkUluv2a1FnFD/vDXhFLIAAV6D6OmGjzz5s=",
+        "lastModified": 1776543599,
+        "narHash": "sha256-u2W9XCsZhJVMOnqbvGQiljxV407lIHtooOzzR7lgA/M=",
         "owner": "allen-liaoo",
         "repo": "nvimx",
-        "rev": "7676edde138f9cf67d2b621de39e8c79cef29c60",
+        "rev": "e420cbee2d6ced60b512c0af7895e33d1ec2c889",
         "type": "github"
       },
       "original": {
@@ -1184,6 +1185,22 @@
       "original": {
         "owner": "QNetITQ",
         "repo": "WaveFox",
+        "type": "github"
+      }
+    },
+    "winresize": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1736192087,
+        "narHash": "sha256-g+2JAzYiTOA2MuJ3eSdnTWObx96UAheFsslVvQgitFI=",
+        "owner": "pogyomo",
+        "repo": "winresize.nvim",
+        "rev": "df7ac44154565b0bb91a8894ffe57c5a93689f10",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pogyomo",
+        "repo": "winresize.nvim",
         "type": "github"
       }
     },

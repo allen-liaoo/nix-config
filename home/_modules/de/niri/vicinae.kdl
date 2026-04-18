@@ -1,4 +1,8 @@
 // launcher
+binds {
+  Mod+X repeat=false { spawn "vicinae" "toggle"; }
+}
+
 layer-rule {
   match namespace=r#"^vicinae$"#
   background-effect {

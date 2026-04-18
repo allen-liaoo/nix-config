@@ -1,9 +1,6 @@
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    Mod+T hotkey-overlay-title="Open a Terminal" { spawn "~/.nix-profile/bin/alacritty"; }
-    Mod+X repeat=false { spawn "vicinae" "toggle"; }
-
     Mod+O repeat=false { toggle-overview; }
     Mod+Q repeat=false { close-window; }
     Mod+Shift+E { quit; } // quit niri

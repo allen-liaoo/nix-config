@@ -1,0 +1,10 @@
+patch:
+
+  schema_list:
+    - schema: bopomofo
+
+  ascii_composer/good_old_caps_lock: false
+  ascii_composer/switch_key: noop # disable any key to switch to english
+
+  key_binder/bindings:
+    - { when: always, accept: Shift+space, toggle: simplification }

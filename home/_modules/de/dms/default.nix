@@ -45,6 +45,15 @@ in
     };
 
     settings = {
+      blurEnabled = true;
+      blurBorderOpacity = 0;
+      popupTransparency = 0.4;
+      currentThemeName = "dynamic";
+      currentThemeCategory = "dynamic";
+      matugenScheme = "scheme-neutral";
+      blurredWallpaperLayer = false;
+      blurredWallpaperOnOverview = true;
+
       enableFprint = aln.ctx.host.equals aln.inventory.hosts.theseus; # TODO: refactor or keep track of this
       maxFprintTries = 8;
       loginctlLockIntegration = true;
@@ -55,27 +64,18 @@ in
       fadeToDpmsGracePeriod = 5;
 
       # automatic lock, turn off monitor, or suspend (sec)
-      batteryMonitorTimeout = 300;
       batteryLockTimeout = 180;
+      batteryMonitorTimeout = 300;
       batterySuspendTimeout = 600;
       batterySuspendBehavior = 0; # 0: suspend, 1: hibernate, 2: suspend then hibernate
-      acMonitorTimeout = 600;
       acLockTimeout = 300;
+      acMonitorTimeout = 600;
       acSuspendTimeout = 1800;
       acSuspendBehavior = 0;
       powerMenuDefaultAction = "lock";
 
       clipboardSettings.disabled = true;
       displayNameMode = "model"; # recognize monitors by model rather than name
-
-      blurEnabled = true;
-      blurBorderOpacity = 0;
-      popupTransparency = 0.4;
-      currentThemeName = "dynamic";
-      currentThemeCategory = "dynamic";
-      matugenScheme = "scheme-neutral";
-      blurredWallpaperLayer = false;
-      blurredWallpaperOnOverview = true;
 
       niriOverviewOverlayEnabled = false; # disable dms launcher
       appIdSubstitutions = [];
