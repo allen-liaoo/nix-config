@@ -54,6 +54,7 @@ in
 
       launcher_window = {
         opacity = 0.6;
+        client_side_decorations.enabled = false;
       };
   
       favorites = [
@@ -68,6 +69,9 @@ in
         applications = {
           preferences = {
             defaultAction = "launch";
+          };
+          entrypoints = {
+            firefox.alias = "b";
           };
         };
         clipboard = {

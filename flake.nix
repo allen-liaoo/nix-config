@@ -77,13 +77,14 @@
 
   inputs = {
     dms = {
-      url = "github:AvengeMedia/DankMaterialShell/stable";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.quickshell.follows = "quickshell";
     };
 
     dgop = { # for dms' system monitor
       url = "github:AvengeMedia/dgop";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     disko = {
@@ -146,6 +147,11 @@
     };
 
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
+
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/quickshell/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";

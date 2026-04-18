@@ -11,29 +11,26 @@ layer-rule {
 }
 
 layer-rule {
-  match namespace="^dms:dash$"
-  //match namespace="^dms:control-center$" // has vertical region
-  match namespace="^dms:battery$"
-  match namespace="^dms:vpn$"
-  match namespace="^dms:process-list-popout$"
-  match namespace="^dms:popout$"
-  match namespace="^dms:tray-menu-window$"
-  //match namespace="^dms:toast$" // has region around
-  match namespace="^dms:notification-popup"
-  //match namespace="^dms:osd$" // has region around
-  //match namespace="^dms:notification-center-popout$" // has vertical region
+  match namespace="^dms:"
+  background-effect {
+    xray false // dont blur as many dms layers are bigger than their actual area on screen
+  }
+}
+
+layer-rule {
+  match namespace="dms:bar"
   background-effect {
     blur true
-    xray false
+    xray true
   }
 }
 
 binds {
-  Mod+Slash hotkey-overlay-title="Settings" {
-    spawn "dms" "ipc" "call" "settings" "focusOrToggle";
-  }
   Mod+N hotkey-overlay-title="Notification Center" {
     spawn "dms" "ipc" "call" "notifications" "toggle";
+  }
+  XF86AudioMedia {
+    spawn "dms" "ipc" "call" "settings" "focusOrToggle";
   }
 
   // Player

@@ -68,6 +68,8 @@ in
       clipboardSettings.disabled = true;
       displayNameMode = "model"; # recognize monitors by model rather than name
 
+      blurEnabled = true;
+      blurBorderOpacity = 0;
       popupTransparency = 0.4;
       currentThemeName = "dynamic";
       currentThemeCategory = "dynamic";

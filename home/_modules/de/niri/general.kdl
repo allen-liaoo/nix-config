@@ -2,8 +2,8 @@
 prefer-no-csd
 
 blur {
-  passes 0
-  offset 3
+  passes 2
+  offset 2.3
 }
 
 window-rule {
