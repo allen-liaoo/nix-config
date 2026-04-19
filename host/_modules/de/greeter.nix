@@ -21,7 +21,7 @@
       #currentThemeName = "blue";
     });
     sessionJson = pkgs.writeText "session.json" (builtins.toJSON {
-      wallpaperPath = aln.lib.relToRoot "assets/wallpaper/wallpaper-night.jpg";
+      wallpaperPath = aln.lib.relToRoot "assets/wallpaper/roadtrip.jpg";
       wallpaperFillMode = "PreserveAspectCrop";
     });
   in [
