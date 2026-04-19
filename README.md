@@ -3,7 +3,7 @@ My NixOS and Home-Manager Configs
 
 ## Features
 ### Dots
-**Standalone** Home Manager modules
+**Standalone** home-manager modules.
 | Feature | Component |
 |---|---|
 | Shell | [Fish](https://fishshell.com)[⌃](/home/_modules/shell/fish.nix), [Starship](https://starship.rs)[⌃](/home/_modules/shell/starship.nix) |
@@ -13,7 +13,7 @@ My NixOS and Home-Manager Configs
 | Theming | [Stylix](https://nix-community.github.io/stylix/)[⌃](/home/_modules/stylix.nix) |
 | Terminal | [Alacritty](https://alacritty.org/)[⌃](/home/_modules/program/alacritty.nix) |
 | Launcher | [Vicinae](https://www.vicinae.com/)[⌃](/home/_modules/program/vicinae.nix) |
-| Browser | [Firefox](https://www.firefox.com)[⌃](/home/_modules/program/firefox) |
+| Browser | [Firefox](https://www.firefox.com)[⌃](/home/_modules/program/browser/firefox) |
 
 ### Self-Hosted
 Podman containers via [quadlet-nix](https://seiarotg.github.io/quadlet-nix/) (Rootful, `userns=auto`)[⌃](host/barrybenson/selfhosted).

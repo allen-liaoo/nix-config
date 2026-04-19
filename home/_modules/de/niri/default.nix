@@ -8,16 +8,14 @@ let
         spawn "${config.programs.alacritty.package}/bin/alacritty";
       }
     }
-    window-rule { // Open terminal in single column
+    window-rule { 
       match app-id=r#"Alacritty"#
-      open-maximized false
+      // Open terminal in single column
+      open-maximized false 
       open-maximized-to-edges false
-    }
-    layer-rule {
-      match namespace=r#"^Alacritty$"#
       background-effect {
         blur true
-        xray false
+        xray true
       }
     }
   '';

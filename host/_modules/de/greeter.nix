@@ -16,7 +16,6 @@
 
   # symlink dms-greeter config files
   systemd.tmpfiles.rules = let 
-    dmsDir = "/dms-greeter/";
     settingsJson = pkgs.writeText "settings.json" (builtins.toJSON {
       #currentThemeName = "blue";
     });
