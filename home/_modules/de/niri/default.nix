@@ -13,10 +13,39 @@ let
       open-maximized false
       open-maximized-to-edges false
     }
+    layer-rule {
+      match namespace=r#"^Alacritty$"#
+      background-effect {
+        blur true
+        xray false
+      }
+    }
+  '';
+  vicinaeKdl = pkgs.writeText "vicinae.kdl" ''
+    binds {
+      Mod+X repeat=false { spawn "${config.services.vicinae.package}/bin/vicinae" "toggle"; }
+    }
+    // launcher
+    layer-rule {
+      match namespace=r#"^vicinae$"#
+      background-effect {
+        blur true
+        xray false
+      }
+    }
+    // vicinae settings
+    window-rule {
+      match app-id="vicinae"
+      background-effect {
+        blur true
+        xray true
+      }
+      geometry-corner-radius 5
+    }
   '';
   fcitx5Kdl = pkgs.writeText "fcitx5.kdl" ''
     binds {
-      Mod+Space hotkey-overlay-title="Switch input method" {
+      Ctrl+Space hotkey-overlay-title="Switch input method" {
         spawn "${config.i18n.inputMethod.fcitx5.fcitx5-with-addons}/bin/fcitx5-remote" "-t";
       }
     }
@@ -35,7 +64,7 @@ in
     ''}
 
     ${lib.optionalString (config.services.vicinae.enable) ''
-    include "${symlinkTo ./vicinae.kdl}"
+    include "${vicinaeKdl}"
     ''}
 
     ${lib.optionalString (config.programs.alacritty.enable) ''

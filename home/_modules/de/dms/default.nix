@@ -21,7 +21,7 @@ in
   programs.dank-material-shell = {
     enable = true;
 
-    #package = dms-pkg; # wait for this option to be changed in nixos stable
+    package = dms-pkg; # wait for this option to be changed in nixos stable
 
     systemd = {
       enable = true;
@@ -41,7 +41,7 @@ in
     session = {
       showThirdPartyPlugins = true;
       # TODO: Remove when stylix is updated
-      wallpaperPath = aln.lib.relToRoot "assets/wallpaper/wallpaper-blue.jpg";
+      wallpaperPath = aln.lib.relToRoot "assets/wallpaper/roadtrip.jpg";
     };
 
     settings = {
@@ -50,7 +50,7 @@ in
       popupTransparency = 0.4;
       currentThemeName = "dynamic";
       currentThemeCategory = "dynamic";
-      matugenScheme = "scheme-neutral";
+      matugenScheme = "scheme-expressive";
       blurredWallpaperLayer = false;
       blurredWallpaperOnOverview = true;
 

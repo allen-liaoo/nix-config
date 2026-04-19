@@ -3,7 +3,9 @@ prefer-no-csd
 
 blur {
   passes 3
-  offset 1.5
+  offset 3
+  noise 0.0
+  saturation 1.7
 }
 
 window-rule {
@@ -16,7 +18,7 @@ window-rule {
   match is-active=false
   background-effect {
     blur true
-    xray false
+    xray true
   }
   opacity 0.85
 }
@@ -63,7 +65,7 @@ gestures {
 }
 
 hotkey-overlay {
-    skip-at-startup
+  skip-at-startup
 }
 
 input {

@@ -56,6 +56,8 @@ in
         opacity = 0.6;
         client_side_decorations.enabled = false;
       };
+
+      font.normal.size = 11;
   
       favorites = [
         "clipboard:history"

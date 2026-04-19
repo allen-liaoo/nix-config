@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   programs.alacritty = {
@@ -7,8 +7,9 @@
     settings = {
       general.live_config_reload = true;
       window = {
-        padding = { x = 10; y = 10; };
+        padding = { x = 8; y = 8; };
         decorations = "None";
+        opacity = lib.mkForce 0.85;
       };
       cursor.style.shape = "Block";
       terminal.osc52 = "OnlyCopy"; # for copying from remote server

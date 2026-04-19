@@ -9,7 +9,7 @@
     polarity = "dark";
 
   } // lib.optionalAttrs aln.ctx.host.is.gui {
-    image = aln.lib.relToRoot "assets/wallpaper/wallpaper-night.jpg";
+    image = aln.lib.relToRoot "assets/wallpaper/roadtrip.jpg";
     imageScalingMode = "fill";
 
     cursor = {
