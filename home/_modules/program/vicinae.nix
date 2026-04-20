@@ -53,8 +53,8 @@ in
       search_files_in_root = true;
 
       launcher_window = {
-        opacity = 0.6;
-        client_side_decorations.enabled = false;
+        opacity = 0.4;
+        client_side_decorations.enabled = true; #false;
       };
 
       font.normal.size = 11;
