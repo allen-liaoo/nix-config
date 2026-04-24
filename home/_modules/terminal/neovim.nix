@@ -2,7 +2,7 @@
 
 let
   nvimxPkg = with inputs.nvimx; makeNixvimWithModule (pkgs.stdenv.hostPlatform.system) {
-    nvimx.configs.enable = true;
+    nvimx.treesitter.enableAllGrammars = true;
     nvimx.shells.enable = true;
   };
 in
