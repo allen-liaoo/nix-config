@@ -6,7 +6,7 @@ let
   vidViewer = "mpv.desktop";
   imgViewer = "org.gnome.Loupe.desktop";
   fileExplorer = "org.gnome.Nautilus.desktop";
-  textEditor = "vim.desktop";
+  textEditor = "nvim.desktop";
 
   mimeTypes = prefix: suffixes: app: 
     suffixes
@@ -56,14 +56,15 @@ in
 
     portal =  {
       enable = true;
-      config.common = {
-        default = [ "gnome" ];
+      config.niri = {
+        default = [ "gnome" "gtk" ];
         "org.freedesktop.impl.portal.Secret" = [
           "gnome-keyring"
         ];
       };
       extraPortals = with pkgs; [
         xdg-desktop-portal-gnome
+        xdg-desktop-portal-gtk
       ];
       xdgOpenUsePortal = true;
     };
