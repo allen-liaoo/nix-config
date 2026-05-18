@@ -10,7 +10,8 @@ let
     with inputs.nvimx;
     makeNixvimWithModule (pkgs.stdenv.hostPlatform.system) {
       nvimx.treesitter.enableAllGrammars = true;
-      nvimx.shells.enable = true;
+      nvimx.preset.nix.enable = true;
+      nvimx.preset.shells.enable = true;
     };
 in
 {

@@ -16,7 +16,7 @@ system:
       }:
       let
         nixvimModule = {
-          nvimx.nix = {
+          nvimx.preset.nix = {
             enable = true;
             nixd = {
               nixpkgsName = "nixpkgs";
@@ -24,7 +24,7 @@ system:
               hmConfKey = if userName != "" then "${userName}@${hostName}" else "";
             };
           };
-          nvimx.configs.enable = true;
+          nvimx.preset.configs.enable = true;
         };
 
         nixvimPkg = inputs.nvimx.makeNixvimWithModule system nixvimModule;
