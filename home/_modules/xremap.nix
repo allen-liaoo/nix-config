@@ -33,6 +33,7 @@ in
           alone = "SPACE";
           free_hold = true; # when released, treat as alone
         };
+        application.not = [ "/Minecraft*/" ];
       }
       {
         name = "Capslock as esc";

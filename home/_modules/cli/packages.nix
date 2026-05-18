@@ -18,7 +18,7 @@
 
   programs.fish = {
     shellAliases = {
-      cat = "bat --paging=never";
+      cat = "bat";
     };
     shellAbbrs = {
       js = "just";
