@@ -302,22 +302,6 @@
         "type": "github"
       }
     },
-    "matugen-themes": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1778406498,
-        "narHash": "sha256-jVIfPrCpccWZMW4t54gqZcmVbQ+wqdbWTQ5Qs2U4sXo=",
-        "owner": "InioX",
-        "repo": "matugen-themes",
-        "rev": "cbe7318106c1e2e74beca97f06ff1fef2865259c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "InioX",
-        "repo": "matugen-themes",
-        "type": "github"
-      }
-    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -660,7 +644,6 @@
         "glide": "glide",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
-        "matugen-themes": "matugen-themes",
         "nix-index-database": "nix-index-database",
         "nix-minecraft": "nix-minecraft",
         "nix-packages": "nix-packages",

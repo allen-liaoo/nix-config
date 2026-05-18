@@ -118,11 +118,6 @@
       inputs.home-manager.follows = "nixpkgs";
     };
 
-    matugen-themes = {
-      url = "github:InioX/matugen-themes";
-      flake = false;
-    };
-
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";

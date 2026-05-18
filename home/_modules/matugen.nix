@@ -3,11 +3,19 @@
   lib,
   pkgs,
   ctx,
-  inputs,
   ...
 }:
 
 let
+  matugenThemes = pkgs.fetchFromGitHub {
+    owner = "InioX";
+    repo = "matugen-themes";
+    rev = "c129e42458ec3dba210f98f26e84e51ae874e8a2";
+    hash = "sha256-2zSQmi8g1uVr0viHPKSuxYDpVDykOYnDtmG6YP+XKMk=";
+    sparseCheckout = [
+      "/templates"
+    ];
+  };
   contentModule = {
     freeformType = lib.types.attrs;
     options = {
@@ -42,7 +50,7 @@ in
       themesPath = lib.mkOption {
         type = lib.types.functionTo lib.types.path;
         readOnly = true;
-        default = path: inputs.matugen-themes.outPath + "/templates/" + path;
+        default = path: "${matugenThemes}/templates/" + path;
         description = "Path to a matugen template in the official matugen-themes repository";
       };
     };
