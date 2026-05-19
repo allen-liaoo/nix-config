@@ -32,12 +32,16 @@
           specialArgs = {
             inherit inputs alnLib inventory;
             ctx = mkCtx { inherit hostName; };
-            pkgs-unstable = mkPkgs inputs.nixpkgs-unstable system;
           };
           system = system;
           modules = [
             ./host/${hostName}
             inputs.disko.nixosModules.disko
+            {
+              _modules.args = {
+                pkgs-unstable = mkPkgs inputs.nixpkgs-unstable system;
+              };
+            }
           ];
         }
       );
@@ -60,21 +64,21 @@
                     inherit hostName;
                     inherit userName;
                   };
-                  pkgs-unstable = mkPkgs inputs.nixpkgs-unstable system;
-                  pkgs-nur = inputs.nur.legacyPackages.${system};
-                  pkgs-aln = import ./packages.nix { inherit pkgs; };
                 };
                 modules = [
                   ./home/${userName}
+                  {
+                    _module.args = {
+                      pkgs-unstable = mkPkgs inputs.nixpkgs-unstable system;
+                      pkgs-nur = inputs.nur.legacyPackages.${system};
+                      pkgs-aln = inputs.aln-packages.legacyPackages.${system};
+                    };
+                  }
                 ];
               };
           }
         ) inventory.userHostPairs
       );
-
-      packages = forEachSystem (system: import ./packages.nix {
-        pkgs = mkPkgs inputs.nixpkgs system;
-      });
 
       devShells = forEachSystem (system: import ./shell.nix { inherit inputs lib inventory; } system);
     };
@@ -85,6 +89,11 @@
   };
 
   inputs = {
+    aln-packages = { 
+      url = "github:allen-liaoo/nix-packages";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     dms = {
       url = "github:AvengeMedia/DankMaterialShell/stable";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -136,12 +145,6 @@
 
     nix-minecraft = {
       url = "github:Infinidoge/nix-minecraft";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # my packages
-    nix-packages = { 
-      url = "github:allen-liaoo/nix-packages";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

@@ -1,12 +1,13 @@
 {
   pkgs,
+  pkgs-unstable,
   ...
 }:
 
 let
   prismlauncher-wrapped = pkgs.symlinkJoin {
     name = "prismlauncher-wrapped";
-    paths = [ pkgs.prismlauncher ];
+    paths = [ pkgs-unstable.prismlauncher ];
     nativeBuildInputs = [ pkgs.makeWrapper ];
 
     postBuild = with pkgs; ''

@@ -16,6 +16,27 @@
         "type": "github"
       }
     },
+    "aln-packages": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ],
+        "wrappers": "wrappers"
+      },
+      "locked": {
+        "lastModified": 1779165316,
+        "narHash": "sha256-t8yY7dpG/Xp+a30EOzx96IURMLgKD//6XFFwGtbvV7g=",
+        "owner": "allen-liaoo",
+        "repo": "nix-packages",
+        "rev": "863384d4bcf925fee5cefb15c3ac05ef111593a9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "allen-liaoo",
+        "repo": "nix-packages",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1767744144,
@@ -344,27 +365,6 @@
         "type": "github"
       }
     },
-    "nix-packages": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "wrappers": "wrappers"
-      },
-      "locked": {
-        "lastModified": 1778992585,
-        "narHash": "sha256-j+lU/IuIRAgZ53zid5wc53iJNVytgfJ+dXK9vKZjmPQ=",
-        "owner": "allen-liaoo",
-        "repo": "nix-packages",
-        "rev": "9dab9e01e114c7eaa839b925f992c1dc2a72be32",
-        "type": "github"
-      },
-      "original": {
-        "owner": "allen-liaoo",
-        "repo": "nix-packages",
-        "type": "github"
-      }
-    },
     "nix-your-shell": {
       "inputs": {
         "advisory-db": "advisory-db",
@@ -638,6 +638,7 @@
     },
     "root": {
       "inputs": {
+        "aln-packages": "aln-packages",
         "disko": "disko",
         "dms": "dms",
         "dms-plugin-registry": "dms-plugin-registry",
@@ -646,7 +647,6 @@
         "impermanence": "impermanence",
         "nix-index-database": "nix-index-database",
         "nix-minecraft": "nix-minecraft",
-        "nix-packages": "nix-packages",
         "nix-your-shell": "nix-your-shell",
         "nixgl": "nixgl",
         "nixos-hardware": "nixos-hardware",
@@ -909,20 +909,20 @@
     "wrappers": {
       "inputs": {
         "nixpkgs": [
-          "nix-packages",
+          "aln-packages",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1778952794,
-        "narHash": "sha256-TQjjHaGnwkuNwGZjR2SWl3t7OK/0nM5PsX/v7a8WQG0=",
-        "owner": "allen-liaoo",
+        "lastModified": 1779158506,
+        "narHash": "sha256-UsvCuaxQPL1CEOeDnIW/Cn97ozJuNE5cq4Rp5Yi5VxI=",
+        "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "rev": "ae502f23152914e12559dd9961fd8767a47d0075",
+        "rev": "6d6695d1140bdbdada1bb4519328818364ec9311",
         "type": "github"
       },
       "original": {
-        "owner": "allen-liaoo",
+        "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
         "type": "github"
       }

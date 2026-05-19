@@ -1,6 +1,6 @@
 {
   pkgs,
-  inputs,
+  pkgs-aln,
   ...
 }:
 
@@ -13,7 +13,7 @@
     ripgrep
     just
 
-    inputs.nix-packages.legacyPackages.${pkgs.stdenv.hostPlatform.system}.television
+    pkgs-aln.television
   ];
 
   programs.fish = {
