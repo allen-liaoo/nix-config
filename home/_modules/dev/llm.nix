@@ -3,6 +3,7 @@
   pkgs,
   pkgs-aln,
   ctx,
+  inventory,
   ...
 }:
 
@@ -33,7 +34,7 @@
         type = "local";
         command = lib.getExe pkgs.mcp-nixos;
       };
-      typst = {
+      typst = lib.mkIf (ctx.host.equals inventory.hosts.theseus) {
         type = "local";
         command = lib.getExe pkgs-aln.typst-mcp;
       };

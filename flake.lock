@@ -24,11 +24,11 @@
         "wrappers": "wrappers"
       },
       "locked": {
-        "lastModified": 1779165316,
-        "narHash": "sha256-t8yY7dpG/Xp+a30EOzx96IURMLgKD//6XFFwGtbvV7g=",
+        "lastModified": 1779230824,
+        "narHash": "sha256-g+4bp5Pw1+rg1bmpC2+g0RTk1smFDD2MHQV3XsNNOLc=",
         "owner": "allen-liaoo",
         "repo": "nix-packages",
-        "rev": "863384d4bcf925fee5cefb15c3ac05ef111593a9",
+        "rev": "f4417bb62d58b3875f72801f5eb4d9e78dc02c7d",
         "type": "github"
       },
       "original": {
