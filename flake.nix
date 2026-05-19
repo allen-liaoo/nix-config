@@ -38,7 +38,7 @@
             ./host/${hostName}
             inputs.disko.nixosModules.disko
             {
-              _modules.args = {
+              _module.args = {
                 pkgs-unstable = mkPkgs inputs.nixpkgs-unstable system;
               };
             }
