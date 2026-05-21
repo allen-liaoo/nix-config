@@ -25,9 +25,10 @@
       dates = lib.mkDefault "weekly";
       persistent = true;
     };
-    # Below snippets make channels use flake inputs
+    # Below snippets make nix path use flake inputs
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+    channel.enable = false;
   };
 
   nixpkgs.config.allowUnfree = true;
