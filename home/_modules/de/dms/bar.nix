@@ -65,15 +65,19 @@
         width = 50;
       }
       {
-        id = "doNotDisturb";
-        width = 50;
+        id = "darkMode";
+        width = 25;
       }
       {
         id = "nightMode";
         width = 25;
       }
       {
-        id = "darkMode";
+        id = "idleInhibitor";
+        width = 25;
+      }
+      {
+        id = "doNotDisturb";
         width = 25;
       }
     ];

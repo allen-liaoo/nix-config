@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  pkgs-unstable,
   config,
   ...
 }:
@@ -10,14 +11,6 @@ let
     "programs"
     "firefox"
   ];
-  # TODO: remove once in unstable
-  pywalfox-native =
-    (import (pkgs.fetchFromGitHub {
-      owner = "allen-liaoo";
-      repo = "nixpkgs";
-      rev = "update-pywalfox-native";
-      hash = "sha256-ZE+UN4OoJkBtl5tE9HQ4F0TXXH/zqRytlxpTrYIp0f8=";
-    }) { system = pkgs.stdenv.hostPlatform.system; }).pywalfox-native;
 in
 {
   imports = [
@@ -31,7 +24,7 @@ in
   programs.firefox = {
     pywalfox = {
       enable = true;
-      package = pywalfox-native;
+      package = pkgs-unstable.pywalfox-native;
     };
     profiles.default = {
       wavefox = {
