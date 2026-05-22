@@ -15,7 +15,7 @@ system:
         userName ? "",
       }:
       let
-        nixvimModule = {
+        nvimxModule = {
           nvimx.preset.nix = {
             enable = true;
             nixd = {
@@ -27,7 +27,7 @@ system:
           nvimx.preset.configs.enable = true;
         };
 
-        nixvimPkg = inputs.nvimx.makeNixvimWithModule system nixvimModule;
+        nixvimPkg = inputs.nvimx.makeNvimxWithModule system nvimxModule;
       in
       pkgs.mkShell {
         packages = [ nixvimPkg ];
