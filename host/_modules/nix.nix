@@ -12,6 +12,7 @@
         "flakes"
         "nix-command"
         "pipe-operators"
+        "recursive-nix"
       ];
       auto-optimise-store = true;
       trusted-users = [
