@@ -65,21 +65,25 @@
         width = 50;
       }
       {
-        id = "darkMode";
-        width = 25;
+        id = "plugin_displayMirror";
+        width = 50;
       }
       {
         id = "nightMode";
-        width = 25;
-      }
-      {
-        id = "idleInhibitor";
-        width = 25;
+        width = 50;
       }
       {
         id = "doNotDisturb";
-        width = 25;
+        width = 50;
       }
+      {
+        id = "darkMode";
+        width = 50;
+      }
+      # {
+      #   id = "idleInhibitor";
+      #   width = 25;
+      # }
     ];
 
     barConfigs = [

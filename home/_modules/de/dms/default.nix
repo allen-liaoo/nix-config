@@ -77,7 +77,8 @@ in
 
     plugins = {
       dankBatteryAlerts.enable = true;
-      ddcBrightness.enable = ctx.user.inGroup.i2c;
+      displayMirror.enable = true;
+      ddcBrightness.enable = false; #ctx.user.inGroup.i2c;
     };
 
     # niri = {
@@ -86,6 +87,11 @@ in
     #   includes.enable = false;
     # };
   };
+
+  home.packages = with pkgs; [
+    libnotify # dankBatteryAlerts
+    wl-mirror # displayMirror
+  ];
 
   # dms is ride or die for niri
   systemd.user.services.dms = {
