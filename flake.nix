@@ -156,7 +156,7 @@
     # my nixvim config
     nvimx = {
       url = "github:allen-liaoo/nvimx";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      #inputs.nixpkgs.follows = "nixpkgs-unstable"; # TODO: Wait til nixpkgs-unstable is on 26.11
     };
 
     nur = {
