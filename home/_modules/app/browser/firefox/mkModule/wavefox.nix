@@ -56,7 +56,7 @@ in
     };
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     home.file =
       cfg.profiles
       |> lib.filterAttrs (_: v: v.wavefox.enable)

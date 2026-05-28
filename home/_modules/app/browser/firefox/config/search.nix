@@ -11,7 +11,6 @@ lib.setAttrByPath modulePath {
     force = true;
     order = [
       "ddg"
-      "mynixos"
     ];
     engines = {
       "google".metaData.hidden = true;

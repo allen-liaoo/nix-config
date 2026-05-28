@@ -15,7 +15,7 @@
   ];
 }
 // lib.setAttrByPath modulePath {
-  enable = true;
+  languagePacks = [ "en-US" ];
 
   profiles.${profile} = {
     settings = {

@@ -1,5 +1,5 @@
 { alnLib, ... }:
 
 {
-  imports = alnLib.listDirFiles ./. ++ alnLib.importExcept (alnLib.listSubdirs ./.) [ "firefox" ];
+  imports = alnLib.listDirFiles ./. ++ alnLib.importExcept (alnLib.listSubdirs ./.) [ "firefox" "vieb" ];
 }

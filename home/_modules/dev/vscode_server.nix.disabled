@@ -1,9 +1,0 @@
-{ inputs, ... }:
-
-{
-  imports = [
-    inputs.vscode-server.nixosModules.home
-  ];
-
-  services.vscode-server.enable = true;
-}

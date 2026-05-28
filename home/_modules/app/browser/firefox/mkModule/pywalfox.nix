@@ -43,7 +43,7 @@ in
     };
   };
 
-  config = lib.mkIf cfg.pywalfox.enable (
+  config = lib.mkIf (cfg.enable && cfg.pywalfox.enable) (
     {
       home.activation = {
         pywalfoxInstall = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

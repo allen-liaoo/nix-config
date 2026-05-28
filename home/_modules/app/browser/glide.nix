@@ -21,6 +21,7 @@ in
   ];
 
   programs.glide-browser = {
+    enable = false;
     pywalfox.enable = false;
     # disable toolbar
     profiles.default.settings."browser.uiCustomization.state" = { };

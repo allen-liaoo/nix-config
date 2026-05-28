@@ -28,7 +28,7 @@ in
     };
   };
 
-  config = lib.setAttrByPath modulePath {
+  config = lib.mkIf cfg.enable (lib.setAttrByPath modulePath {
     policies.ExtensionSettings =
       (
         cfg.webstore.addons
@@ -44,5 +44,5 @@ in
       // {
         "*".installation_mode = lib.mkIf cfg.webstore.blockInstall "blocked";
       };
-  };
+  });
 }

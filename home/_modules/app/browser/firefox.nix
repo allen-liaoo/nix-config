@@ -22,6 +22,7 @@ in
   ];
 
   programs.firefox = {
+    enable = true;
     pywalfox = {
       enable = true;
       package = pkgs-unstable.pywalfox-native;
