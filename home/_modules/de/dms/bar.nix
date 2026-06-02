@@ -69,8 +69,12 @@
         width = 50;
       }
       {
+        id = "idleInhibitor";
+        width = 25;
+      }
+      {
         id = "nightMode";
-        width = 50;
+        width = 25;
       }
       {
         id = "doNotDisturb";
@@ -80,10 +84,6 @@
         id = "darkMode";
         width = 50;
       }
-      # {
-      #   id = "idleInhibitor";
-      #   width = 25;
-      # }
     ];
 
     barConfigs = [
