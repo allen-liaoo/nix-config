@@ -13,7 +13,7 @@ let
   ];
 in
 {
-  programs.ssh.matchBlocks = {
+  programs.ssh.settings = {
     "ionobro" = {
       hostname = "allenl.me";
       user = "allenliao"; # TODO: Change to al
