@@ -47,7 +47,7 @@ in
     };
 
   # Disable local DNS stub listener on 127.0.0.53
-  services.resolved.extraConfig = ''
-    DNSStubListener=no
-  '';
+  services.resolved.settings.Resolve = {
+    DNSStubListener = "no";
+  };
 }
