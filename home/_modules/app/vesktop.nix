@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   ...
 }:
@@ -22,4 +23,12 @@
     };
   };
   programs.dank-material-shell.settings.matugenTemplateVesktop = true;
+
+  # force vesktop to respect settings
+  xdg.configFile."vesktop/state.json" = {
+    source = pkgs.writeText "vesktop-state.json" ''
+      { "firstLaunch": false }
+    '';
+    force = true;
+  };
 }
