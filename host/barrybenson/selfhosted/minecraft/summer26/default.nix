@@ -22,6 +22,14 @@
       ];
 
       whitelist = import ../players.nix;
+      operators = import ../ops.nix {
+        ayyllien = {
+          level = 4;
+        };
+        Dsnustad = {
+          level = 3;
+        };
+      };
       symlinks = {
         mods = pkgs.linkFarmFromDrvs "mods" (
           map pkgs.fetchurl (builtins.attrValues (import ./mods.nix))
