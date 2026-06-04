@@ -20,4 +20,14 @@ in
   home.packages = with pkgs; [
     prismlauncher-wrapped
   ];
+
+  aln.niri.configFile."prismlauncher" = {
+    enable = true;
+    content = ''
+      window-rule {
+        match app-id=r#"^Minecraft.*"#
+        open-fullscreen true
+      }
+    '';
+  };
 }
