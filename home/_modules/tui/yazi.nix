@@ -9,9 +9,8 @@
     enableBashIntegration = true;
     enableFishIntegration = true;
     enableZshIntegration = true;
+    shellWrapperName = "y"; # new in 26.05
 
-    # TODO: Consider linking toml files
-    # to share config across hosts/homes? what about conditional opens?
     settings = {
       mgr = {
         show_hidden = false;
@@ -19,20 +18,8 @@
         sort_by = "extension";
         show_symlink = true;
       };
-
-      # TODO: opener and open rules based on gui/headless
-      #open.prepend_rules = [
-      #{ mime = "text/plain"; use = "text"; }
-      #{ name = "*"; use = "default_open"; }
-      #];
-
-      #opener = {
-      #text = [{ run = "$EDITOR %s"; block = true; }];
-      # default_open = [{ run = "xdg-open \"$@\""; orphan = true; }];
-      #};
     };
   };
-  # TODO: for wayland with alacritty, need ueberzugpp installed
 
   # Yazi specific init (replaces the need for abbreviation)
   # press q to quit with auto cd; press Q to quit without cd
