@@ -7,13 +7,13 @@ My NixOS and Home-Manager Configs
 | Feature | Component |
 |---|---|
 | Shell | [Fish](https://fishshell.com)[⌃](/home/_modules/shell/fish.nix), [Starship](https://starship.rs)[⌃](/home/_modules/shell/starship.nix) |
-| Editor | [Neovim](https://neovim.io)[⌃](https://github.com/allen-liaoo/nvimx), [Vim](https://www.vim.org)[⌃](/home/_modules/terminal/vim.nix) |
+| Editor | [Neovim](https://neovim.io)[⌃](https://github.com/allen-liaoo/nvimx), [Vim](https://www.vim.org)[⌃](/home/_modules/tui/vim.nix) |
 | WM | [Niri](https://niri-wm.github.io/niri/)[⌃](/home/_modules/de/niri) |
 | Desktop Shell | [DankMaterialShell](https://danklinux.com/)[⌃](/home/_modules/de/dms) |
-| Theming | [Matugen](https://iniox.github.io/#matugen)[⌃](/home/_modules/de/matugen.nix) |
+| Theming | [Matugen](https://iniox.github.io/#matugen)[⌃](/home/_modules/matugen.nix) |
 | Terminal | [Alacritty](https://alacritty.org/)[⌃](/home/_modules/app/alacritty.nix) |
 | Launcher | [Vicinae](https://www.vicinae.com/)[⌃](/home/_modules/app/vicinae.nix) |
-| Browser | [Firefox](https://www.firefox.com)[⌃](/home/_modules/app/browser/firefox) |
+| Browser | [Firefox](https://www.firefox.com)[⌃](/home/_modules/app/browser/firefox/config) |
 
 ### Self-Hosted
 Podman containers via [quadlet-nix](https://seiarotg.github.io/quadlet-nix/) (Rootful, `userns=auto`)[⌃](host/barrybenson/selfhosted).
@@ -25,6 +25,7 @@ Podman containers via [quadlet-nix](https://seiarotg.github.io/quadlet-nix/) (Ro
 | CalDAV/CardDAV | Radicale (TODO) |
 | Music Stats | Multi-scrobbler, Koito (TODO) |
 | Torrent Indexer | [Jackett](https://github.com/Jackett/Jackett)[⌃](/host/barrybenson/selfhosted/jackett.nix) |
+| Minecraft Server | [Nix-Minecraft](https://github.com/Infinidoge/nix-minecraft)[⌃](/host/barrybenson/selfhosted/minecraft) |
 | RSS Aggregator | FreshRSS (TODO) |
 | Nix Binary Cache | TODO |
 
