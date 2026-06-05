@@ -14,12 +14,12 @@
     };
 
     plugins = with pkgs.vimPlugins; [
-      commentary # gcc to comment line, or gc + motion
       indentLine
-      surround # motion + s + char, i.e. cs( = change surrounding to (
       lightline-vim # status line
+      vim-commentary # gcc to comment line, or gc + motion
       vim-cool # disable search highlight after search
       vim-signify # git diff on the left
+      vim-surround # motion + s + char, i.e. cs( = change surrounding to (
       vim-peekaboo # show contents of registers when pressing "
     ];
 
