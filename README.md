@@ -22,12 +22,13 @@ Podman containers via [quadlet-nix](https://seiarotg.github.io/quadlet-nix/) (Ro
 | Authentication | [Authelia](https://www.authelia.com/)[⌃](/host/barrybenson/selfhosted/authelia) |
 | Reverse Proxy | [Caddy](https://caddyserver.com/)[⌃](/host/barrybenson/selfhosted/rproxy) |
 | Adblock | [Pihole](https://pi-hole.net/)[⌃](/host/barrybenson/selfhosted/pihole.nix) |
-| CalDAV/CardDAV | Radicale (TODO) |
-| Music Stats | Multi-scrobbler, Koito (TODO) |
 | Torrent Indexer | [Jackett](https://github.com/Jackett/Jackett)[⌃](/host/barrybenson/selfhosted/jackett.nix) |
 | Minecraft Server | [Nix-Minecraft](https://github.com/Infinidoge/nix-minecraft)[⌃](/host/barrybenson/selfhosted/minecraft) |
-| RSS Aggregator | FreshRSS (TODO) |
 | Nix Binary Cache | TODO |
+| Services Monitoring | Beszel (TODO) |
+| CalDAV/CardDAV | Radicale (TODO) |
+| Music Stats | Multi-scrobbler, Koito (TODO) |
+| RSS Aggregator | FreshRSS (TODO) |
 
 ### Nix-Specific
 - Secrets management via [sops-nix](https://github.com/Mic92/sops-nix) [⌃](host/_modules/sops.nix),[⌃](home/_modules/sops.nix).
