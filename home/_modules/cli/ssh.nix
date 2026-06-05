@@ -9,7 +9,7 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks =
+    settings =
       # Github access for this repository
       # NOTE: use gh_nix_config as git's remote url to avoid key conflicts with other git repositories
       lib.optionalAttrs (ctx.user.can.deployNixConfig) {

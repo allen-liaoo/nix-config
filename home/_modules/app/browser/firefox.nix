@@ -23,6 +23,7 @@ in
 
   programs.firefox = {
     enable = true;
+    configPath = "${config.xdg.configHome}/mozilla/firefox"; # new in 26.05
     pywalfox = {
       enable = true;
       package = pkgs-unstable.pywalfox-native;
