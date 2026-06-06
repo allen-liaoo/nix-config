@@ -32,7 +32,7 @@
       };
       symlinks = {
         mods = pkgs.linkFarmFromDrvs "mods" (
-          map pkgs.fetchurl (builtins.attrValues (import ./mods.nix))
+          map pkgs.fetchurl (builtins.attrValues (import ./_mods.nix))
         );
       };
     };

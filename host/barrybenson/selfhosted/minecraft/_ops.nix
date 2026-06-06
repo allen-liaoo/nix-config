@@ -1,6 +1,6 @@
 operators:
 let
-  players = import ./players.nix;
+  players = import ./_players.nix;
 in
   builtins.mapAttrs
     (name: val:
