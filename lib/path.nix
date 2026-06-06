@@ -2,39 +2,32 @@
 
 let
   rootPath = ../.; # project root path; resolves in nix store
+  inherit (builtins) readFile readDir attrNames;
+  inherit (lib) pipe path concatMap hasPrefix hasSuffix removePrefix filterAttrs;
 in
 rec {
   # use path relative to the root of this project
   # note that this will resolve to be a path within /nix/store
   # to refer to a path outside of /nix/store, use outOfStoreRelToRoot
-  relToRoot = lib.path.append rootPath;
+  relToRoot = path.append rootPath;
 
-  # List all regular nix files in a directory, excluding "default.nix"; non-recurive
-  listDirFiles = (
+  # recursively imports every nix file in a directory, ignoring files/directories starting with "_"
+  importRecursive =
     dir:
     let
-      files = builtins.readDir dir;
-      nixFiles = builtins.filter (name: name != "default.nix" && builtins.match ".*\\.nix" name != null) (
-        builtins.attrNames files
-      );
+      entries = readDir (toString dir); # toString to prevent dir from being copied to store again
+      nixFiles = pipe entries [
+        (filterAttrs (name: typ: typ == "regular" && hasSuffix ".nix" name && !(hasPrefix "_" name)))
+        attrNames
+        (map (f: path.append dir f))
+      ];
+      subdirs = pipe entries [
+        (filterAttrs (name: typ: typ == "directory" && !(hasPrefix "_" name)))
+        attrNames
+        (map (d: path.append dir d))
+      ];
     in
-    map (name: dir + "/${name}") nixFiles
-  );
-
-  # List all immediate subdirectories of a directory
-  listSubdirs = (
-    dir:
-    let
-      entries = builtins.readDir dir;
-      subdirs = builtins.filter (name: entries.${name} == "directory") (builtins.attrNames entries);
-    in
-    map (name: dir + "/${name}") subdirs
-  );
-
-  # filters importsList by removing occurences of blackList
-  importExcept =
-    importsList: blackList:
-    builtins.filter (f: !(builtins.any (b: lib.hasSuffix b f) blackList)) importsList;
+    nixFiles ++ concatMap importRecursive subdirs;
 
   ## HOME MANAGER EXCLUSIVE ##
 
@@ -42,7 +35,7 @@ rec {
   # DO NOT USE DIRECTLY
   # We require that ALL INSTANCES OF THIS REPO ON NIXOS/NON-NIXOS MACHINES TO BE STORED IN THE BELOW PATH (one per user who manages hm/os on NixOS machines)
   # See outOfStoreRelToRoot for explanation
-  NIX_CONFIG_REL_HOME = builtins.readFile (relToRoot "REPO_NAME");
+  NIX_CONFIG_REL_HOME = readFile (relToRoot "REPO_NAME");
 
   # Returns the actual, out of store, path relative to the root of the repository
   # ONLY USE WITHIN HM
@@ -59,7 +52,8 @@ rec {
       flakePath = toString rootPath;
       relPathStr = toString relPath;
     in
-    assert lib.hasPrefix flakePath relPathStr;
-    homeDir + "/" + NIX_CONFIG_REL_HOME + (lib.removePrefix flakePath relPathStr)
+    builtins.trace "flakePath: ${flakePath}\n relPath: ${relPathStr}" 
+    (assert hasPrefix flakePath relPathStr;
+    homeDir + "/" + NIX_CONFIG_REL_HOME + (removePrefix flakePath relPathStr))
   );
 }
