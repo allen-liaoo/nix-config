@@ -43,10 +43,10 @@ in
 
   config =
     lib.mkMerge 
-      #(map (m: lib.mkIf config.aln.de.enable m)
+      (map (m: lib.mkIf config.aln.de.enable m)
         [
           {
-            xdg.configFile."niri/config.kdl".text = lib.mkIf config.aln.de.enable ''
+            xdg.configFile."niri/config.kdl".text = ''
               include "${symlinkTo ./general.kdl}"
               include "${symlinkTo ./binds.kdl}"
 
@@ -63,15 +63,14 @@ in
               }
             '';
 
-            home.packages = lib.mkIf config.aln.de.enable [ pkgs.xwayland-satellite ];
+            home.packages = [ pkgs.xwayland-satellite ];
           }
           # wrap in nixGL to fix OpenGL under nix in non-Nixos systems
-          (lib.mkIf (config.aln.de.enable && ctx.host.is.generic-linux) {
+          (lib.mkIf ctx.host.is.generic-linux {
             # no need to install on nixos (we do so system wide)
             home.packages = [ (config.lib.nixGL.wrap pkgs.niri) ];
           })
-      ]
-    ;
+      ]);
 }
 
 # NOTE: Assuming user does not have sudo priviledges,
