@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  ctx,
   ...
 }:
 
@@ -56,7 +55,7 @@ in
     };
   };
 
-  config = lib.mkIf ctx.host.is.gui {
+  config = lib.mkIf config.aln.de.enable {
     xdg.configFile."matugen/config.toml".source = tomlFormat.generate "config.toml" {
       config = { };
       templates = (
