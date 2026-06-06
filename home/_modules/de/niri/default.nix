@@ -41,33 +41,37 @@ in
     };
   };
 
-  config = lib.mkMerge [
-    {
-      xdg.configFile."niri/config.kdl".text = ''
-        include "${symlinkTo ./general.kdl}"
-        include "${symlinkTo ./binds.kdl}"
+  config =
+    lib.mkMerge 
+      #(map (m: lib.mkIf config.aln.de.enable m)
+        [
+          {
+            xdg.configFile."niri/config.kdl".text = lib.mkIf config.aln.de.enable ''
+              include "${symlinkTo ./general.kdl}"
+              include "${symlinkTo ./binds.kdl}"
 
-        ${config.aln.niri.config}
+              ${config.aln.niri.config}
 
-        ${
-          config.aln.niri.configFile
-          |> builtins.attrValues
-          |> builtins.filter (c: c.enable)
-          |> lib.map (c: ''
-            include "${c.fileDeriv}"
-          '')
-          |> lib.concatStrings
-        }
-      '';
+              ${
+                config.aln.niri.configFile
+                |> builtins.attrValues
+                |> builtins.filter (c: c.enable)
+                |> lib.map (c: ''
+                  include "${c.fileDeriv}"
+                '')
+                |> lib.concatStrings
+              }
+            '';
 
-      home.packages = [ pkgs.xwayland-satellite ];
-    }
-    # wrap in nixGL to fix OpenGL under nix in non-Nixos systems
-    (lib.optionalAttrs ctx.host.is.generic-linux {
-      # no need to install on nixos (we do so system wide)
-      home.packages = [ (config.lib.nixGL.wrap pkgs.niri) ];
-    })
-  ];
+            home.packages = lib.mkIf config.aln.de.enable [ pkgs.xwayland-satellite ];
+          }
+          # wrap in nixGL to fix OpenGL under nix in non-Nixos systems
+          (lib.mkIf (config.aln.de.enable && ctx.host.is.generic-linux) {
+            # no need to install on nixos (we do so system wide)
+            home.packages = [ (config.lib.nixGL.wrap pkgs.niri) ];
+          })
+      ]
+    ;
 }
 
 # NOTE: Assuming user does not have sudo priviledges,

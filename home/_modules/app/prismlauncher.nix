@@ -1,4 +1,6 @@
 {
+  lib,
+  config,
   pkgs,
   pkgs-unstable,
   ...
@@ -16,7 +18,7 @@ let
     '';
   };
 in
-{
+lib.mkIf config.aln.app.enable {
   home.packages = with pkgs; [
     prismlauncher-wrapped
   ];

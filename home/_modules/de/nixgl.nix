@@ -7,13 +7,14 @@
   inputs,
   pkgs,
   ctx,
+  config,
   ...
 }:
 
 let
   nixgl-pkg = inputs.nixgl.packages.${pkgs.stdenv.hostPlatform.system};
 in
-lib.optionalAttrs ctx.host.is.generic-linux {
+lib.mkIf (config.aln.de.enable && ctx.host.is.generic-linux) {
   targets.genericLinux.nixGL = {
     packages = nixgl-pkg;
     defaultWrapper =

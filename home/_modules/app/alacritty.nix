@@ -5,7 +5,7 @@
   ...
 }:
 
-{
+lib.mkIf config.aln.app.enable {
   programs.alacritty = {
     enable = true;
     package = config.lib.nixGL.wrap pkgs.alacritty;

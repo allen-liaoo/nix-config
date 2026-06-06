@@ -1,11 +1,12 @@
 {
+  lib,
   pkgs,
   config,
   alnLib,
   ...
 }:
 
-{
+lib.mkIf config.aln.app.enable {
   home.packages = with pkgs; [
     qbittorrent
   ];

@@ -1,6 +1,10 @@
-{ ... }:
-
 {
+  lib,
+  config,
+  ...
+}:
+
+lib.mkIf config.aln.app.enable {
   programs.sioyek = {
     enable = true;
     config = {

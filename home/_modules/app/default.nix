@@ -1,10 +1,10 @@
 {
   lib,
-  alnLib,
   ctx,
   ...
 }:
 
 {
-  imports = lib.optionals ctx.host.is.gui (alnLib.listDirFiles ./. ++ alnLib.listSubdirs ./.);
+  options.aln.app.enable = lib.mkEnableOption "app";
+  config.aln.app.enable = ctx.host.is.gui;
 }

@@ -5,7 +5,7 @@
   ...
 }:
 
-{
+lib.mkIf config.aln.app.enable {
   programs.vesktop = {
     enable = true;
     settings = {

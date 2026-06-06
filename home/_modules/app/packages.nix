@@ -1,6 +1,11 @@
-{ pkgs, ... }:
-
 {
+  lib,
+  pkgs,
+  config,
+  ...
+}:
+
+lib.mkIf config.aln.app.enable {
   home.packages = with pkgs; [
     bitwarden-desktop
     loupe # image viewer

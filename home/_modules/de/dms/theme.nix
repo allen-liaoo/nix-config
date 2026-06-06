@@ -1,9 +1,11 @@
 {
+  lib,
+  config,
   pkgs,
   ...
 }:
 
-{
+lib.mkIf config.aln.de.enable {
   home.packages = [
     pkgs.adw-gtk3 # for theming gtk
   ];

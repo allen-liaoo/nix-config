@@ -1,6 +1,10 @@
-{ lib, ... }:
-
 {
+  lib,
+  config,
+  ...
+}:
+
+lib.mkIf config.aln.de.enable {
   programs.dank-material-shell.session = {
     hiddenTrayIds = [
       "spotify-client"

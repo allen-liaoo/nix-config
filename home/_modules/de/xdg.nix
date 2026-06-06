@@ -99,7 +99,7 @@ let
   ];
   codeMimes = mimeTypes "text" [ ]; # TODO
 in
-{
+lib.mkIf config.aln.de.enable {
   xdg = {
     mime.enable = true;
     mimeApps = {

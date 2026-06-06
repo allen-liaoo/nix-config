@@ -10,7 +10,7 @@
 let
   fcitx5-pkg = pkgs.kdePackages.fcitx5-with-addons;
 in
-{
+lib.mkIf config.aln.de.enable {
   i18n.inputMethod = {
     enable = true;
     type = "fcitx5";

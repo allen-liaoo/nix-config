@@ -1,9 +1,10 @@
 {
   lib,
+  config,
   ...
 }:
 
-{
+lib.mkIf config.aln.de.enable {
   home.sessionVariables = {
     XDG_CURRENT_DESKTOP = "niri";
     QT_QPA_PLATFORM = "wayland";

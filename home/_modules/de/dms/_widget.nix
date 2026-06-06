@@ -1,4 +1,10 @@
 {
+  lib,
+  config,
+  ...
+}:
+
+lib.mkIf config.aln.de.enable {
   programs.dank-material-shell.settings = {
     # Cannot figure out how to set position and interval of this widget
     # Bugged: need to set its instance?
