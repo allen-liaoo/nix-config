@@ -13,8 +13,8 @@ in
 {
   imports = [
     inputs.glide.homeModules.default
-    (import ./firefox/mkModule { inherit modulePath; })
-    (import ./firefox/config {
+    (import ./_firefox/mkModule { inherit modulePath; })
+    (import ./_firefox/config {
       inherit modulePath;
       profile = "default";
     })

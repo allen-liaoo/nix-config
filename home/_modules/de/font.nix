@@ -1,9 +1,11 @@
 {
   pkgs,
+  lib,
+  config,
   ...
 }:
 
-{
+lib.mkIf config.aln.de.enable {
   home.packages = with pkgs; [
     dejavu_fonts
     adwaita-fonts

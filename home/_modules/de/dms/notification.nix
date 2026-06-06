@@ -1,4 +1,10 @@
 {
+  lib,
+  config,
+  ...
+}:
+
+lib.mkIf config.aln.de.enable {
   programs.dank-material-shell.settings = {
     notificationRules = [
       {

@@ -1,10 +1,12 @@
 {
   pkgs,
   alnLib,
+  lib,
+  config,
   ...
 }:
 
-{
+lib.mkIf config.aln.de.enable {
   home.pointerCursor = {
     name = "Vimix-cursors";
     package = pkgs.vimix-cursors;

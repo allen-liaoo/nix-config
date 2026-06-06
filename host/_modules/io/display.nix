@@ -1,5 +1,6 @@
 {
   lib,
+  config,
   pkgs,
   ctx,
   ...
@@ -10,7 +11,7 @@ let
   # cant simply check config.groups.i2c because hardware.i2c references it (infinite rec)
   enable = ctx.host.users |> map (u: u.groups) |> lib.flatten |> builtins.elem grp;
 in
-{
+lib.mkIf config.aln.io.enable {
   hardware.i2c = {
     enable = enable;
     group = grp; # give this group access

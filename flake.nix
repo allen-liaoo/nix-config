@@ -34,15 +34,17 @@
             ctx = mkCtx { inherit hostName; };
           };
           system = system;
-          modules = [
-            ./host/${hostName}
-            inputs.disko.nixosModules.disko
-            {
-              _module.args = {
-                pkgs-unstable = mkPkgs inputs.nixpkgs-unstable system;
-              };
-            }
-          ];
+          modules = 
+            (alnLib.importRecursive ./host/_modules)
+            ++ (alnLib.importRecursive ./host/${hostName})
+            ++ [
+              inputs.disko.nixosModules.disko
+              {
+                _module.args = {
+                  pkgs-unstable = mkPkgs inputs.nixpkgs-unstable system;
+                };
+              }
+            ];
         }
       );
 
@@ -65,16 +67,18 @@
                     inherit userName;
                   };
                 };
-                modules = [
-                  ./home/${userName}
-                  {
-                    _module.args = {
-                      pkgs-unstable = mkPkgs inputs.nixpkgs-unstable system;
-                      pkgs-nur = inputs.nur.legacyPackages.${system};
-                      pkgs-aln = inputs.aln-packages.legacyPackages.${system};
-                    };
-                  }
-                ];
+                modules =
+                  (alnLib.importRecursive ./home/_modules)
+                  ++ (alnLib.importRecursive ./home/${userName})
+                  ++ [
+                    {
+                      _module.args = {
+                        pkgs-unstable = mkPkgs inputs.nixpkgs-unstable system;
+                        pkgs-nur = inputs.nur.legacyPackages.${system};
+                        pkgs-aln = inputs.aln-packages.legacyPackages.${system};
+                      };
+                    }
+                  ];
               };
           }
         ) inventory.userHostPairs

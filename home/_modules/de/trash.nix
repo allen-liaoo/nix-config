@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }:
 
@@ -14,7 +15,7 @@ let
     '';
   };
 in
-{
+lib.mkIf config.aln.de.enable {
   systemd.user.timers."auto-trash" = {
     Timer = {
       OnCalendar = "daily";

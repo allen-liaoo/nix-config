@@ -1,9 +1,11 @@
 {
+  lib,
   pkgs,
+  config,
   ...
 }:
 
-{
+lib.mkIf config.aln.app.enable {
   programs.mpv = {
     enable = true;
     scripts = with pkgs.mpvScripts; [

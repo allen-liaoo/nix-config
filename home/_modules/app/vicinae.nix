@@ -18,203 +18,205 @@ in
     inputs.vicinae.homeManagerModules.default
   ];
 
-  # vicinae is ride or die for niri
-  systemd.user.services.vicinae = {
-    Unit = {
-      After = [ "niri.service" ];
-      BindsTo = [ "niri.service" ];
+  config = lib.mkIf config.aln.app.enable {
+    # vicinae is ride or die for niri
+    systemd.user.services.vicinae = {
+      Unit = {
+        After = [ "niri.service" ];
+        BindsTo = [ "niri.service" ];
+      };
     };
-  };
 
-  services.vicinae = {
-    enable = true;
-    systemd = {
+    services.vicinae = {
       enable = true;
-      autoStart = true;
-      environment = {
-        USE_LAYER_SHELL = 1;
-      };
-    };
-
-    extensions =
-      with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system};
-      [
-        nix
-        player-pilot
-        ssh
-        #systemd # not supported currently
-      ]
-      ++
-        # raycast extensions
-        (
-          [
-            {
-              name = "gif-search";
-              sha = "sha256-aWIYh6tQbdZxT04TRVEc/HmgJUXFl0eMFpIZpCaIQ4U=";
-            }
-            {
-              name = "unicode-symbols";
-              sha = "sha256-JYwlyRGqbJflalPVFdpQTFSoma2owcc0wYYmzBPicgE=";
-            }
-          ]
-          |> map (
-          { name, sha }:
-            inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.mkRayCastExtension {
-              inherit name;
-              rev = rcRev;
-              sha256 = sha;
-            }
-          )
-        );
-
-    settings = {
-      theme = {
-        # see below
-        dark.name = "matugen";
-        light.name = "matugen";
+      systemd = {
+        enable = true;
+        autoStart = true;
+        environment = {
+          USE_LAYER_SHELL = 1;
+        };
       };
 
-      close_on_focus_loss = true;
-      consider_preedit = true;
-      pop_to_root_on_close = true;
-      favicon_service = "twenty";
-      search_files_in_root = true;
+      extensions =
+        with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system};
+        [
+          nix
+          player-pilot
+          ssh
+          #systemd # not supported currently
+        ]
+        ++
+          # raycast extensions
+          (
+            [
+              {
+                name = "gif-search";
+                sha = "sha256-aWIYh6tQbdZxT04TRVEc/HmgJUXFl0eMFpIZpCaIQ4U=";
+              }
+              {
+                name = "unicode-symbols";
+                sha = "sha256-JYwlyRGqbJflalPVFdpQTFSoma2owcc0wYYmzBPicgE=";
+              }
+            ]
+            |> map (
+            { name, sha }:
+              inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.mkRayCastExtension {
+                inherit name;
+                rev = rcRev;
+                sha256 = sha;
+              }
+            )
+          );
 
-      launcher_window = {
-        opacity = 0.4;
-        client_side_decorations.enabled = true; # false;
-      };
-
-      font.normal = {
-        size = 11;
-        family = builtins.head config.fonts.fontconfig.defaultFonts.sansSerif;
-      };
-
-      favorites = [
-        "clipboard:history"
-        "files:search"
-        "core:search-emojis"
-        "@mmazzarolo/unicode-symbols:index"
-        "@josephschmitt/gif-search:search"
-      ];
-
-      providers = {
-        "@mmazzarolo/unicode-symbols".entrypoints.index.alias = "u";
-
-        # nix plugin
-        "@knoopx/vicinae-extension-nix-0".entrypoints = {
-          "packages".alias = "np"; # nixpkgs
-          "options".alias = "no"; # nixos modules
-          "home-manager-options".alias = "hm"; # hm modules
+      settings = {
+        theme = {
+          # see below
+          dark.name = "matugen";
+          light.name = "matugen";
         };
 
-        applications = {
-          preferences = {
-            defaultAction = "launch";
-          };
-          entrypoints = {
-            firefox.alias = "b";
-          };
-        };
-        
-        clipboard = {
-          preferences = {
-            monitoring = true;
-            encryption = true;
-            eraseOnStartup = true;
-            ignorePasswords = true;
-          };
-          entrypoints.history.alias = "c";
+        close_on_focus_loss = true;
+        consider_preedit = true;
+        pop_to_root_on_close = true;
+        favicon_service = "twenty";
+        search_files_in_root = true;
+
+        launcher_window = {
+          opacity = 0.4;
+          client_side_decorations.enabled = true; # false;
         };
 
-        core = {
-          entrypoints = {
-            about.enabled = false;
-            documentation.enabled = false;
-            keybind-settings.enabled = false;
-            list-extensions.enabled = false;
-            manage-fallback.enabled = false;
-            oauth-token-store.enabled = false;
-            open-config-file.enabled = false;
-            open-default-config.enabled = false;
-            report-bug.enabled = true;
-            search-emojis = {
-              enabled = true;
-              alias = "e";
+        font.normal = {
+          size = 11;
+          family = builtins.head config.fonts.fontconfig.defaultFonts.sansSerif;
+        };
+
+        favorites = [
+          "clipboard:history"
+          "files:search"
+          "core:search-emojis"
+          "@mmazzarolo/unicode-symbols:index"
+          "@josephschmitt/gif-search:search"
+        ];
+
+        providers = {
+          "@mmazzarolo/unicode-symbols".entrypoints.index.alias = "u";
+
+          # nix plugin
+          "@knoopx/vicinae-extension-nix-0".entrypoints = {
+            "packages".alias = "np"; # nixpkgs
+            "options".alias = "no"; # nixos modules
+            "home-manager-options".alias = "hm"; # hm modules
+          };
+
+          applications = {
+            preferences = {
+              defaultAction = "launch";
             };
-            sponsor.enabled = false;
+            entrypoints = {
+              firefox.alias = "b";
+            };
           };
-        };
-        developer.enabled = false;
+          
+          clipboard = {
+            preferences = {
+              monitoring = true;
+              encryption = true;
+              eraseOnStartup = true;
+              ignorePasswords = true;
+            };
+            entrypoints.history.alias = "c";
+          };
 
-        files = {
-          preferences.watecherPaths = config.home.homeDirectory + "/Downloads";
-          entrypoints.search.alias = "f";
-        };
+          core = {
+            entrypoints = {
+              about.enabled = false;
+              documentation.enabled = false;
+              keybind-settings.enabled = false;
+              list-extensions.enabled = false;
+              manage-fallback.enabled = false;
+              oauth-token-store.enabled = false;
+              open-config-file.enabled = false;
+              open-default-config.enabled = false;
+              report-bug.enabled = true;
+              search-emojis = {
+                enabled = true;
+                alias = "e";
+              };
+              sponsor.enabled = false;
+            };
+          };
+          developer.enabled = false;
 
-        manage-shortcuts.entrypoints.create.enabled = false;
+          files = {
+            preferences.watecherPaths = config.home.homeDirectory + "/Downloads";
+            entrypoints.search.alias = "f";
+          };
 
-        power.entrypoints = {
-          lock = {
-            enabled = true;
-            alias = "l";
+          manage-shortcuts.entrypoints.create.enabled = false;
+
+          power.entrypoints = {
+            lock = {
+              enabled = true;
+              alias = "l";
+            };
+            logout = {
+              enabled = true;
+              alias = "lo";
+            };
+            suspend = {
+              enabled = true;
+              alias = "s";
+            };
+            power-off = {
+              enabled = true;
+              alias = "p";
+            };
+            reboot = {
+              enabled = true;
+              alias = "r";
+            };
+            hibernate.enabled = false;
+            sleep.enabled = false;
+            soft-reboot.enabled = false;
           };
-          logout = {
-            enabled = true;
-            alias = "lo";
-          };
-          suspend = {
-            enabled = true;
-            alias = "s";
-          };
-          power-off = {
-            enabled = true;
-            alias = "p";
-          };
-          reboot = {
-            enabled = true;
-            alias = "r";
-          };
-          hibernate.enabled = false;
-          sleep.enabled = false;
-          soft-reboot.enabled = false;
         };
       };
     };
-  };
 
-  aln.niri.configFile."vicinae" = {
-    enable = true;
-    content = ''
-      binds {
-        Mod+X repeat=false { spawn "${lib.getExe config.services.vicinae.package}" "toggle"; }
-      }
-      // launcher
-      layer-rule {
-        match namespace=r#"^vicinae$"#
-        background-effect {
-          blur true
-          xray false
+    aln.niri.configFile."vicinae" = {
+      enable = true;
+      content = ''
+        binds {
+          Mod+X repeat=false { spawn "${lib.getExe config.services.vicinae.package}" "toggle"; }
         }
-      }
-      // vicinae settings
-      window-rule {
-        match app-id="vicinae"
-        background-effect {
-          blur true
-          xray true
+        // launcher
+        layer-rule {
+          match namespace=r#"^vicinae$"#
+          background-effect {
+            blur true
+            xray false
+          }
         }
-        geometry-corner-radius 5
-      }
-    '';
-  };
+        // vicinae settings
+        window-rule {
+          match app-id="vicinae"
+          background-effect {
+            blur true
+            xray true
+          }
+          geometry-corner-radius 5
+        }
+      '';
+    };
 
-  aln.matugen.template."vicinae" = {
-    enable = true;
-    content = {
-      input_path = inputs.vicinae.outPath + "/extra/matugen.toml";
-      output_path = config.xdg.dataHome + "/vicinae/themes/matugen.toml";
-      post_hook = "${lib.getExe config.services.vicinae.package} theme set matugen";
+    aln.matugen.template."vicinae" = {
+      enable = true;
+      content = {
+        input_path = inputs.vicinae.outPath + "/extra/matugen.toml";
+        output_path = config.xdg.dataHome + "/vicinae/themes/matugen.toml";
+        post_hook = "${lib.getExe config.services.vicinae.package} theme set matugen";
+      };
     };
   };
 }
