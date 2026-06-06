@@ -1,11 +1,10 @@
 {
   inputs,
-  alnLib,
   ...
 }:
 
 {
-  imports = alnLib.importExcept (alnLib.listDirFiles ./.) [ "players.nix" "ops.nix" ] ++ alnLib.listSubdirs ./. ++ [
+  imports = [
     inputs.nix-minecraft.nixosModules.minecraft-servers
   ];
 

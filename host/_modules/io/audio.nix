@@ -1,6 +1,10 @@
-{ ... }:
-
 {
+  lib,
+  config,
+  ...
+}:
+
+lib.mkIf config.aln.io.enable {
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

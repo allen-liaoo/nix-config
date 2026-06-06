@@ -21,8 +21,8 @@
         "-Xmx10G" "-Xms1G"
       ];
 
-      whitelist = import ../players.nix;
-      operators = import ../ops.nix {
+      whitelist = import ../_players.nix;
+      operators = import ../_ops.nix {
         ayyllien = {
           level = 4;
         };

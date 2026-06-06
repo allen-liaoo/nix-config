@@ -10,8 +10,8 @@ let
   dbName = name + "_db";
   podName = name + "-pod";
   logsVolumeName = name + "_logs";
-  usersDatabase = import ./users_database.nix;
-  secretsDir = import ../secrets_dir.nix alnLib;
+  usersDatabase = import ./_users_database.nix;
+  secretsDir = import ../_secrets_dir.nix alnLib;
   # sops of user hashed passwords
   password_sops_name_from_user = (name: "authelia_users_${name}_password_hashed");
 in

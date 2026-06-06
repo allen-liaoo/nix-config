@@ -8,7 +8,7 @@
 let
   name = "rproxy";
   dataVolumeName = name + "_data";
-  secretsDir = import ../secrets_dir.nix alnLib;
+  secretsDir = import ../_secrets_dir.nix alnLib;
   blogGitUrl = "https://github.com/allen-liaoo/alsblog.git";
   blogCache = "/tmp/alsblog";
   domain = "allenl.me";

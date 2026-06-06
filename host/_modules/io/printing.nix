@@ -1,10 +1,11 @@
 {
   lib,
+  config,
   ctx,
   ...
 }:
 
-lib.mkIf ctx.host.is.laptop {
+lib.mkIf (config.aln.io.enable && ctx.host.is.laptop) {
   # enable CUPS
   services.printing = {
     enable = true;

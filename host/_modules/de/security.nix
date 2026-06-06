@@ -1,6 +1,11 @@
-{ pkgs, ... }:
-
 {
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+
+lib.mkIf config.aln.de.enable {
   # required for gnome keyring
   security.pam.services.login.enableGnomeKeyring = true;
   security.pam.services.greetd.enableGnomeKeyring = true;
