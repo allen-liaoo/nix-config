@@ -22,4 +22,11 @@
       }
     ];
   };
+
+  aln.impermanence.files = [
+    # these are the only files necessary to persist on initial install,
+    # the rest of the configs can be generated from the config with these keys
+    "/etc/ssh/ssh_host_ed25519_key"
+    "/etc/ssh/ssh_host_ed25519_key.pub"
+  ];
 }

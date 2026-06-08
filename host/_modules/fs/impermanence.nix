@@ -53,14 +53,8 @@ in {
         "/var/lib/systemd/coredump" # crash dumps
         "/var/lib/systemd/timers"
       ]
-      ++ lib.optionals (ctx.host.is.server) [
+      ++ lib.optionals config.systemd.network.enable [
         "/var/lib/systemd/network"
-        #"/var/lib/containers" # since this is on separate subvolume, no need to persist it as it wont be wiped
-      ]
-      ++ lib.optionals (!ctx.host.is.server) [
-        "/var/lib/bluetooth"
-        "/etc/NetworkManager/system-connections"
-        "/var/lib/cups" # printer
       ]
       ++
         # For each user NOT using impermanence: persist their home directory
@@ -78,11 +72,6 @@ in {
 
       files = config.aln.impermanence.files ++ [
         "/etc/machine-id" # stable machine identity
-
-        # these are the only files necessary to persist on initial install,
-        # the rest of the configs can be generated from the config with these keys
-        "/etc/ssh/ssh_host_ed25519_key"
-        "/etc/ssh/ssh_host_ed25519_key.pub"
       ];
 
       # For each user using impermanence: persist specific directories
