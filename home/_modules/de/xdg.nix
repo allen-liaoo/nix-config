@@ -135,10 +135,12 @@ lib.mkIf config.aln.de.enable {
         ];
         "org.freedesktop.impl.portal.Settings" = [ "gnome" ];
         "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+        "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" "gtk" ];
       };
       extraPortals = with pkgs; [
         xdg-desktop-portal-gnome
         xdg-desktop-portal-gtk
+        xdg-desktop-portal-termfilechooser
       ];
       xdgOpenUsePortal = true;
     };

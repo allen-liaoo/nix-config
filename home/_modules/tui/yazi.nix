@@ -1,5 +1,7 @@
 {
   config,
+  pkgs,
+  lib,
   ...
 }:
 
@@ -32,6 +34,17 @@
       end
       rm -f -- "$tmp"
     end
+  '';
+
+  # use yazi as terminal file chooser
+  xdg.configFile."xdg-desktop-portal-termfilechooser/config".text = ''
+    [filechooser]
+    cmd=${pkgs.xdg-desktop-portal-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh
+    default_dir=$HOME
+    create_help_file=1
+    open_mode=suggested
+    save_mode=suggested
+    env=TERMCMD='${lib.getExe config.programs.alacritty.package} -T "Terminal Filechooser" -e'
   '';
 
   aln.matugen.template."yazi" = {
