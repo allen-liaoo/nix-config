@@ -31,7 +31,7 @@ in
           ];
           volumes = [
             "${./conf}:/etc/caddy:ro"
-            "${blogCache}/build:/srv/alsblog:ro"
+            #"${blogCache}/build:/srv/alsblog:ro"
             "${volumes.${dataVolumeName}.ref}:/data:rw,U"
           ];
 
@@ -47,41 +47,41 @@ in
             volumes.${dataVolumeName}.ref
           ];
         };
-        serviceConfig = {
-          # Check if blog files exists, if not, build it
-          ExecStartPre =
-            let
-              buildBlog = pkgs.writeShellApplication {
-                name = "build-alsblog";
-                runtimeInputs = [
-                  pkgs.git
-                  pkgs.hugo
-                ];
-                text = ''
-                  blog_build="${blogCache}/build"
-                  blog_build_tmp="${blogCache}/build.tmp"
-                  blog_repo="${blogCache}/repository"
-
-                  # Ensure cache directory exists
-                  mkdir -p "${blogCache}"
-
-                  # Keep repository and submodules up to date.
-                  if [ ! -d "$blog_repo/.git" ]; then
-                    git clone --recurse-submodules ${blogGitUrl} "$blog_repo"
-                  else
-                    git -C "$blog_repo" pull --ff-only
-                    git -C "$blog_repo" submodule update --init --recursive
-                  fi
-
-                  rm -rf "$blog_build_tmp"
-                  hugo --source="$blog_repo" --destination="$blog_build_tmp" --gc
-                  rm -rf "$blog_build"
-                  mv "$blog_build_tmp" "$blog_build"
-                '';
-              };
-            in
-            "${buildBlog}/bin/${buildBlog.name}";
-        };
+        # serviceConfig = {
+        #   # Check if blog files exists, if not, build it
+        #   ExecStartPre =
+        #     let
+        #       buildBlog = pkgs.writeShellApplication {
+        #         name = "build-alsblog";
+        #         runtimeInputs = [
+        #           pkgs.git
+        #           pkgs.hugo
+        #         ];
+        #         text = ''
+        #           blog_build="${blogCache}/build"
+        #           blog_build_tmp="${blogCache}/build.tmp"
+        #           blog_repo="${blogCache}/repository"
+        #
+        #           # Ensure cache directory exists
+        #           mkdir -p "${blogCache}"
+        #
+        #           # Keep repository and submodules up to date.
+        #           if [ ! -d "$blog_repo/.git" ]; then
+        #             git clone --recurse-submodules ${blogGitUrl} "$blog_repo"
+        #           else
+        #             git -C "$blog_repo" pull --ff-only
+        #             git -C "$blog_repo" submodule update --init --recursive
+        #           fi
+        #
+        #           rm -rf "$blog_build_tmp"
+        #           hugo --source="$blog_repo" --destination="$blog_build_tmp" --gc
+        #           rm -rf "$blog_build"
+        #           mv "$blog_build_tmp" "$blog_build"
+        #         '';
+        #       };
+        #     in
+        #     "${buildBlog}/bin/${buildBlog.name}";
+        # };
       };
 
       images.${name} = alnLib.mkImage {
