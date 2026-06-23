@@ -27,7 +27,7 @@ in
       };
     };
 
-    services.vicinae = {
+    programs.vicinae = {
       enable = true;
       systemd = {
         enable = true;
@@ -60,7 +60,7 @@ in
             ]
             |> map (
             { name, sha }:
-              inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.mkRayCastExtension {
+              inputs.vicinae.lib.${pkgs.stdenv.hostPlatform.system}.mkRayCastExtension {
                 inherit name;
                 rev = rcRev;
                 sha256 = sha;

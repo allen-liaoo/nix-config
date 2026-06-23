@@ -95,7 +95,6 @@
   inputs = {
     aln-packages = { 
       url = "github:allen-liaoo/aln-packages";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     dms = {

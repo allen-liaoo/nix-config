@@ -52,8 +52,7 @@ rec {
       flakePath = toString rootPath;
       relPathStr = toString relPath;
     in
-    builtins.trace "flakePath: ${flakePath}\n relPath: ${relPathStr}" 
-    (assert hasPrefix flakePath relPathStr;
-    homeDir + "/" + NIX_CONFIG_REL_HOME + (removePrefix flakePath relPathStr))
+    assert hasPrefix flakePath relPathStr;
+    homeDir + "/" + NIX_CONFIG_REL_HOME + (removePrefix flakePath relPathStr)
   );
 }
