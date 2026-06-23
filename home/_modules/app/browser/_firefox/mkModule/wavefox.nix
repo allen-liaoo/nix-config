@@ -15,8 +15,8 @@ let
   wavefox = pkgs.fetchFromGitHub {
     owner = "QNetITQ";
     repo = "WaveFox";
-    rev = "v1.9.150";
-    hash = "sha256-cFrKG9VGDda9sFcAu/6zvpsd82TUOWTTEZVoaCLt1gg=";
+    rev = "v1.9.152";
+    hash = "sha256-4DUGDbk6a8UAxnyKIG8HYfBvXRHoKo2ToOqlW0VGfS4=";
     sparseCheckout = [
       "/chrome"
     ];

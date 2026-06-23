@@ -24,8 +24,11 @@
 
     wavefox = {
       config = {
-        "Tabs.Shape" = 8;
-        "Tabs.Separators" = 2;
+        "HorizontalTabs.AttachedTabs" = "true";
+        "HorizontalTabs.AttachedTabs.Shape" = 1;
+        "HorizontalTabs.AttachedTabs.Shape.Mode" = 1;
+        "HorizontalTabs.Toolbar.Roundings" = 4;
+        "HozitontalTabs.AttachedTabs.Separators" = 1;
       };
     };
 

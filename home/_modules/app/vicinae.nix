@@ -188,7 +188,7 @@ in
       enable = true;
       content = ''
         binds {
-          Mod+X repeat=false { spawn "${lib.getExe config.services.vicinae.package}" "toggle"; }
+          Mod+X repeat=false { spawn "${lib.getExe config.programs.vicinae.package}" "toggle"; }
         }
         // launcher
         layer-rule {
@@ -215,7 +215,7 @@ in
       content = {
         input_path = inputs.vicinae.outPath + "/extra/matugen.toml";
         output_path = config.xdg.dataHome + "/vicinae/themes/matugen.toml";
-        post_hook = "${lib.getExe config.services.vicinae.package} theme set matugen";
+        post_hook = "${lib.getExe config.programs.vicinae.package} theme set matugen";
       };
     };
   };
