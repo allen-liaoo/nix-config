@@ -12,6 +12,7 @@ let
   # Do not move to flake input, as we want sparse checkout
   # See: https://github.com/vicinaehq/vicinae/blob/main/nix/mkRayCastExtension.nix
   rcRev = "e1f89bc508756fe5d287571b3d4bae38e309d339";
+  package = inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
   imports = [
@@ -29,6 +30,7 @@ in
 
     programs.vicinae = {
       enable = true;
+      inherit package;
       systemd = {
         enable = true;
         autoStart = true;

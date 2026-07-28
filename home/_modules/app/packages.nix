@@ -1,29 +1,21 @@
 {
   lib,
   pkgs,
+  pkgs-unstable,
   config,
   ...
 }:
 
 lib.mkIf config.aln.app.enable {
-  home.packages = with pkgs; [
-    bitwarden-desktop
+  home.packages = (with pkgs; [
     loupe # image viewer
     nautilus # file browser
     signal-desktop
     zotero
-  ];
-
-  # fix dep electron-39.8.10 insecure and EOL
+  ])
+  # old BW uses EOL electron version
   # https://github.com/NixOS/nixpkgs/issues/526914
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-39.8.10"
-  ];
-  nixpkgs.overlays = [
-    (final: prev: {
-      bitwarden-desktop = prev.bitwarden-desktop.override {
-        electron_39 = final.electron_39-bin;
-      };
-    })
-  ];
+  ++ (with pkgs-unstable; [
+    bitwarden-desktop
+  ]);
 }

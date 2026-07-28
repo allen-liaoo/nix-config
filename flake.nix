@@ -100,7 +100,6 @@
     dms = {
       url = "github:AvengeMedia/DankMaterialShell/stable";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.quickshell.follows = "quickshell";
     };
 
     dms-plugin-registry = {
@@ -168,11 +167,6 @@
     };
 
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
-
-    quickshell = {
-      url = "git+https://git.outfoxxed.me/quickshell/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
