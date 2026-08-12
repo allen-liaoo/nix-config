@@ -13,7 +13,8 @@
     ripgrep
     just
 
-    pkgs-aln.television
+    # TODO: fix pkg
+    # pkgs-aln.television
   ];
 
   programs.fish = {

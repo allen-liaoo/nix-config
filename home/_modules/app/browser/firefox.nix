@@ -46,4 +46,5 @@ in
     #   config.home.homeDirectory + "/.cache/wal/dank-pywalfox.json"
     # );
   };
+
 }

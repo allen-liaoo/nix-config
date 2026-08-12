@@ -34,7 +34,8 @@
 
     extensions.packages = with pkgs-nur.repos.rycee.firefox-addons; [
       bitwarden
-      bypass-paywalls-clean
+      # TODO: gitflic.ru 404 error
+      # bypass-paywalls-clean
       darkreader
       ublock-origin-upstream
       vimium
