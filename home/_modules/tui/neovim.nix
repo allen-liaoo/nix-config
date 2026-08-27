@@ -11,6 +11,7 @@ let
     makeNvimxWithModule (pkgs.stdenv.hostPlatform.system) {
       nvimx.treesitter.enableAllGrammars = true;
       nvimx.preset.nix.enable = true;
+      nvimx.preset.rust.enable = true;
       nvimx.preset.shells.enable = true;
     };
 in
