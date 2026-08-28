@@ -7,4 +7,4 @@ patch:
   ascii_composer/switch_key: noop # disable any key to switch to english
 
   key_binder/bindings:
-    - { when: always, accept: Shift+space, toggle: simplification }
+    - { when: always, accept: Shift+space, toggle: zh_hans }

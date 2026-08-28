@@ -1,4 +1,3 @@
-# Status: Config not working
 {
   lib,
   config,
@@ -31,6 +30,8 @@ lib.mkIf config.aln.de.enable {
         };
         globalOptions = {
           Hotkey = {
+            TriggerKeys = "Control+space";
+            AltTriggerKeys = ""; # disable the default Shift toggle
             EnumerateWithTriggerKeys = true;
             EnumerateSkipFirst = false;
             ModifierOnlyKeyTimeout = 250;
@@ -49,11 +50,11 @@ lib.mkIf config.aln.de.enable {
   );
 
   aln.niri.configFile."fcitx5" = {
-    enable = false; # with config.i18n.inputMethod; lib.optionalString (enable && (type == "fcitx5"));
+    enable = true; # with config.i18n.inputMethod; lib.optionalString (enable && (type == "fcitx5"));
     content = ''
       binds {
         Ctrl+Space hotkey-overlay-title="Switch input method" {
-          spawn "${lib.getExe config.i18n.inputMethod.fcitx5.fcitx5-with-addons}" "-t";
+          spawn "${config.i18n.inputMethod.fcitx5.fcitx5-with-addons}/bin/fcitx5-remote" "-t";
         }
       }
     '';

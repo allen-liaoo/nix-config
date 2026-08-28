@@ -6,6 +6,6 @@ patch:
     - name: full_shape
       reset: 0
       states: [半角]
-    - name: simplification
+    - name: zh_hans # actual option read by the simplifier@zh_hans filter
       reset: 0  # default traditional
       states: [漢字, 汉字]
