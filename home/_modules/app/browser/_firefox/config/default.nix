@@ -38,7 +38,6 @@
       # bypass-paywalls-clean
       darkreader
       ublock-origin-upstream
-      vimium
     ];
   };
 }
