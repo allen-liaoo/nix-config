@@ -35,4 +35,9 @@
     algorithm = "zstd";
     # memoryPercent defaults to 50
   };
+
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+  };
 }

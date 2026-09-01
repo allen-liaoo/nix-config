@@ -50,13 +50,13 @@ in
         fadeToDpmsGracePeriod = 5;
 
         # automatic lock, turn off monitor, or suspend (sec)
-        batteryLockTimeout = 180;
-        batteryMonitorTimeout = 300;
-        batterySuspendTimeout = 600;
+        batteryLockTimeout = 900;
+        batteryMonitorTimeout = 1800;
+        batterySuspendTimeout = 3600;
         batterySuspendBehavior = 0; # 0: suspend, 1: hibernate, 2: suspend then hibernate
-        acLockTimeout = 300;
-        acMonitorTimeout = 600;
-        acSuspendTimeout = 1800;
+        acLockTimeout = 1800;
+        acMonitorTimeout = 3600;
+        acSuspendTimeout = 5400;
         acSuspendBehavior = 0;
         powerMenuDefaultAction = "lock";
 
