@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-unstable,
   lib,
   ...
 }:
@@ -21,6 +22,34 @@
         show_symlink = true;
       };
     };
+
+    keymap = {
+      mgr.prepend_keymap = [
+        {
+          on = "M";
+          run = "plugin mount";
+          desc = "View mounts";
+        }
+        {
+          on = "T";
+          run = "plugin omni-trash";
+          desc = "View trash";
+        }
+      ];
+    };
+
+    plugins = {
+      mount = pkgs.yaziPlugins.mount;
+      omni-trash = pkgs-unstable.yaziPlugins.omni-trash; # TODO: switch to stable
+      yatline = {
+        package = pkgs.yaziPlugins.yatline;
+        setup = true;
+      };
+    };
+
+    extraPackages = with pkgs; [
+      trash-cli    # required by omni-trash
+    ];
   };
 
   # Yazi specific init (replaces the need for abbreviation)

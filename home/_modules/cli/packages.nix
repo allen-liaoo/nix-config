@@ -9,7 +9,6 @@
     bat
     fd
     fzf
-    gtrash
     ripgrep
     just
 
@@ -23,7 +22,6 @@
     };
     shellAbbrs = {
       js = "just";
-      tr = "gtrash put";
       tvc = "tv channels";
       tvj = "tv journal";
       tvn = "tv nix-search-tv";
