@@ -2,49 +2,31 @@
   lib,
   config,
   inputs,
-  pkgs,
-  alnLib,
+  ctx,
   ...
 }:
 
+let
+  # gui hosts only ever have a single desktop user
+  user = lib.head ctx.host.users;
+in
 {
   imports = [
-    inputs.dms.nixosModules.greeter
+    inputs.dank-greeter.nixosModules.default
   ];
 
   config = lib.mkIf config.aln.de.enable {
-    programs.dank-material-shell.greeter = {
+    services.displayManager.dms-greeter = {
       enable = true;
       compositor.name = "niri";
-      configFiles = [
-        "/var/cache/dms-greeter/settings.json"
-        "/var/cache/dms-greeter/session.json"
-      ];
+      # copies settings.json/session.json/dms-colors.json from this user's
+      # live DMS config at every greetd start, so the greeter always shows
+      # the current theme/wallpaper
+      configHome = "/home/${user.name}";
       logs = {
         save = true;
         path = "/tmp/dms-greeter.log";
       };
     };
-
-    # symlink dms-greeter config files
-    systemd.tmpfiles.rules =
-      let
-        settingsJson = pkgs.writeText "settings.json" (
-          builtins.toJSON {
-            #currentThemeName = "blue";
-          }
-        );
-        sessionJson = pkgs.writeText "session.json" (
-          builtins.toJSON {
-            wallpaperPath = alnLib.relToRoot "assets/wallpaper/roadtrip.jpg";
-            wallpaperFillMode = "PreserveAspectCrop";
-          }
-        );
-      in
-      [
-        "d /var/cache/dms-greeter 0755 root root -"
-        "C+ /var/cache/dms-greeter/settings.json - - - - ${settingsJson}"
-        "C+ /var/cache/dms-greeter/session.json - - - - ${sessionJson}"
-      ];
   };
 }
