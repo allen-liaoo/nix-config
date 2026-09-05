@@ -10,6 +10,7 @@ lib.mkIf config.aln.app.enable {
   home.packages = (with pkgs; [
     loupe # image viewer
     nautilus # file browser
+    file-roller # archive manager
     signal-desktop
     zotero
   ])

@@ -12,6 +12,8 @@ let
   vidViewer = "mpv.desktop";
   imgViewer = "org.gnome.Loupe.desktop";
   textEditor = "nvim.desktop";
+  fileManager = "yazi.desktop";
+  archiveManager = "org.gnome.FileRoller.desktop";
 
   mimeTypes =
     prefix: suffixes: app:
@@ -118,6 +120,8 @@ lib.mkIf config.aln.de.enable {
             "x-scheme-handler/magnet" = "qbittorrent.desktop";
             "x-scheme-handler/spotify" = "spotify.desktop";
             "x-scheme-handler/discord" = "vesktop.desktop";
+            "inode/directory" = fileManager;
+            "application/zip" = archiveManager;
           };
     };
 

@@ -41,7 +41,7 @@ binds {
     Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
     Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
     Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
-    Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+H hotkey-overlay-title="Move Column: Monitor Left"  { move-column-to-monitor-left; }
     Mod+Shift+Ctrl+J     { move-column-to-monitor-down; }
     Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
     Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
@@ -56,7 +56,7 @@ binds {
     Mod+Shift+Alt+Down  { move-workspace-to-monitor-down; }
     Mod+Shift+Alt+Up    { move-workspace-to-monitor-up; }
     Mod+Shift+Alt+Right { move-workspace-to-monitor-right; }
-    Mod+Shift+Alt+H  { move-workspace-to-monitor-left; }
+    Mod+Shift+Alt+H hotkey-overlay-title="Goto Workspace: Monitor Left" { move-workspace-to-monitor-left; }
     Mod+Shift+Alt+J  { move-workspace-to-monitor-down; }
     Mod+Shift+Alt+K  { move-workspace-to-monitor-up; }
     Mod+Shift+Alt+L  { move-workspace-to-monitor-right; }

@@ -41,6 +41,7 @@ in
               id = "wg_hs_dns";
               type = "wireguard";
               interface-name = "wg_hs";
+              autoconnect = false;
             };
             wireguard.private-key = "$WG_PRIVKEY";
             # TODO: Centralize keys and ips
