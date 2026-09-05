@@ -42,9 +42,9 @@ in
     };
 
     # setup DMS managed matugen theme
-    # home.file.".cache/wal/colors.json".source = config.lib.file.mkOutOfStoreSymlink (
-    #   config.home.homeDirectory + "/.cache/wal/dank-pywalfox.json"
-    # );
+    home.file.".cache/wal/colors.json".source = config.lib.file.mkOutOfStoreSymlink (
+      config.home.homeDirectory + "/.cache/wal/dank-pywalfox.json"
+    );
   };
 
 }

@@ -45,6 +45,9 @@ in
 
   config = lib.mkIf (cfg.enable && cfg.pywalfox.enable) (
     {
+      # dms's matugen only generates pywalfox colors if `pywalfox` is on PATH
+      home.packages = [ cfg.pywalfox.package ];
+
       home.activation = {
         pywalfoxInstall = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           ${lib.getExe cfg.pywalfox.package} install \

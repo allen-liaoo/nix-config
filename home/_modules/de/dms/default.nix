@@ -3,7 +3,6 @@
   config,
   inputs,
   pkgs,
-  pkgs-unstable,
   alnLib,
   inventory,
   ctx,
@@ -32,8 +31,7 @@ in
       };
 
       enableVPN = true;
-      enableSystemMonitoring = true; # uses dms's dgop
-      dgop.package = pkgs-unstable.dgop;
+      enableSystemMonitoring = true; # dgop is now built into dms-shell
       enableDynamicTheming = true; # mutagen
       enableAudioWavelength = true;
       enableCalendarEvents = false; # khal ; need extra setup
