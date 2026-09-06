@@ -65,12 +65,4 @@ binds {
   XF86AudioMicMute allow-when-locked=true {
     spawn "dms" "ipc" "call" "audio" "micmute";
   }
-
-  // Brightness Controls
-  XF86MonBrightnessUp allow-when-locked=true {
-    spawn "dms" "ipc" "call" "brightness" "increment" "5" "";
-  }
-  XF86MonBrightnessDown allow-when-locked=true {
-    spawn "dms" "ipc" "call" "brightness" "decrement" "5" "";
-  }
 }
