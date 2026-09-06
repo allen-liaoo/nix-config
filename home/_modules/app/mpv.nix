@@ -10,6 +10,7 @@ lib.mkIf config.aln.app.enable {
     enable = true;
     scripts = with pkgs.mpvScripts; [
       autosub
+      autosubsync-mpv
       mpris
     ];
   };
