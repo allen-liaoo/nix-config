@@ -69,20 +69,20 @@ lib.mkIf config.aln.de.enable {
         width = 50;
       }
       {
-        id = "plugin_displayMirror";
+        id = "plugin_niriDS";
         width = 50;
       }
       {
         id = "idleInhibitor";
+        width = 50;
+      }
+      {
+        id = "doNotDisturb";
         width = 25;
       }
       {
         id = "nightMode";
         width = 25;
-      }
-      {
-        id = "doNotDisturb";
-        width = 50;
       }
       {
         id = "darkMode";
@@ -123,21 +123,24 @@ lib.mkIf config.aln.de.enable {
         ];
         rightWidgets = [
           { id = "systemTray"; }
+          { id = "hiddenBar"; }
           { id = "privacyIndicator"; }
           # { id = "keyboard_layout_name"; keyboardLayoutNameCompactMode = true; }
-          { id = "ddcBrightness"; } # plugin
-          { id = "battery"; }
+          { id = "batteryPlus"; }
           {
             id = "controlCenterButton";
             showAudioIcon = true;
             showAudioPercent = false;
             showBatteryIcon = false;
             showBluetoothIcon = true;
-            showBrightnessIcon = true;
+            showBrightnessIcon = false;
             showBrightnessPercent = false;
             showNetworkIcon = true;
             showMicIcon = false;
             showMicPercent = false;
+            showScreenSharingIcon = true;
+            showDoNotDisturbIcon = true;
+            showIdleInhibitorIcon = true;
           }
         ];
       }

@@ -77,21 +77,20 @@ in
       };
 
       plugins = {
+        batteryPlus.enable = true;
+        # dankAlbumWidget.enable = true;
         dankBatteryAlerts.enable = true;
-        displayMirror.enable = true;
-        ddcBrightness.enable = false; #ctx.user.inGroup.i2c;
+        dankDesktopWeather.enable = true;
+        hiddenBar.enable = true;
+        niriDS.enable = true;
       };
-
-      # niri = {
-      #   enableSpawn = false;
-      #   enableKeybinds = false;
-      #   includes.enable = false;
-      # };
     };
 
     home.packages = with pkgs; [
+      upower # batterPlus
+      power-profiles-daemon # batteryPlus
       libnotify # dankBatteryAlerts
-      wl-mirror # displayMirror
+      wl-mirror # niriDS
     ];
 
     # dms is ride or die for niri
