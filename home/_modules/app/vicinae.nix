@@ -116,7 +116,7 @@ in
               defaultAction = "launch";
             };
             entrypoints = {
-              firefox.alias = "b";
+              #firefox.alias = "b";
             };
           };
           

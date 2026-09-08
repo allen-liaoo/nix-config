@@ -90,6 +90,7 @@
 },
 {
   "type": "host",
+  "format": "{vendor} {name} ({version})",
   "key": "󰟀 Host",
   "keyColor": "yellow"
 },

@@ -80,7 +80,7 @@ in
         batteryPlus.enable = true;
         # dankAlbumWidget.enable = true;
         dankBatteryAlerts.enable = true;
-        dankDesktopWeather.enable = true;
+        # dankDesktopWeather.enable = true;
         hiddenBar.enable = true;
         niriDS.enable = true;
       };

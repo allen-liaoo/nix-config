@@ -1,6 +1,8 @@
 # Nix-Config
 My NixOS and Home-Manager Configs
 
+![cover](assets/cover.png)
+
 ## Features
 ### Dots
 **Standalone** home-manager modules.

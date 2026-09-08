@@ -12,30 +12,30 @@ lib.mkIf config.aln.de.enable {
     # keys (which we don't set), wiping this declared widget to [] at startup.
     configVersion = 4;
     desktopWidgetInstances = [
-      {
-        id = "dw_weather";
-        widgetType = "dankDesktopWeather";
-        name = "Dank Desktop Weather";
-        enabled = true;
-        config = {
-          displayPreferences = [
-            "all"
-          ];
-          viewMode = "detailed";
-          colorMode = "primary";
-          forecastDays = 7;
-          backgroundOpacity = 0;
-          showCondition = false;
-          showForecast = true;
-          showHourlyForecast = true;
-          hourlyCount = 6;
-          showLocation = false;
-          showHumidity = true;
-          showWind = true;
-          showPrecipitation = true;
-          syncPositionAcrossScreens = true;
-        };
-      }
+      # {
+      #   id = "dw_weather";
+      #   widgetType = "dankDesktopWeather";
+      #   name = "Dank Desktop Weather";
+      #   enabled = true;
+      #   config = {
+      #     displayPreferences = [
+      #       "all"
+      #     ];
+      #     viewMode = "forecast";
+      #     colorMode = "primary";
+      #     backgroundOpacity = 0;
+      #     showLocation = true;
+      #     showCondition = true;
+      #     showHumidity = true;
+      #     showWind = true;
+      #     showPrecipitation = true;
+      #     showForecast = true;
+      #     forecastDays = 7;
+      #     showHourlyForecast = false;
+      #     hourlyCount = 4;
+      #     syncPositionAcrossScreens = true;
+      #   };
+      # }
       # {
       #   id = "dw_album";
       #   widgetType = "dankAlbumWidget";
@@ -98,11 +98,11 @@ lib.mkIf config.aln.de.enable {
       width = 320;
       height = 480;
     };
-    dw_weather._synced = {
-      x = 0;
-      y = 1;
-      width = 470;
-      height =  470;
-    };
+    # dw_weather._synced = {
+    #   x = 0;
+    #   y = 1;
+    #   width = 320;
+    #   height = 480;
+    # };
   };
 }

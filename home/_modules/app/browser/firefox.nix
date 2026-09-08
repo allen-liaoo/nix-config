@@ -45,6 +45,22 @@ in
     home.file.".cache/wal/colors.json".source = config.lib.file.mkOutOfStoreSymlink (
       config.home.homeDirectory + "/.cache/wal/dank-pywalfox.json"
     );
+
+    aln.niri.configFile."firefox" = {
+      enable = true;
+      content = ''
+        binds {
+          Mod+B hotkey-overlay-title="Open a browser instance" {
+            spawn "${lib.getExe config.programs.firefox.package}";
+          }
+        }
+        window-rule { 
+          match app-id=r#"firefox"#
+          open-maximized true 
+          open-maximized-to-edges true
+        }
+      '';
+    };
   };
 
 }

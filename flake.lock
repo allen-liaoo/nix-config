@@ -724,11 +724,11 @@
         "winresize": "winresize"
       },
       "locked": {
-        "lastModified": 1788659485,
-        "narHash": "sha256-rTHbqJdjkuUSYIpPHT9/id7yLvFLIrz0PcxXPtcfGvY=",
+        "lastModified": 1788711507,
+        "narHash": "sha256-p3XDoZZDbLV68sW+ta8y9JPBfYRak1BFULPVA9fpBrM=",
         "owner": "allen-liaoo",
         "repo": "nvimx",
-        "rev": "35235b72c6f2b127a0f7fd2c2671c814a5401851",
+        "rev": "898333a06c3b6fecd1dcb5f62aac21cb46d1b10f",
         "type": "github"
       },
       "original": {
