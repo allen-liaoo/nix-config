@@ -6,8 +6,4 @@
       hyperlinks = true;
     };
   };
-
-  programs.fish.shellAbbrs = {
-    diff = "delta";
-  };
 }

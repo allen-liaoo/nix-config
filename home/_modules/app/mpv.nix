@@ -11,8 +11,18 @@ lib.mkIf config.aln.app.enable {
     scripts = with pkgs.mpvScripts; [
       autosub
       autosubsync-mpv
+      modernz
       mpris
     ];
+    scriptOpts = {
+      modernz = {
+        layout = "compact";
+        icon_style = "outline";
+        jump_buttons = "no";
+        playlist_button = "no";
+        ontop_button = "no";
+      };
+    };
   };
 
   aln.niri.configFile."mpv" = {
