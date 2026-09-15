@@ -43,7 +43,6 @@ in
         with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system};
         [
           nix
-          player-pilot
           ssh
           #systemd # not supported currently
         ]
@@ -82,6 +81,8 @@ in
         pop_to_root_on_close = true;
         favicon_service = "twenty";
         search_files_in_root = true;
+        wrap_navigation = true;
+        tray.enabled = false;
 
         launcher_window = {
           opacity = 0.4;
