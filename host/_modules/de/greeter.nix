@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  inputs,
   ctx,
   ...
 }:
@@ -11,10 +10,6 @@ let
   user = lib.head ctx.host.users;
 in
 {
-  imports = [
-    inputs.dank-greeter.nixosModules.default
-  ];
-
   config = lib.mkIf config.aln.de.enable {
     services.displayManager.dms-greeter = {
       enable = true;
