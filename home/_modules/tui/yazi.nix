@@ -49,6 +49,8 @@
 
     extraPackages = with pkgs; [
       trash-cli    # required by omni-trash
+      # ueberzugpp   # for alacritty image support
+      # see ueberzugpp issue #290, yazi issue #4283
     ];
   };
 
