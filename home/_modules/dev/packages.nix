@@ -2,7 +2,7 @@
 
 {
   home.packages = with pkgs-unstable; [
-    antigravity-cli
+    #antigravity-cli
     claude-code
   ];
 }
