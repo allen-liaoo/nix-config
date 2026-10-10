@@ -27,7 +27,7 @@ creation_rules:
 - path_regex: secrets/host/theseus+
   age: [*theseus, *sops_admin]
 - path_regex: secrets/host/wifi_passwd.yaml
-  age: [*theseus, *sops_admin]
+  age: [*theseus, *barrybenson, *sops_admin]
 - path_regex: secrets/host/barrybenson+
   age: [*barrybenson, *sops_admin]
 - path_regex: secrets/host/ionobro+
