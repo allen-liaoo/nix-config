@@ -19,9 +19,8 @@ in
       user = "allenliao"; # TODO: Change to al
     };
     "barrybenson" = with inventory; {
-      hostname = hosts.barrybenson.data.wg_ip;
+      hostname = "barrybenson.local"; # mDNS, same LAN
       user = users.al.name;
-      proxyJump = "ionobro";
       serverAliveInterval = 60;
       serverAliveCountMax = 10;
     };
