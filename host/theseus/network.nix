@@ -12,6 +12,7 @@ let
   # NM connections/profiles
   connections = [
     "hotspot_a16n"
+    "home_uv"
   ];
 
   # whose ~/.joinnow eduroam certs (scripts/securew2-joinnow) wpa_supplicant needs to see;
@@ -32,31 +33,31 @@ in
       # NOTE: trailing ":" is important in "list of ..." fields
       profiles = {
         # home server (DNS)
-        wg_hs_dns =
-          let
-            ionobro = inventory.hosts.ionobro.data;
-          in
-          {
-            connection = {
-              id = "wg_hs_dns";
-              type = "wireguard";
-              interface-name = "wg_hs";
-              autoconnect = false;
-            };
-            wireguard.private-key = "$WG_PRIVKEY";
-            # TODO: Centralize keys and ips
-            "wireguard-peer.${ionobro.wg_pubkey}" = {
-              endpoint = "${ionobro.ip}:${ionobro.wg_port}";
-              allowed-ips = "${ionobro.wg_ip}/24;";
-              persistent-keepalive = 25;
-            };
-            ipv4 = with ctx.host.data; {
-              address1 = "${wg_ip}/32";
-              dns = "${ionobro.wg_ip};"; # trailing ";"!
-              method = "manual";
-            };
-            ipv6.method = "disabled";
-          };
+        # wg_hs_dns =
+        #   let
+        #     ionobro = inventory.hosts.ionobro.data;
+        #   in
+        #   {
+        #     connection = {
+        #       id = "wg_hs_dns";
+        #       type = "wireguard";
+        #       interface-name = "wg_hs";
+        #       autoconnect = false;
+        #     };
+        #     wireguard.private-key = "$WG_PRIVKEY";
+        #     # TODO: Centralize keys and ips
+        #     "wireguard-peer.${ionobro.wg_pubkey}" = {
+        #       endpoint = "${ionobro.ip}:${ionobro.wg_port}";
+        #       allowed-ips = "${ionobro.wg_ip}/24;";
+        #       persistent-keepalive = 25;
+        #     };
+        #     ipv4 = with ctx.host.data; {
+        #       address1 = "${wg_ip}/32";
+        #       dns = "${ionobro.wg_ip};"; # trailing ";"!
+        #       method = "manual";
+        #     };
+        #     ipv6.method = "disabled";
+        #   };
         # phone
         a16n = {
           connection = {
@@ -78,6 +79,24 @@ in
             method = "auto";
           };
         };
+
+        home_uv = {
+          connection = {
+            id = "home_uv";
+            type = "wifi";
+          };
+          wifi = {
+            mode = "infrastructure";
+            ssid =  "TP-Link_CF39";
+          };
+          wifi-security = {
+            auth-alg = "open";
+            key-mgmt = "wpa-psk";
+            psk = "$PASSWD_HOME_UV"; # psk_home defined in environmentFiles
+          };
+          ipv4.method = "auto";
+          ipv6.method = "auto";
+      };
         # OSU eduroam is intentionally NOT declared here: it's fully managed by
         # `scripts/securew2-joinnow` (see that directory's README), which talks
         # directly to NetworkManager over D-Bus to create/renew the connection.
