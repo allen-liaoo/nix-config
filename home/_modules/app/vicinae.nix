@@ -43,6 +43,7 @@ in
         with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system};
         [
           nix
+          process-manager
           ssh
           #systemd # not supported currently
         ]
@@ -110,6 +111,10 @@ in
             "packages".alias = "np"; # nixpkgs
             "options".alias = "no"; # nixos modules
             "home-manager-options".alias = "hm"; # hm modules
+          };
+
+          "@leonkohli/vicinae-extension-process-manager-0".entrypoints = {
+              processes.enabled = false;
           };
 
           applications = {
