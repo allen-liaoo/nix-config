@@ -39,6 +39,16 @@ in
   # Need network-online for podman-user-wait-network-online.service
   systemd.targets.network-online.wantedBy = [ "multi-user.target" ];
 
+  # Advertise barrybenson.local on the LAN (mDNS), so clients don't need its DHCP ip
+  services.avahi = {
+    enable = true;
+    openFirewall = true; # udp 5353
+    publish = {
+      enable = true;
+      addresses = true;
+    };
+  };
+
   # # Firewall
   # networking.nftables.enable = true; # keep nftables backend for podman
   # networking.firewall = {
