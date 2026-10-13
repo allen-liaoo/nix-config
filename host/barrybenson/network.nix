@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   alnLib,
   ...
@@ -36,7 +37,7 @@ in
     };
   };
 
-  # Need network-online for podman-user-wait-network-online.service
+  # Services (caddy, mDNS aliases, qbittorrent) order after network-online
   systemd.targets.network-online.wantedBy = [ "multi-user.target" ];
 
   # Advertise barrybenson.local on the LAN (mDNS), so clients don't need its DHCP ip
@@ -46,18 +47,26 @@ in
     publish = {
       enable = true;
       addresses = true;
+      userServices = true; # allow publishing over D-Bus, needed by avahi-publish (services/rproxy.nix aliases)
     };
   };
 
-  # # Firewall
-  # networking.nftables.enable = true; # keep nftables backend for podman
-  # networking.firewall = {
-  #   enable = true;
-  #   allowedTCPPorts = [
-  #     22 # ssh
-  #   ];
-  # };
+  # Re-publish aliases when the ip may have changed (new DHCP lease, reconnect)
+  networking.networkmanager.dispatcherScripts = [
+    {
+      source = pkgs.writeShellScript "restart-avahi-aliases" ''
+        case "$2" in
+          up|dhcp4-change)
+            ${config.systemd.package}/bin/systemctl try-restart 'avahi-alias-*.service' ;;
+        esac
+      '';
+    }
+  ];
 
+
+  # Firewall: ssh (sshd.nix), mDNS (avahi) and http (services/rproxy.nix) open themselves;
+  # services only listen behind the reverse proxy and don't open their own ports
+  networking.firewall.enable = true;
 
   sops.templates."nm-secrets-env".content = ''
     PASSWD_HOME_UV=${config.sops.placeholder."passwd_home"}
