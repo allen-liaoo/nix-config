@@ -76,6 +76,15 @@
                   ];
                 };
 
+                # media library + torrent downloads (same fs so *arr can hardlink)
+                "@media" = {
+                  mountpoint = "/srv/media";
+                  mountOptions = [
+                    "compress=zstd"
+                    "noatime"
+                  ];
+                };
+
                 "@snapshots" = {
                   mountpoint = "/.snapshots";
                   mountOptions = [
