@@ -10,6 +10,14 @@
   # which is used for ordering services (i.e. with impermanence)
   services.userborn.enable = true;
 
+  # userborn keeps UIDs/GIDs stable by reading its previous passwd/group, so they must persist.
+  # Otherwise system users without a static uid are reallocated each boot and lose
+  # access to their persisted state. 
+  # Can't persist /etc/passwd itself: userborn umounts it to write it.
+  # /var/lib/nixos is in pathsNeededForBoot, so it's bind mounted in initrd, before userborn runs
+  services.userborn.passwordFilesLocation = lib.mkIf ctx.host.hasTag.impermanent "/var/lib/nixos";
+
+
   users.mutableUsers = false;
   users.users = lib.mergeAttrsList (
     map (user: {
