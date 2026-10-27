@@ -2,7 +2,7 @@
 
 // Open DMS windows as floating by default
 window-rule {
-  match app-id=r#"org.quickshell$"#
+  match app-id=r#"^com\.danklinux\.dms$"#
   open-floating true
 }
 
@@ -30,6 +30,14 @@ layer-rule {
 binds {
   Mod+N hotkey-overlay-title="Notification Center" {
     spawn "dms" "ipc" "call" "notifications" "toggle";
+  }
+  // FW 13 F9 Key
+  Mod+P repeat=false {
+    spawn "dms" "ipc" "call" "lock" "lock";
+  }
+  // FW 13 F10 Key
+  XF86Launch1 hotkey-overlay-title="Toggle Do Not Disturb" {
+    spawn "dms" "ipc" "call" "notifications" "toggleDoNotDisturb";
   }
   XF86AudioMedia {
     spawn "dms" "ipc" "call" "settings" "focusOrToggle";
