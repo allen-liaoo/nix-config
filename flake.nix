@@ -75,7 +75,7 @@
                       _module.args = {
                         pkgs-unstable = mkPkgs inputs.nixpkgs-unstable system;
                         pkgs-nur = inputs.nur.legacyPackages.${system};
-                        pkgs-aln = inputs.aln-packages.legacyPackages.${system};
+                        pkgs-aln = inputs.alnpkgs.legacyPackages.${system};
                       };
                     }
                   ];

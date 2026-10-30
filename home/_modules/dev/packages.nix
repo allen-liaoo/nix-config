@@ -3,6 +3,5 @@
 {
   home.packages = with pkgs-unstable; [
     antigravity-cli
-    claude-code
   ];
 }

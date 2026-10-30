@@ -12,7 +12,7 @@ in
     #enableZshIntegration = true;
   };
 
-  programs.fish.shellAbbrs = {
+  aln.shell.module.integrations.zellij.abbreviations = {
     zj = "zellij";
   };
 
