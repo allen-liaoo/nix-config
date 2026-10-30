@@ -19,7 +19,6 @@ lib.mkIf (config.aln.io.enable && ctx.host.is.laptop) {
     openFirewall = true;
   };
 
-
   aln.impermanence.dirs = [
     "/var/lib/cups"
   ];

@@ -93,8 +93,8 @@
   };
 
   inputs = {
-    aln-packages = { 
-      url = "github:allen-liaoo/aln-packages";
+    alnpkgs = { 
+      url = "github:allen-liaoo/alnpkgs";
     };
 
     dms = {
