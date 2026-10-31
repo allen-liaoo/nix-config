@@ -93,9 +93,8 @@
   };
 
   inputs = {
-    alnpkgs = { 
-      url = "github:allen-liaoo/alnpkgs";
-    };
+    # also provides my nixvim config (alnpkgs.inputs.nvimx)
+    alnpkgs.url = "github:allen-liaoo/alnpkgs";
 
     dms = {
       url = "github:AvengeMedia/DankMaterialShell/stable";
@@ -147,12 +146,6 @@
     nix-your-shell = {
       url = "github:MercuryTechnologies/nix-your-shell";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # my nixvim config
-    nvimx = {
-      url = "github:allen-liaoo/nvimx";
-      #inputs.nixpkgs.follows = "nixpkgs-unstable"; # TODO: Wait til nixpkgs-unstable is on 26.11
     };
 
     nur = {
