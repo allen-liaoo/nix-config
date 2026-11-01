@@ -24,11 +24,11 @@
         "wrappers": "wrappers"
       },
       "locked": {
-        "lastModified": 1793470830,
-        "narHash": "sha256-5uYslOqw4Lxgi3YYPIEBiSAXi3KSAK5UK/LfN6HHhuQ=",
+        "lastModified": 1793569786,
+        "narHash": "sha256-Tve+PnHmqT5kdeJ4s4e7DxtEZTIqvCfTG8E3DJPk6/w=",
         "owner": "allen-liaoo",
         "repo": "alnpkgs",
-        "rev": "d888a075df12ab6e443bec21754866222fbefb1c",
+        "rev": "aabf1d724d9a05e510255218500a2f8b71fcf51e",
         "type": "github"
       },
       "original": {
@@ -676,11 +676,11 @@
         "winresize": "winresize"
       },
       "locked": {
-        "lastModified": 1793469001,
-        "narHash": "sha256-nB7CBzESIBDf8l7bbc55kk/jbNSYxFbBGmJUZvT+DxY=",
+        "lastModified": 1793568577,
+        "narHash": "sha256-VTN9dMgeFM3HWZI0xZDbez3iv5U9atfFxVnrnHORL2I=",
         "owner": "allen-liaoo",
         "repo": "nvimx",
-        "rev": "21cc2b5fadb0597af892437bd5db9e75a316011e",
+        "rev": "f8d3eb921745385740be4619c0977c8513797bd7",
         "type": "github"
       },
       "original": {

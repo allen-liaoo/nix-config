@@ -1,3 +1,4 @@
+# disabled below module to not use matugen theme (I dont like the colors)
 {
   config,
   lib,

@@ -27,8 +27,19 @@ lib.mkIf config.aln.app.enable {
       };
       cursor.style.shape = "Block";
       terminal.osc52 = "CopyPaste";
+      # tells fish to start tmux (see below)
+      env.ALN_TMUX_AUTOSTART = "1";
     };
   };
+
+  # new tmux session per window, back in fish once tmux exits/detaches;
+  # `alacritty -e <cmd>` still bypasses this. Erased first so nested shells don't start tmux
+  aln.shell.module.integrations.alacritty.interactiveInit = ''
+    if set -q ALN_TMUX_AUTOSTART; and not set -q TMUX
+      set -e ALN_TMUX_AUTOSTART
+      tmux new-session
+    end
+  '';
 
   programs.dank-material-shell.settings.matugenTemplateAlacritty = true;
 
@@ -43,7 +54,7 @@ lib.mkIf config.aln.app.enable {
       window-rule { 
         match app-id=r#"Alacritty"#
         // Open terminal in single column
-        open-maximized false 
+        open-maximized true 
         open-maximized-to-edges false
         background-effect {
           blur true
