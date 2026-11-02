@@ -24,11 +24,11 @@
         "wrappers": "wrappers"
       },
       "locked": {
-        "lastModified": 1793569786,
-        "narHash": "sha256-Tve+PnHmqT5kdeJ4s4e7DxtEZTIqvCfTG8E3DJPk6/w=",
+        "lastModified": 1793637337,
+        "narHash": "sha256-kLfFjPBYzSBH+kq1+AkV9dmpcLhWxtn6HnMUrk7yRuQ=",
         "owner": "allen-liaoo",
         "repo": "alnpkgs",
-        "rev": "aabf1d724d9a05e510255218500a2f8b71fcf51e",
+        "rev": "f828127779154a69b9946fa4e22baf67da18e927",
         "type": "github"
       },
       "original": {

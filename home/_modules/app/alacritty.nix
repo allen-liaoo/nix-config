@@ -27,6 +27,21 @@ lib.mkIf config.aln.app.enable {
       };
       cursor.style.shape = "Block";
       terminal.osc52 = "CopyPaste";
+      # tmux only requests modifyOtherKeys (not kitty keys), which alacritty doesn't support, so
+      # C-S-hjkl would arrive as plain C-hjkl; send them as CSI u explicitly
+      keyboard.bindings =
+        lib.mapAttrsToList
+          (key: code: {
+            inherit key;
+            mods = "Control|Shift";
+            chars = builtins.fromJSON ''"\u001b[${toString code};6u"'';
+          })
+          {
+            H = 104;
+            J = 106;
+            K = 107;
+            L = 108;
+          };
       # tells fish to start tmux (see below)
       env.ALN_TMUX_AUTOSTART = "1";
     };
