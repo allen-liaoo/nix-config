@@ -42,19 +42,10 @@ lib.mkIf config.aln.app.enable {
             K = 107;
             L = 108;
           };
-      # tells fish to start tmux (see below)
+      # tells fish to start tmux (see shell/tmux-autostart.nix)
       env.ALN_TMUX_AUTOSTART = "1";
     };
   };
-
-  # new tmux session per window, back in fish once tmux exits/detaches;
-  # `alacritty -e <cmd>` still bypasses this. Erased first so nested shells don't start tmux
-  aln.shell.module.integrations.alacritty.interactiveInit = ''
-    if set -q ALN_TMUX_AUTOSTART; and not set -q TMUX
-      set -e ALN_TMUX_AUTOSTART
-      tmux new-session
-    end
-  '';
 
   programs.dank-material-shell.settings.matugenTemplateAlacritty = true;
 
@@ -62,7 +53,7 @@ lib.mkIf config.aln.app.enable {
     enable = true;
     content = ''
       binds {
-        Mod+T hotkey-overlay-title="Open a Terminal" {
+        Mod+T hotkey-overlay-title="Open Terminal: Alacritty" {
           spawn "${lib.getExe config.programs.alacritty.package}";
         }
       }

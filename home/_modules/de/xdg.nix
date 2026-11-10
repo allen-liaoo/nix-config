@@ -127,7 +127,7 @@ lib.mkIf config.aln.de.enable {
 
     terminal-exec = {
       enable = true;
-      settings.default = [ "Alacritty.desktop" ];
+      settings.default = [ "kitty.desktop" ];
     };
 
     portal = {
