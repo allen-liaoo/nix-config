@@ -1,0 +1,36 @@
+{
+  config,
+  lib,
+  pkgs-aln,
+  ...
+}:
+
+let
+  # out of store (a string, not a path) so matugen can rewrite it
+  theme = "${config.xdg.stateHome}/matugen/tmux-colors.conf";
+  tmux = lib.getExe config.aln.shell.package.configuration.tools.tmux;
+in
+{
+  # disabled below to not use matugen theme (I dont like the colors)
+  # aln.matugen.template."tmux" = {
+  #   enable = config.aln.de.enable;
+  #   content = {
+  #     input_path = config.aln.matugen.themesPath "tmux-colors.conf";
+  #     output_path = theme;
+  #     post_hook = "${tmux} source-file -q ${theme} 2>/dev/null || true"; # live reload
+  #   };
+  # };
+  #
+  # aln.shell.module = lib.mkIf config.aln.de.enable {
+  #   tools.tmux = pkgs-aln.tmux.wrap { inherit theme; };
+  # };
+
+  # tmux server started before a switch still opens the current (changed) shell in new panes
+  # note: use mainProgram (symlink) so tmux package doesn't need to change on changes to shell
+  aln.shell.module.tools.tmux = pkgs-aln.tmux.wrap {
+    configAfter = ''
+      set -g default-shell ${config.home.profileDirectory}/bin/${pkgs-aln.shell.meta.mainProgram}
+    '';
+  };
+
+}

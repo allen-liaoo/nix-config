@@ -88,6 +88,10 @@ lib.mkIf config.aln.de.enable {
         id = "darkMode";
         width = 50;
       }
+      {
+        id = "plugin_cast";
+        width = 25;
+      }
     ];
 
     barConfigs = [

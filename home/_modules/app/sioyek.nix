@@ -27,6 +27,8 @@ lib.mkIf config.aln.app.enable {
       "fit_to_page_height" = "0";
       "goto_top_of_page" = "H";
       "goto_bottom_of_page" = "L";
+      "open_document" = "O";
+      "overview_link" = "o";
     };
   };
 }

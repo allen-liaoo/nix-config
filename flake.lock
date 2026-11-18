@@ -24,16 +24,43 @@
         "wrappers": "wrappers"
       },
       "locked": {
-        "lastModified": 1793648283,
-        "narHash": "sha256-OQc2pYH6YpwnzNPnzhtQPyInK7xTHwp0KGaIqWmjzMs=",
+        "lastModified": 1795029739,
+        "narHash": "sha256-VrYiULrb6ZVmtlHuIV8m5cbTvGarcw8qvCLADFIX4ls=",
         "owner": "allen-liaoo",
         "repo": "alnpkgs",
-        "rev": "e06484ddaf1f866b52f9255e89603618d4990657",
+        "rev": "de98c96d9ffe6180f4b5749501a519e61ee23ab3",
         "type": "github"
       },
       "original": {
         "owner": "allen-liaoo",
         "repo": "alnpkgs",
+        "type": "github"
+      }
+    },
+    "coil-nvim": {
+      "inputs": {
+        "nixpkgs": [
+          "alnpkgs",
+          "nvimx",
+          "nixpkgs"
+        ],
+        "nixvim": [
+          "alnpkgs",
+          "nvimx",
+          "nixvim"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795028936,
+        "narHash": "sha256-Fu0LqKPCAF2qW4sqi9c1APf9BMZz7FobDqeg/kRGW9k=",
+        "owner": "allen-liaoo",
+        "repo": "coil.nvim",
+        "rev": "e166e6b1b91b65d94fe78a2bf8a5a96e1782cec6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "allen-liaoo",
+        "repo": "coil.nvim",
         "type": "github"
       }
     },
@@ -133,11 +160,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793107151,
-        "narHash": "sha256-d2efv5ZIC8OOQtFQWIjEE4apiVPDesy223ln9GAaVyA=",
+        "lastModified": 1794802344,
+        "narHash": "sha256-vXuMHEDKMkklEkLSMWrE9uUW4Vnh+xmJJ0cFqOeqXjo=",
         "owner": "AvengeMedia",
         "repo": "dms-plugin-registry",
-        "rev": "727f3fc34cef0ae874ef6398c3db07672a43b45e",
+        "rev": "4625fde9db44a355d2db0288924ee5098438255e",
         "type": "github"
       },
       "original": {
@@ -691,6 +718,7 @@
     },
     "nvimx": {
       "inputs": {
+        "coil-nvim": "coil-nvim",
         "nixpkgs": [
           "alnpkgs",
           "nixpkgs"
@@ -699,11 +727,11 @@
         "winresize": "winresize"
       },
       "locked": {
-        "lastModified": 1793568577,
-        "narHash": "sha256-VTN9dMgeFM3HWZI0xZDbez3iv5U9atfFxVnrnHORL2I=",
+        "lastModified": 1795029583,
+        "narHash": "sha256-1hrry/FUdvE3gFnCfJ+NJ0+w61hBGmSBbAOmjqVGtbE=",
         "owner": "allen-liaoo",
         "repo": "nvimx",
-        "rev": "f8d3eb921745385740be4619c0977c8513797bd7",
+        "rev": "4ef22898a3ffa1fc3fe6f75ddacc7d50b5d4fb56",
         "type": "github"
       },
       "original": {
