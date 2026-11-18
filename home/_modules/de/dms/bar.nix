@@ -69,11 +69,11 @@ lib.mkIf config.aln.de.enable {
         width = 50;
       }
       {
-        id = "plugin_niriDS";
+        id = "idleInhibitor";
         width = 50;
       }
       {
-        id = "idleInhibitor";
+        id = "darkMode";
         width = 50;
       }
       {
@@ -85,8 +85,8 @@ lib.mkIf config.aln.de.enable {
         width = 25;
       }
       {
-        id = "darkMode";
-        width = 50;
+        id = "plugin_niriDS";
+        width = 25;
       }
       {
         id = "plugin_cast";

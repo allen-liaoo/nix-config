@@ -3,6 +3,7 @@
   config,
   inputs,
   pkgs,
+  pkgs-aln,
   alnLib,
   inventory,
   ctx,
@@ -78,6 +79,7 @@ in
 
       plugins = {
         batteryPlus.enable = true;
+        cast.enable = true; # see host/_modules/de/cast.nix
         hiddenBar.enable = true;
         niriDS.enable = true;
       };
@@ -88,6 +90,8 @@ in
       power-profiles-daemon # batteryPlus
       libnotify # dankBatteryAlerts
       wl-mirror # niriDS
+    ] ++ [
+      pkgs-aln.dux-cast # cast
     ];
 
     # dms is ride or die for niri
