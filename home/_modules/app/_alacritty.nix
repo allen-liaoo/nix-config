@@ -27,6 +27,23 @@ lib.mkIf config.aln.app.enable {
       };
       cursor.style.shape = "Block";
       terminal.osc52 = "CopyPaste";
+      # tmux only requests modifyOtherKeys (not kitty keys), which alacritty doesn't support, so
+      # C-S-hjkl would arrive as plain C-hjkl; send them as CSI u explicitly
+      keyboard.bindings =
+        lib.mapAttrsToList
+          (key: code: {
+            inherit key;
+            mods = "Control|Shift";
+            chars = builtins.fromJSON ''"\u001b[${toString code};6u"'';
+          })
+          {
+            H = 104;
+            J = 106;
+            K = 107;
+            L = 108;
+          };
+      # tells fish to start tmux (see shell/tmux-autostart.nix)
+      env.ALN_TMUX_AUTOSTART = "1";
     };
   };
 
@@ -36,14 +53,14 @@ lib.mkIf config.aln.app.enable {
     enable = true;
     content = ''
       binds {
-        Mod+T hotkey-overlay-title="Open a Terminal" {
+        Mod+T hotkey-overlay-title="Open Terminal: Alacritty" {
           spawn "${lib.getExe config.programs.alacritty.package}";
         }
       }
       window-rule { 
         match app-id=r#"Alacritty"#
         // Open terminal in single column
-        open-maximized false 
+        open-maximized true 
         open-maximized-to-edges false
         background-effect {
           blur true

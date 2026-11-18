@@ -1,4 +1,5 @@
 {
+  lib,
   config,
   ctx,
   ...
@@ -27,6 +28,11 @@
     configHome = config.home.homeDirectory + "/.config";
     dataHome = config.home.homeDirectory + "/.local/share";
     stateHome = config.home.homeDirectory + "/.local/state";
+  };
+
+  home.sessionVariables = {
+    "EDITOR" = lib.mkForce "nvim";
+    "VISUAL" = lib.mkForce "nvim";
   };
 
   # This value determines the Home Manager release that your

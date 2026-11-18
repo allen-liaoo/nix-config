@@ -27,7 +27,7 @@ system:
           nvimx.preset.configs.enable = true;
         };
 
-        nixvimPkg = inputs.nvimx.makeNvimxWithModule system nvimxModule;
+        nixvimPkg = inputs.alnpkgs.inputs.nvimx.makeNvimxWithModule system nvimxModule;
       in
       pkgs.mkShell {
         packages = [ nixvimPkg ];

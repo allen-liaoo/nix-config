@@ -137,6 +137,13 @@ in
     ];
   };
 
+  # nss-mdns only resolves 2-label names (host.local) by default; allow multi-label
+  # names (e.g. sonarr.barrybenson.local) via the trailing full `mdns4` nss module
+  environment.etc."mdns.allow".text = ''
+    .local.
+    .local
+  '';
+
   sops.secrets =
     (
       connections

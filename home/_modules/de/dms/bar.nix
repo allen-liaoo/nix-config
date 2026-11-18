@@ -116,7 +116,11 @@ lib.mkIf config.aln.de.enable {
         leftWidgets = [
           { id = "clock"; }
           { id = "notificationButton"; }
-          { id = "music"; }
+          {
+            id = "music";
+            mediaStyle = "controls";
+            mediaShowLyrics = false;
+          }
         ];
         centerWidgets = [
           { id = "workspaceSwitcher"; }
