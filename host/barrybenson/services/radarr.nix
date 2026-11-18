@@ -5,20 +5,17 @@
 
   nixarr.radarr.enable = true;
 
-  nixarr.radarr.settings-sync.transmission.enable = true;
-  nixarr.transmission.enable = true;
+  nixarr.radarr.settings-sync.transmission = {
+    enable = true;
+    config = {
+      # remove from transmission once imported and done seeding (deletes the copy in torrents/,
+      # the hardlinked library file stays)
+      remove_completed_downloads = true;
+      remove_failed_downloads = true;
+      fields.movieCategory = "radarr"; # downloads to <mediaDir>/torrents/radarr
+    };
+  };
 
-  # nixarr.radarr.settings-sync.downloadClients = [
-  #   {
-  #     name = "qBittorrent";
-  #     implementation = "QBittorrent";
-  #     fields = {
-  #       host = "127.0.0.1";
-  #       port = config.services.qbittorrent.webuiPort; # qBittorrent's own webui, not qui
-  #       movieCategory = "radarr"; # downloads to <mediaDir>/qbittorrent/radarr
-  #     };
-  #   }
-  # ];
   services.radarr.settings.auth.required = "DisabledForLocalAddresses";
   aln.impermanence.dirs = [ config.nixarr.radarr.stateDir ];
 }

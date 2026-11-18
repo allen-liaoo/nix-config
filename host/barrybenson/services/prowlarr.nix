@@ -12,11 +12,12 @@
       enable-nixarr-apps = true;
       indexers = [
         # { sort_name = "1337x"; } # blocked by cloudflare
+        # { sort_name = "kickasstorrents.to"; } # blocked by cloudflare
+        # { sort_name = "magnet cat"; } # blocked by cloudflare
         { sort_name = "anime tosho"; }
         { sort_name = "knaben"; }
         { sort_name = "limetorrents"; }
         { sort_name = "nyaa si"; }
-        { sort_name = "magnet cat"; }
         { sort_name = "pirate bay"; }
         { sort_name = "torrentdownload"; }
         { sort_name = "torrent downloads"; }
