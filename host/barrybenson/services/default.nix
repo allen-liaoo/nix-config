@@ -25,7 +25,7 @@
     nixarr = {
       enable = true;
       # @media subvolume (see disko.nix)
-      # downloads (qbittorrent/) and library (library/) on the same fs so *arr hardlinks instead of copying
+      # downloads (torrents/) and library (library/) on the same fs so *arr hardlinks instead of copying
       mediaDir = "/srv/media";
       stateDir = "/var/lib/nixarr";
     };

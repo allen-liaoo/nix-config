@@ -37,7 +37,7 @@ in
     };
   };
 
-  # Services (caddy, mDNS aliases, qbittorrent) order after network-online
+  # Services (caddy, mDNS aliases) order after network-online
   systemd.targets.network-online.wantedBy = [ "multi-user.target" ];
 
   # Advertise barrybenson.local on the LAN (mDNS), so clients don't need its DHCP ip
