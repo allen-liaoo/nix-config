@@ -4,47 +4,37 @@ My NixOS and Home-Manager Configs
 ![cover](assets/cover.png)
 
 ## Features
-### Dots
-**Standalone** home-manager modules.
+**Standalone** home-manager modules (*: config is [external](#related)).
 | Feature | Component |
 |---|---|
-| Shell | [Fish](https://fishshell.com)[⌃](/home/_modules/shell/fish.nix), [Starship](https://starship.rs)[⌃](/home/_modules/shell/starship.nix) |
-| Editor | [Neovim](https://neovim.io)[⌃](https://github.com/allen-liaoo/nvimx), [Vim](https://www.vim.org)[⌃](/home/_modules/tui/vim.nix) |
+| Shell | [Fish](https://fishshell.com)\*, [Starship](https://starship.rs)\* |
+| Editor | [Neovim](https://neovim.io)\* |
 | WM | [Niri](https://niri-wm.github.io/niri/)[⌃](/home/_modules/de/niri) |
-| Desktop Shell | [DankMaterialShell](https://danklinux.com/)[⌃](/home/_modules/de/dms) |
+| Desktop Shell | [Dux Modular Shell](https://duxlabs.dev/)[⌃](/home/_modules/de/dms) |
 | Theming | [Matugen](https://iniox.github.io/#matugen)[⌃](/home/_modules/matugen.nix) |
-| Terminal | [Alacritty](https://alacritty.org/)[⌃](/home/_modules/app/alacritty.nix) |
+| Terminal | [Kitty](https://sw.kovidgoyal.net/kitty/)[⌃](/home/_modules/app/kitty.nix), [tmux](https://tmux.app/)\* |
 | Launcher | [Vicinae](https://www.vicinae.com/)[⌃](/home/_modules/app/vicinae.nix) |
-| Browser | [Firefox](https://www.firefox.com)[⌃](/home/_modules/app/browser/firefox/config) |
+| Browser | [Firefox](https://www.firefox.com)[⌃](#firefox-based-browsers) |
+| File Manager | [Coil.nvim](https://github.com/allen-liaoo/coil.nvim)\* |
+| PDF Viewer | [Sioyek](https://sioyek.info/)[^](/home/_modules/app/sioyek.nix) |
+| Video Player | [mpv](https://mpv.io/)[^](/home/_modules/app/mpv.nix) |
 
-### Self-Hosted
-Podman containers via [quadlet-nix](https://seiarotg.github.io/quadlet-nix/) (Rootful, `userns=auto`)[⌃](host/barrybenson/selfhosted).
-| Service | Component |
-|---|---|
-| Authentication | [Authelia](https://www.authelia.com/)[⌃](/host/barrybenson/selfhosted/authelia) |
-| Reverse Proxy | [Caddy](https://caddyserver.com/)[⌃](/host/barrybenson/selfhosted/rproxy) |
-| Adblock | [Pihole](https://pi-hole.net/)[⌃](/host/barrybenson/selfhosted/pihole.nix) |
-| Torrent Indexer | [Jackett](https://github.com/Jackett/Jackett)[⌃](/host/barrybenson/selfhosted/jackett.nix) |
-| Minecraft Server | [Nix-Minecraft](https://github.com/Infinidoge/nix-minecraft)[⌃](/host/barrybenson/selfhosted/minecraft) |
-| Nix Binary Cache | TODO |
-| Services Monitoring | Beszel (TODO) |
-| CalDAV/CardDAV | Radicale (TODO) |
-| Music Stats | Multi-scrobbler, Koito (TODO) |
-| RSS Aggregator | FreshRSS (TODO) |
 
-### Nix-Specific
+**Self-Hosted** \*arr stack, Jellyfin services via [nixarr](https://nixarr.com/) [⌃](host/barrybenson/services).
+
+**Nix-Specific**
 - Secrets management via [sops-nix](https://github.com/Mic92/sops-nix) [⌃](host/_modules/sops.nix),[⌃](home/_modules/sops.nix).
 - Declarative disks partitioning via [disko](https://github.com/nix-community/disko/) with BTRFS and LUKS [⌃](host/theseus/disko.nix).
 - Wipe storage on boot via [impermanence](https://github.com/nix-community/impermanence) [⌃](host/_modules/fs/impermanence.nix).
 
 ## Structure
 ```
+home/
+_modules/ - modules for home-manager
+<username>/ - HM users
 host/
   _modules/ - modules for nixos
   <hostname>/ - nixos hosts
-home/
-  _modules/ - modules for home-manager
-  <username>/ - HM users
 inventory/ - metadata of users, hosts and valid pairings (see section below)
 secrets/ - sops-nix secrets
 shell.nix - decShells for the repo, including distinct neovim instances and dev env for home/ and host/
@@ -65,10 +55,7 @@ This allows symlinking out of store files to work correctly, and sidesteps file 
 |---|---|---|----|---|
 |theseus|Framework Laptop 13 (Ryzen AI 5 340)|laptop|My daily driver. NixOS + LUKS + everything in dots.|✅|
 |barrybenson|Beelink Mini PC (Ryzen 7 5700U)|server|Headless homeserver with impermanence. Containers setup in progress.|✅|
-|ionobro|IONOS VPS (1G RAM, 10G Storage)|server|Acts as the router/firewall for barrybenson who is behind CGNAT. I need a minimal NixOS install to run wireguard + nftables.|📝|
-|guinea|QEMU/KVM|VM|Used to build this config. Need to configure declaratively on theseus.|✅|
 
-<!-- |louisxvi|Macbook Air M1|laptop|Broke the screen so now it's "headless". Plan to run Asahi with NixOS. Currently retired.|-| -->
 
 ✅ Setup completed | 
 🚧 In progress | 
@@ -83,7 +70,7 @@ This allows symlinking out of store files to work correctly, and sidesteps file 
 
 ### Firefox-based Browsers
 My firefox (HM) module configs can be applied to any firefox-based browser, such as `floorp`, `librewolf`, or even `glide` (from external flake). 
-For examples, see [firefox.nix](home/_modules/app/browser/firefox.nix) and [glide.nix](home/_modules/app/browser/glide.nix).
+For examples, see [firefox.nix](home/_modules/app/browser/firefox.nix) and [glide.nix](home/_modules/app/browser/_glide.nix).
 Both share these centralized configs: 
 - [firefox/config](home/_modules/app/browser/firefox/config) - Shared policies, settings, extensions, and my custom module configs
 - [firefox/mkModule](home/_modules/app/browser/firefox/mkModule) - My custom modules, which includes:
@@ -92,7 +79,6 @@ Both share these centralized configs:
 
 The shared configs and custom modules are meant to be merged with firefox-based browser modules such as `programs.firefox`, `programs.librewolf`, etc.
 
-### Networking
-- `ionobro` is my VPS which connects clients to my homeserver, `barrybenson`, via wireguard. It forwards packets to `barrybenson` without source nat. 
-- `barrybenson` hosts services and lives behind CGNAT. Its outgoing traffic goes through wireguard if it is a response from some incoming traffic from the tunnel, otherwise it goes through the normal internet. This is achieved via nftables policy-based routing[⌃](/host/barrybenson/network.nix).
-
+## Related
+- [nvimx](https://github.com/allen-liaoo/nvimx) - My modular Neovim distribution via NixVim.
+- [alnpkgs](https://github.com/allen-liaoo/alnpkgs) - My nix packages and wrapper modules (I use it to package my [shell](/home/_modules/shell/aln-shell.nix) and its dependencies).
