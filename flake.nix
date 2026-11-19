@@ -94,6 +94,7 @@
 
   inputs = {
     # also provides my nixvim config (alnpkgs.inputs.nvimx)
+    # dont set nixpkgs follows, nixvim tend to break
     alnpkgs.url = "github:allen-liaoo/alnpkgs";
 
     dms = {
@@ -137,7 +138,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
@@ -158,23 +162,22 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # dont set nixpkgs.follows or cachix cache misses
     vicinae.url = "github:vicinaehq/vicinae";
 
-    vicinae-extensions.url = "github:vicinaehq/extensions";
+    vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    xremap.url = "github:xremap/nix-flake";
+    xremap = {
+      url = "github:xremap/nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }
