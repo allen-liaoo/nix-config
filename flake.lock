@@ -24,11 +24,11 @@
         "wrappers": "wrappers"
       },
       "locked": {
-        "lastModified": 1795029739,
-        "narHash": "sha256-VrYiULrb6ZVmtlHuIV8m5cbTvGarcw8qvCLADFIX4ls=",
+        "lastModified": 1795110372,
+        "narHash": "sha256-DA+Inhx17KIhVt/LxOiGqWPBt5GWWEP9CBIsrnbd/N8=",
         "owner": "allen-liaoo",
         "repo": "alnpkgs",
-        "rev": "de98c96d9ffe6180f4b5749501a519e61ee23ab3",
+        "rev": "6d4abf69ace3e40102e285151b807b8b526511c9",
         "type": "github"
       },
       "original": {
@@ -51,11 +51,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795028936,
-        "narHash": "sha256-Fu0LqKPCAF2qW4sqi9c1APf9BMZz7FobDqeg/kRGW9k=",
+        "lastModified": 1795032254,
+        "narHash": "sha256-HHAk0CzXTldgdbFhqMagVcyIFvWdq8Cl/EzVn4y+pKI=",
         "owner": "allen-liaoo",
         "repo": "coil.nvim",
-        "rev": "e166e6b1b91b65d94fe78a2bf8a5a96e1782cec6",
+        "rev": "b86722132d0c2d2e4968c9848a51d7a51b318ff2",
         "type": "github"
       },
       "original": {
@@ -727,11 +727,11 @@
         "winresize": "winresize"
       },
       "locked": {
-        "lastModified": 1795029583,
-        "narHash": "sha256-1hrry/FUdvE3gFnCfJ+NJ0+w61hBGmSBbAOmjqVGtbE=",
+        "lastModified": 1795110297,
+        "narHash": "sha256-ZocBiTguYpf3KO28LEyjkJDrI7+CIho9Nx36Zco928I=",
         "owner": "allen-liaoo",
         "repo": "nvimx",
-        "rev": "4ef22898a3ffa1fc3fe6f75ddacc7d50b5d4fb56",
+        "rev": "c8c09e5e3a9d7c806874e413a371d4e535562f2d",
         "type": "github"
       },
       "original": {
