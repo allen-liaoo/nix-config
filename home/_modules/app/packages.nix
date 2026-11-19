@@ -12,6 +12,7 @@ lib.mkIf config.aln.app.enable {
     nautilus # file browser
     file-roller # archive manager
     signal-desktop
+    spotify
     zotero
   ])
   # old BW uses EOL electron version
